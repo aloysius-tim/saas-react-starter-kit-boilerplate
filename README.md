@@ -40,7 +40,8 @@ or manually clone the repo and then run `npm install`.
 ### VueJS
 Run the following commands to build vuejs app.
 ```bash
-    $ cd vue-spa
+    $ cd vue-pwa
+    $ yarn
     $ npm run build
 ```
 ### Migrations
