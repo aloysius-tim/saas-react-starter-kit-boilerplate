@@ -67,7 +67,13 @@ export default {
     return {
       drawer: this.$vuetify.breakpoint.lgAndUp,
       userMenu: [
-        { title: 'Profile', icon: 'person', action: () => {} },
+        {
+          title: 'Profile',
+          icon: 'person',
+          action: () => {
+            this.$router.push({ name: 'user-profile' })
+          }
+        },
         {
           title: 'Update Password',
           icon: 'lock',

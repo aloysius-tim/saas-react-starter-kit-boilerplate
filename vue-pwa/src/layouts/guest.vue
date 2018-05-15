@@ -1,5 +1,11 @@
 <template>
-  <router-view v-if="!$store.getters['auth/isAuthorised']" />
+  <v-app>
+    <v-content>
+      <v-container fluid fill-height>
+        <router-view v-if="!$store.getters['auth/isAuthorised']" />
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 <script>
 import bus from '@/bus'
