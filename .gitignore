@@ -30,5 +30,5 @@ quasar-client/.quasar
 quasar-client/.DS_Store
 quasar-client/.thumbs.db
 
-adonify/node_modules
-adonify/dist
+vue-pwa/node_modules
+vue-pwa/dist
