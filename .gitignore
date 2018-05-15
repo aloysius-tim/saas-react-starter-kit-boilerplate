@@ -1,0 +1,35 @@
+# Node modules
+node_modules
+
+# Adonis directory for storing tmp files
+tmp
+
+# Environment variables, never commit this file
+.env
+
+# The development sqlite file
+database/development.sqlite
+.c9/
+.c9
+vue-spa/node_modules
+vue-spa/dist
+public/static
+public/static/*
+quasar-client/node_modules
+quasar-client/node_modules/*
+quasar-client/dist
+quasar-client/dist/*
+quasar-client/src-cordova/platforms
+quasar-client/src-cordova/plugins
+quasar-client/src-cordova/www
+
+quasar-client/npm-debug.log*
+quasar-client/yarn-debug.log*
+quasar-client/yarn-error.log*
+quasar-client/.quasar
+quasar-client/.DS_Store
+quasar-client/.thumbs.db
+
+adonify/node_modules
+adonify/dist
+adonify/.git

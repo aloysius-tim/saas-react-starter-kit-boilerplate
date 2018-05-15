@@ -1,0 +1,1 @@
+webpackJsonp([3],{"2NXm":function(e,t,l){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){var e=this.$createElement,t=this._self._c||e;return t("q-page",[t("h1",[this._v("Welcome")])])},i=[];n._withStripped=!0;var r=l("XyMi"),s=Object(r.a)(null,n,i,!1,null,null,null);s.options.__file="src\\pages\\index.vue";t.default=s.exports}});

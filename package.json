@@ -1,0 +1,39 @@
+{
+  "name": "adonis-jwt-api-starter",
+  "version": "0.5.0",
+  "adonis-version": "4.1.0",
+  "description": "Adonisjs boilerplate for API server with pre-configured JWT AUTH and VueJS as frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node ace test"
+  },
+  "keywords": [
+    "adonisjs",
+    "adonis-app",
+    "adonisjs vuejs"
+  ],
+  "author": "Amit Kumar Khare",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@adonisjs/ace": "^5.0.1",
+    "@adonisjs/auth": "^3.0.4",
+    "@adonisjs/bodyparser": "^2.0.2",
+    "@adonisjs/cors": "^1.0.5",
+    "@adonisjs/fold": "^4.0.7",
+    "@adonisjs/framework": "^5.0.5",
+    "@adonisjs/ignitor": "^2.0.6",
+    "@adonisjs/lucid": "^5.0.3",
+    "@adonisjs/mail": "^3.0.5",
+    "@adonisjs/validator": "^5.0.3",
+    "axios": "^0.18.0",
+    "gravatar": "^1.6.0",
+    "mysql": "^2.15.0",
+    "sqlite3": "^4.0.0"
+  },
+  "devDependencies": {},
+  "autoload": {
+    "App": "./app"
+  }
+}

@@ -1,0 +1,50 @@
+@layout('layouts/auth')
+
+@section('content')
+<div class='alert alert-success' id="message"></div>
+<div id="app">
+      <form class="form-signin" onsubmit="changePassword()">
+            <input type="hidden" name="token" id="inputToken" value="{{ token }}" />
+            <h1 class="h3 mb-3 font-weight-normal">Create new password</h1>
+            <label for="inputPassword" class="sr-only">New Password</label>
+            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+            <button  id="submitBtn" class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2018 {{ appName() }}</p>
+      </form>
+</div>
+@endsection
+
+@section('foot-content')
+<script>
+
+$(document).ready(function() {
+      $("form").submit(function(e){
+        e.preventDefault();
+      });
+      $('#message').hide();
+});
+
+function changePassword() {
+      $('#message').hide();
+      const submitBtnRef = document.getElementById('submitBtn');
+      const messageRef = document.getElementById('message');
+      const appRef = document.getElementById('app');
+      const tokenRef = document.getElementById('inputToken');
+      const passwordRef = document.getElementById('inputPassword');
+      axios.post('{{ route('auth.reset.password') }}', { token: tokenRef.value, password: passwordRef.value }).then(res => {
+            appRef.innerHTML="<div class='alert alert-success'>"+res.data.message+"</div>"
+            messageRef.innerHTML = null
+            $('#message').hide();
+      }).catch(e => {
+            submitBtnRef.disabled = false
+            $('#show').hide();
+            if(e.response) {
+                  messageRef.innerHTML = e.response.data.message
+            } else {
+                  messageRef.innerHTML = "Something went wrong, try again."
+            }
+      })
+}
+
+</script>
+@endsection

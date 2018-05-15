@@ -1,0 +1,4 @@
+Hello, someone requested password reset on your Adonis Starter account.
+If this is not you, then ignore this email.
+Otherwise change your password following the link:
+<a href="{{ host() }}{{ route('auth.reset.password.form', { token: token }) }}">Reset password</a>
