@@ -1,16 +1,16 @@
 'use strict'
 
-class Forgot {
+class ResetPassword {
 
   get rules () {
     return {
-      email: 'required|email'
+      token: 'required',
+      password: 'required|min:6'
     }
   }
   
   get data () {
     const requestBody = this.ctx.request.all()
-    requestBody.email = (requestBody.email) ? requestBody.email.trim().toLowerCase() : null
     return requestBody
   }
   
@@ -23,11 +23,12 @@ class Forgot {
   
   get messages () {
     return {
-      'email.required': 'Email is required',
-      'email.email': 'Enter a valid email address'
+      'token.required': 'Token is required',
+      'password.required': 'Password is required',
+      'password.min': 'Password needs to be at least 6 characters long.'
     }
   }
 
 }
 
-module.exports = Forgot
+module.exports = ResetPassword

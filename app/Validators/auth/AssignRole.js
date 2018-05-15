@@ -1,11 +1,11 @@
 'use strict'
 
-class Authorise {
+class AssignRole {
 
   get rules () {
     return {
-      email: 'required|email',
-      password: 'required'
+      userId: 'required',
+      role: 'required'
     }
   }
 
@@ -19,15 +19,13 @@ class Authorise {
   
   get data () {
     const requestBody = this.ctx.request.all()
-    requestBody.email = (requestBody.email) ? requestBody.email.trim().toLowerCase() : null
     return requestBody
   }
   
   get messages () {
     return {
-      'email.required': 'Email address can\'t be empty.',
-      'email.email': 'Email address is not valid',
-      'password.required': 'Password Required'
+      'userId.required': 'userId can\'t be empty.',
+      'role.required': 'Role can\'t be empty.'
     }
   }
   
@@ -40,4 +38,4 @@ class Authorise {
 
 }
 
-module.exports = Authorise
+module.exports = AssignRole

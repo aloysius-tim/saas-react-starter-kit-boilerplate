@@ -4,7 +4,7 @@ class Authorise {
 
   get rules () {
     return {
-      password: 'required'
+      refresh_token: 'required'
     }
   }
 
@@ -16,16 +16,14 @@ class Authorise {
     }
   }
   
-  // get data () {
-  //   const requestBody = this.ctx.request.all()
-  //   return requestBody
-  // }
+  get data () {
+    const requestBody = this.ctx.request.all()
+    return requestBody
+  }
   
   get messages () {
     return {
-      'email.required': 'Email address can\'t be empty.',
-      'email.email': 'Email address is not valid',
-      'password.required': 'Password Required'
+      'refresh_token.required': 'Refresh token can\'t be empty.'
     }
   }
   

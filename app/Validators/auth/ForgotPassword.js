@@ -1,6 +1,6 @@
 'use strict'
 
-class Forgot {
+class ForgotPassword {
 
   get rules () {
     return {
@@ -30,4 +30,4 @@ class Forgot {
 
 }
 
-module.exports = Forgot
+module.exports = ForgotPassword

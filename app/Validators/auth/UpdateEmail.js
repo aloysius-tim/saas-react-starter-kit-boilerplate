@@ -1,6 +1,6 @@
 'use strict'
 
-class Authorise {
+class UpdateEmail {
 
   get rules () {
     return {
@@ -27,7 +27,7 @@ class Authorise {
     return {
       'email.required': 'Email address can\'t be empty.',
       'email.email': 'Email address is not valid',
-      'password.required': 'Password Required'
+      'password.required': 'Password can\'t be empty.'
     }
   }
   
@@ -40,4 +40,4 @@ class Authorise {
 
 }
 
-module.exports = Authorise
+module.exports = UpdateEmail

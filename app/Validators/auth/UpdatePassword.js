@@ -1,6 +1,6 @@
 'use strict'
 
-class Authorise {
+class UpdatePassword {
 
   get rules () {
     return {
@@ -40,4 +40,4 @@ class Authorise {
 
 }
 
-module.exports = Authorise
+module.exports = UpdatePassword

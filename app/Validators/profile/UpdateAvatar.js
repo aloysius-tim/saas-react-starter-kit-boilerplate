@@ -20,6 +20,7 @@ class Authorise {
   get data () {
     const requestBody = this.ctx.request.all()
     requestBody.email = (requestBody.email) ? requestBody.email.trim().toLowerCase() : null
+    requestBody.username = (requestBody.username) ? requestBody.username.trim().toLowerCase() : null
     return requestBody
   }
   
