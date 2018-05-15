@@ -102,10 +102,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     new SWPrecacheWebpackPlugin({
       cacheId: 'adonify',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css}'],
-      stripPrefix: 'dist/',
+      staticFileGlobs: ['../public/app', '../public/app/**/*.{js,html,css}', '../public/app/service-worker.js'],
+      stripPrefix: '../public',
+      navigateFallback: '/app/',
       minify: true,
-      navigateFallback: '/',
       maximumFileSizeToCacheInBytes: 10 * 1024 * 1024
     })
   ]

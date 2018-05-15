@@ -10,9 +10,9 @@ module.exports = {
     index: path.resolve(__dirname, '../../resources/views/frontend/vuejs.edge'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../public'),
+    assetsRoot: path.resolve(__dirname, '../../public/app'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/app/',
     
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
@@ -32,7 +32,7 @@ module.exports = {
     port: 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/app/',
     proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
