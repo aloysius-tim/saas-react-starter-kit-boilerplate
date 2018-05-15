@@ -31,8 +31,11 @@ module.exports = {
     env: require('./dev.env'),
     port: 8080,
     autoOpenBrowser: false,
+    index: path.resolve(__dirname, '../../resources/views/frontend/vuejs.edge'),
+    // Paths
+    assetsRoot: path.resolve(__dirname, '../../public/app'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/app/',
     proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
