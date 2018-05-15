@@ -17,7 +17,7 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
-# change index.html => /  in [ROOT/service-worker.js]
+# add config ['/app/', 'sha-random-key'] => /  in [ROOT/service-worker.js]
 npm run build --report
 ```
 
