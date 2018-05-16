@@ -1,55 +1,77 @@
 <template>
 <v-layout row wrap>
-  <v-flex xs12 mb-2>
+  <v-flex xs12 md4 mb-2>
     <v-card v-if="user">
-      <v-card-actions>
-        <v-card-title primary-title>
-          <div class="headline">Profile</div>
-        </v-card-title> 
-        <v-spacer></v-spacer>
-        <v-btn flat icon><v-icon>edit</v-icon></v-btn>
-      </v-card-actions>
       <v-card-media
-          :src="user.profile.avatar"
+          class="white--text"
           height="300px"
+          :src="user.profile.avatar"
         >
-        </v-card-media>
+        <v-container fill-height fluid>
+          <v-layout fill-height>
+            <v-flex xs12 align-end flexbox>
+              <avatar-upload-module></avatar-upload-module>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-media>
         <v-card-title primary-title>
           <div>
-            <div class="headline">{{ user.email }}</div>
+            <div class="title">
+              <v-tooltip bottom v-if="user.verified">
+                <v-icon slot="activator" dark color="green">verified_user</v-icon>
+                <span>Email Verified.</span>
+              </v-tooltip>
+              <v-tooltip bottom v-else>
+                <v-icon slot="activator" dark color="secondary">verified_user</v-icon>
+                <span>Email not verified</span>
+              </v-tooltip>
+              {{ user.email }}
+            </div>
             <span class="grey--text">{{ user.username }} ({{ user.role }})</span>
             <span class="grey--text">{{ user.first_name }} {{ user.last_name }}</span>
           </div>
         </v-card-title>
     </v-card>
   </v-flex>
-  <v-flex xs12>
+  <v-flex xs12 md7 offset-md1>
     <v-card v-if="user">
         <v-card-title>
           <span class="headline">User Profile</span>
+          <v-spacer></v-spacer>
+          <v-menu bottom left>
+            <v-btn slot="activator" icon>
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+            <v-list>
+              <v-list-tile @click="$router.push({ name: 'update-email'})">
+                <v-list-tile-title>Update Email</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="$router.push({ name: 'update-password'})">
+                <v-list-tile-title>Update Password</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal first name" required></v-text-field>
+                <v-text-field label="First name" required></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field label="Middle name" hint="example of helper text only on focus"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field
-                  label="Legal last name"
+                  label="Last name"
                   hint="example of persistent helper text"
                   persistent-hint
                   required
                 ></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field label="Email" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Password" type="password" required></v-text-field>
+                <v-text-field label="About Me"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6>
                 <v-select
@@ -73,8 +95,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
+          <v-btn color="primary" @click.native="dialog = false">Save</v-btn>
         </v-card-actions>
       </v-card>
   </v-flex>
@@ -82,8 +103,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import AvatarUploadModule from './AvatarUploadModule'
 export default {
   components: {
+    AvatarUploadModule
   },
   computed: {
     ...mapGetters({
@@ -94,6 +117,7 @@ export default {
     return {
       busy: false,
       email: '',
+      e1: null,
       password: ''
     }
   },

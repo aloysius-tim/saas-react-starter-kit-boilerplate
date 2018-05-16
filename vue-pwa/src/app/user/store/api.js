@@ -9,16 +9,12 @@ api.updateProfile = (data) => {
   })
 }
 
-api.updateAvatar = ({ newPassword, password }) => {
-  return axios.post('profile/update/avatar').then(res => {
-    return Promise.resolve(res.data)
-  }).catch(err => {
-    return Promise.reject(err)
-  })
-}
-
-api.me = () => {
-  return axios.get('profile').then(res => {
+api.updateAvatar = (formData) => {
+  return axios.post('profile/update/avatar', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(res => {
     return Promise.resolve(res.data)
   }).catch(err => {
     return Promise.reject(err)

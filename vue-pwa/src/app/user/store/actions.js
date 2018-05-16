@@ -1,4 +1,5 @@
 import API from './api'
+import bus from '@/bus'
 
 export const updateProfile = ({ dispatch, commit }, data) => {
   return API.updateProfile(data).then(data => {
@@ -6,11 +7,20 @@ export const updateProfile = ({ dispatch, commit }, data) => {
   })
 }
 
-export const fetchMe = ({ commit }) => {
-  return API.me().then(data => {
-    commit('SET_ME', data)
-  }).catch(() => {
-    commit('SET_ME', null)
+export const profileUpdateAvatar = ({ dispatch }, { imagefile }) => {
+  bus.$emit('showWait', 'Uploading avatar...')
+  var formData = new FormData()
+  formData.append('avatar', imagefile.files[0])
+  return API.updateAvatar(formData).then(data => {
+    bus.$emit('hideWait')
+    dispatch('auth/fetchMe', null, { root: true })
+    return Promise.resolve(data)
+  }).catch(err => {
+    bus.$emit('hideWait')
+    if (err.response) {
+      dispatch('root/setAlert', { type: 'error', message: 'SOMETHING_WENT_WRONG', translate: true }, { root: true })
+    }
+    return Promise.reject(err)
   })
 }
 

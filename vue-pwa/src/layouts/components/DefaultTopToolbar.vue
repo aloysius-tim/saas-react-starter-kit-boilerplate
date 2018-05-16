@@ -27,9 +27,9 @@
     </v-btn>
     <v-menu offset-y>
       <v-btn icon flat slot="activator" large>
-        <v-avatar size="32px" tile>
+        <v-avatar size="40px">
           <img
-            :src="user.profile.remote_avatar"
+            :src="user.profile.avatar"
             :alt="user.username"
           >
         </v-avatar>

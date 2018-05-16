@@ -9,7 +9,7 @@
           <v-tooltip bottom>
             <v-btn
               slot="activator"
-              @click="$router.push({ name: 'home' })"
+              @click="$router.push({ name: 'user-profile' })"
               icon
               large
               target="_blank"
@@ -28,7 +28,7 @@
         <v-card-actions>
           <v-btn type="submit" :loading="busy" color="primary">Update Password</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="secondery" :disabled="busy" @click="$router.push({ name: 'home' })">Cancel</v-btn>
+          <v-btn color="secondery" :disabled="busy" @click="$router.push({ name: 'user-profile' })">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </form>
