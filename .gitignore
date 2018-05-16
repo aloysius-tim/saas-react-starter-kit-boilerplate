@@ -16,6 +16,7 @@ vue-spa/dist
 public/static
 public/static/*
 public/images/avatars/*
+public/app/*
 !public/images/avatars/.gitkeep
 quasar-client/node_modules
 quasar-client/node_modules/*
