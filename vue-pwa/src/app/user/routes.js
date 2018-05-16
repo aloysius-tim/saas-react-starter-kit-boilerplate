@@ -8,7 +8,8 @@ export default [
       {
         path: 'profile',
         name: 'user-profile',
-        component: components.Profile
+        component: components.Profile,
+        meta: { requiresAuth: true }
       }
     ],
     meta: { requiresAuth: true }
