@@ -4,8 +4,7 @@ class Authorise {
 
   get rules () {
     return {
-      email: 'required|email',
-      password: 'required'
+      // avatar: 'required'
     }
   }
 
@@ -19,16 +18,13 @@ class Authorise {
   
   get data () {
     const requestBody = this.ctx.request.all()
-    requestBody.email = (requestBody.email) ? requestBody.email.trim().toLowerCase() : null
-    requestBody.username = (requestBody.username) ? requestBody.username.trim().toLowerCase() : null
     return requestBody
   }
   
   get messages () {
     return {
-      'email.required': 'Email address can\'t be empty.',
-      'email.email': 'Email address is not valid',
-      'password.required': 'Password Required'
+      'avatar.required': 'Avatar address can\'t be empty.',
+      'avatar.file': 'Avatar address is not valid'
     }
   }
   
