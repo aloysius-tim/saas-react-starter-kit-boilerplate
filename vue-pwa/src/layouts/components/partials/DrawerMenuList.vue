@@ -1,5 +1,5 @@
 <template>
-  <v-list dense v-if="user">
+  <v-list dense>
     <drawer-menu-item v-for="item in items" :key="item.title" :item="item" />
   </v-list>
 </template>
@@ -12,8 +12,10 @@ export default {
   },
   data () {
     return {
-      menuSegments: []
+      items: []
     }
+  },
+  watch: {
   },
   computed: {
     menuUser () {
@@ -33,59 +35,47 @@ export default {
     },
     user () {
       return this.$store.getters['auth/getMe']
-    },
-    items () {
-      this.sortMenuItems(this.menuUser)
-
-      if (this.user.role === 'moderator') {
-        this.sortMenuItems(this.menuModerator)
-      }
-      if (this.user.role === 'manager') {
-        this.sortMenuItems(this.menuModerator)
-        this.sortMenuItems(this.menuManager)
-      }
-      if (this.user.role === 'admin') {
-        this.sortMenuItems(this.menuModerator)
-        this.sortMenuItems(this.menuManager)
-        this.sortMenuItems(this.menuAdmin)
-      }
-      if (this.user.role === 'superadmin') {
-        this.sortMenuItems(this.menuModerator)
-        this.sortMenuItems(this.menuManager)
-        this.sortMenuItems(this.menuAdmin)
-        this.sortMenuItems(this.menuSuperAdmin)
-      }
-      return this.getSortedMenu()
     }
   },
-  methods: {
-    getSortedMenu () {
-      let items = []
-      this.menuSegments.filter(seg => {
-        items.push({ heading: seg.heading, action: seg.action })
+  created () {
+    let segments = this.getSegments(this.menuUser)
+    if (this.user.role === 'moderator') {
+      segments = this.getSegments(this.menuUser, this.menuModerator)
+    }
+    if (this.user.role === 'manager') {
+      segments = this.getSegments(this.menuUser, this.menuModerator, this.menuManager)
+    }
+    if (this.user.role === 'admin') {
+      segments = this.getSegments(this.menuUser, this.menuModerator, this.menuManager, this.menuAdmin)
+    }
+    if (this.user.role === 'superadmin') {
+      segments = this.getSegments(this.menuUser, this.menuModerator, this.menuManager, this.menuAdmin, this.menuSuperAdmin)
+    }
 
-        seg.items.filter(itm => {
-          items.push(itm)
-        })
+    this.items = this.getItems(segments)
+  },
+  methods: {
+    getItems (segments) {
+      let items = []
+      segments.filter(seg => {
+        items.push({ heading: seg.heading, action: seg.action, actionTitle: seg.actionTitle })
+        items.push(...seg.items)
       })
-      console.log(items.length)
       return items
     },
-    sortMenuItems (menu) {
-      menu.filter(seg => {
-        const hasSegment = this.menuSegments.find(el => el.heading === seg.heading)
-        if (!hasSegment) {
-          this.menuSegments.push(seg)
-        } else {
-          this.menuSegments.map(el => {
-            if (el.heading === seg.heading) {
-              el.items.push(...seg.items)
-            }
-            return el
-          })
-        }
+    getSegments (...menus) {
+      let segments = []
+      menus.filter(menu => {
+        menu.filter(seg => {
+          const hasSegment = segments.find(el => el.heading === seg.heading)
+          if (!hasSegment) {
+            segments.push(seg)
+          } else {
+            segments[segments.indexOf(hasSegment)].items.push(...seg.items)
+          }
+        })
       })
-      return this.menuSegments
+      return segments
     }
   }
 }
