@@ -10,7 +10,7 @@ class JwtAuthAdmin {
       }
       
       if(user.confirmation_token !== null){
-        return response.status(403).json({ message: 'You need to verify your account before accessing this resource.'})
+        return response.status(400).json({ message: 'You need to verify your account before accessing this resource.'})
       }
     } catch (error) {
       return response.status(401).json({ message: 'Missing or invalid token'})
