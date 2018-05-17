@@ -5,7 +5,7 @@
       <v-card-media
           class="white--text"
           height="300px"
-          :src="user.profile.avatar"
+          :src="user.profile.avatar + '?size=300'"
         >
         <v-container fill-height fluid>
           <v-layout fill-height>
