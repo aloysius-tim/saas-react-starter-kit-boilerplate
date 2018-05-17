@@ -32,7 +32,9 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(res => {
   return new Promise((resolve, reject) => {
-    apiNotify(res)
+    if (res && res.data && res.data.message) {
+      apiNotify(res)
+    }
     resolve(res)
   })
 }, err => {

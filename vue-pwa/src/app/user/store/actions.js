@@ -1,6 +1,6 @@
 import API from './api'
 import bus from '@/bus'
-
+// import { apiNotify } from '@/plugins/helpers'
 export const updateProfile = ({ dispatch, commit }, data) => {
   return API.updateProfile(data).then(data => {
     return Promise.resolve(data)
@@ -17,9 +17,6 @@ export const profileUpdateAvatar = ({ dispatch }, { imagefile }) => {
     return Promise.resolve(data)
   }).catch(err => {
     bus.$emit('hideWait')
-    if (err.response) {
-      dispatch('root/setAlert', { type: 'error', message: 'SOMETHING_WENT_WRONG', translate: true }, { root: true })
-    }
     return Promise.reject(err)
   })
 }
