@@ -7,13 +7,18 @@ import router from './router'
 import store from './store'
 import bus from '@/bus'
 import Vuetify from 'vuetify'
+import Croppa from 'vue-croppa'
+
 import 'vuetify/dist/vuetify.min.css'
-Vue.use(Vuetify)
+import 'vue-croppa/dist/vue-croppa.css'
 
 localforage.config({
   driver: localforage.LOCALSTORAGE,
   storeName: 'adonify'
 })
+
+Vue.use(Vuetify)
+Vue.use(Croppa)
 
 Vue.config.productionTip = false
 

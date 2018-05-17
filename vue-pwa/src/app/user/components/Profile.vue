@@ -7,13 +7,12 @@
           height="300px"
           :src="user.profile.avatar + '?size=300'"
         >
-        <v-container fill-height fluid>
-          <v-layout fill-height>
-            <v-flex xs12 align-end flexbox>
-              <avatar-upload-module></avatar-upload-module>
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <v-layout align-end justify-start>
+          <avatar-upload-module></avatar-upload-module>
+        </v-layout>
+        <v-layout align-end justify-end>
+          <v-btn icon color="secondary" @click.stop="showAvatarCropDialog = true"><v-icon>crop</v-icon></v-btn>
+        </v-layout>
       </v-card-media>
         <v-card-title primary-title>
           <div>
@@ -99,14 +98,17 @@
         </v-card-actions>
       </v-card>
   </v-flex>
+  <avatar-uplaod-dialog :initImage="user.profile.avatar" :show="showAvatarCropDialog" @closed="showAvatarCropDialog = false" />
 </v-layout>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import AvatarUploadModule from './AvatarUploadModule'
+import AvatarUplaodDialog from './AvatarUplaodDialog'
 export default {
   components: {
-    AvatarUploadModule
+    AvatarUploadModule,
+    AvatarUplaodDialog
   },
   computed: {
     ...mapGetters({
@@ -118,7 +120,8 @@ export default {
       busy: false,
       email: '',
       e1: null,
-      password: ''
+      password: '',
+      showAvatarCropDialog: null
     }
   },
   methods: {
