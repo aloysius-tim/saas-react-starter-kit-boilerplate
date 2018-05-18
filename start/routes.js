@@ -13,8 +13,9 @@ Route.group(use('App/Routes/Auth')).prefix('api/auth')
 Route.group(use('App/Routes/Profile')).prefix('api/profile')
 Route.group(use('App/Routes/Logs')).prefix('api/logs').middleware('jwtAuth')
 
-Route.any('/app', ({ view }) => view.render('frontend/vuejs')).as('app')
 Route.any('/quasar', ({ view }) => view.render('frontend/quasar')).as('quasar')
+Route.any('/app/', ({ view }) => view.render('frontend/vuejs')).as('app')
+Route.any('*', ({ view }) => view.render('frontend/vuejs')).as('app')
 
 // 404 page not found
 Route.any('*', ({ response, view }) => {

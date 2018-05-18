@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 const Router = new VueRouter({
   // needs to be history mode for bootstrap to work with vuetify
   mode: 'history',
-  base: '/',
+  base: 'app',
   scrollBehavior: () => ({ y: 0 }),
   routes
 })
