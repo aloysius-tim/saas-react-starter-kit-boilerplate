@@ -1,11 +1,11 @@
 <template>
   <v-system-bar
-   fixed app status 
-   color="outline warning" 
+   fixed app status
+   color="outline warning"
    class="verify-bar"
    v-if="user && !user.verified && $route.name!='verify-email'">
-        <v-layout @click="$router.push({name: 'verify-email'})" justify-center align-center>
-            <v-icon>info</v-icon> Please verify your email to use our services.
+        <v-layout @click="$router.push({name: 'resend-email-verification-code'})" justify-center align-center>
+            <v-icon>info</v-icon>Email not verified, click hare to resend code.
         </v-layout>
     </v-system-bar>
 </template>

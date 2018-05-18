@@ -3,5 +3,6 @@ export default {
   UpdatePassword: () => import('./UpdatePassword'),
   UpdateEmail: () => import('./UpdateEmail'),
   ForgotPassword: () => import('./ForgotPassword'),
+  ResendEmailVerificationCode: () => import('./ResendEmailVerificationCode'),
   Signup: () => import('./Signup')
 }

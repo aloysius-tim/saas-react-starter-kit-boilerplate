@@ -8,9 +8,7 @@ import store from './store'
 import bus from '@/bus'
 import Vuetify from 'vuetify'
 import Croppa from 'vue-croppa'
-
-import 'vuetify/dist/vuetify.min.css'
-import 'vue-croppa/dist/vue-croppa.css'
+import BootstrapVue from 'bootstrap-vue'
 
 localforage.config({
   driver: localforage.LOCALSTORAGE,
@@ -19,6 +17,7 @@ localforage.config({
 
 Vue.use(Vuetify)
 Vue.use(Croppa)
+Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 

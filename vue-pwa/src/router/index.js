@@ -6,8 +6,9 @@ import beforeEach from './beforeEach'
 Vue.use(VueRouter)
 
 const Router = new VueRouter({
-  mode: 'hash',
-  base: '/',
+  // needs to be history mode for bootstrap to work with vuetify
+  mode: 'history',
+  base: '/app/',
   scrollBehavior: () => ({ y: 0 }),
   routes
 })

@@ -1,5 +1,6 @@
 import API from './api'
 import localforage from 'localforage'
+import bus from '@/bus'
 
 export const authorise = ({ dispatch, commit }, { email, password }) => {
   return API.authorise({ email, password }).then(data => {
@@ -20,7 +21,9 @@ export const updateEmail = ({ dispatch, commit }, { email, password }) => {
 }
 
 export const resendEmailVerificationCode = ({ dispatch, commit }, { email }) => {
+  bus.$emit('showWait', 'Sending email...')
   return API.resendEmailVerificationCode({ email }).then(data => {
+    bus.$emit('hideWait')
     return Promise.resolve(data)
   })
 }

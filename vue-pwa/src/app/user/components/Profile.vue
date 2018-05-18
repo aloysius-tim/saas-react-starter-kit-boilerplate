@@ -22,8 +22,8 @@
                 <span>Email Verified.</span>
               </v-tooltip>
               <v-tooltip bottom v-else>
-                <v-icon slot="activator" dark color="secondary">verified_user</v-icon>
-                <span>Email not verified</span>
+                <v-icon class="hand" slot="activator" dark color="secondary" @click="$router.push({name: 'resend-email-verification-code'})">verified_user</v-icon>
+                <span>Email not verified, click to resend code.</span>
               </v-tooltip>
               {{ user.email }}
             </div>
@@ -128,3 +128,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.hand {
+  cursor: pointer;
+}
+</style>

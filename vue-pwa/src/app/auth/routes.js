@@ -2,23 +2,25 @@ import components from './components'
 
 export default [
   {
-    path: '/',
+    path: '/auth',
     component: () => import('@/layouts/guest'),
     children: [
       {
-        path: '/login',
+        path: 'login',
         name: 'login',
         component: components.Login,
         meta: { guest: true }
-      }, {
-        path: '/signup',
+      },
+      {
+        path: 'signup',
         name: 'signup',
         component: components.Signup,
         meta: {
           guest: true
         }
-      }, {
-        path: '/forgot/password',
+      },
+      {
+        path: 'forgot/password',
         name: 'forgot-password',
         component: components.ForgotPassword,
         meta: {
@@ -28,11 +30,11 @@ export default [
     ]
   },
   {
-    path: '/',
-    component: () => import('@/layouts/default'),
+    path: '/auth',
+    component: () => import('@/layouts/dashboard'),
     children: [
       {
-        path: '/update/password',
+        path: 'update/password',
         name: 'update-password',
         component: components.UpdatePassword,
         meta: {
@@ -40,9 +42,17 @@ export default [
         }
       },
       {
-        path: '/update/email',
+        path: 'update/email',
         name: 'update-email',
         component: components.UpdateEmail,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'resend/email/verification/code',
+        name: 'resend-email-verification-code',
+        component: components.ResendEmailVerificationCode,
         meta: {
           requiresAuth: true
         }

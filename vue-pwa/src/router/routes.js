@@ -9,6 +9,20 @@ export default [
         path: '',
         name: 'home',
         component: () => import('@/pages/index'),
+        meta: {
+          // requiresAuth: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    component: () => import('@/layouts/dashboard'),
+    children: [
+      {
+        path: '',
+        name: 'dashboard',
+        component: () => import('@/pages/index'),
         meta: { requiresAuth: true }
       }
     ]

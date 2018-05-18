@@ -3,7 +3,7 @@ import components from './components'
 export default [
   {
     path: '/user',
-    component: () => import('@/layouts/default'),
+    component: () => import('@/layouts/dashboard'),
     children: [
       {
         path: 'profile',

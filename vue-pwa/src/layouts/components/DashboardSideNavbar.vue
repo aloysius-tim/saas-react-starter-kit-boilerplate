@@ -9,7 +9,7 @@
 </template>
 <script>
 import bus from '@/bus'
-import DrawerMenuList from './partials/DrawerMenuList'
+import DrawerMenuList from './partials-dashboard/DrawerMenuList'
 export default {
   components: {
     DrawerMenuList

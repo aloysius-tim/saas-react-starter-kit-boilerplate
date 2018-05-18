@@ -8,6 +8,7 @@
   </v-app>
 </template>
 <script>
+import 'vuetify/dist/vuetify.min.css'
 import bus from '@/bus'
 import { redirectIntended } from '@/plugins/helpers'
 export default {
