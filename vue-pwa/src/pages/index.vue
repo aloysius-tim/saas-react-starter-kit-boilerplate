@@ -8,7 +8,7 @@
             tag="article"
             class="mb-2">
       <p class="card-text">
-        <b-btn @click="$router.push({ name: 'login' })">login</b-btn>
+        <b-btn @click="$router.push({ name: 'dashboard' })">dashboard</b-btn>
       </p>
       <b-button href="#" variant="primary">Go somewhere</b-button>
     </b-card>
