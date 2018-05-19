@@ -52,7 +52,7 @@ export default {
 
     doUpload () {
       var imagefile = document.querySelector('#file')
-      this.updateAvatar({ imagefile: imagefile, context: this })
+      this.updateAvatar({ imagefile: imagefile, context: this, findFace: true })
     }
   }
 }

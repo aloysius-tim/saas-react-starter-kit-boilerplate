@@ -11,7 +11,8 @@ ProfileHook.setAvatar = async (profileInstance) => {
   if(!profileInstance.avatar || profileInstance.avatar == "") {
     profileInstance.avatar = profileInstance.remote_avatar
   } else {
-    profileInstance.avatar = Env.get("APP_URL", "") + profileInstance.avatar
+    // // use this if you use local upload method
+    // profileInstance.avatar =  Env.get("APP_URL", "") + profileInstance.avatar
   }
 }
 

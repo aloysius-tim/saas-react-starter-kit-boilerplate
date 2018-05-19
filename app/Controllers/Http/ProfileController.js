@@ -7,10 +7,57 @@ const Helpers = use('Helpers')
 const avatarDir = Helpers.publicPath('images/avatars/') + '/'
 const logger = use('App/Helpers/Logger')
 const Profile = use('App/Models/Profile')
+const cloudinary = use ('cloudinary')
 
 class ProfileController {
+  
+  // upload cloudinary
+  async updateAvatar({ request, response, auth }) {
+    const user = await auth.getUser();
+    const avatar = request.file('avatar', {
+      types: ['image'],
+      size: '3mb'
+    })
     
-    async updateAvatar({ request, response, auth }) {
+    if (!avatar || !avatar.tmpPath || !avatar.clientName) {
+      return response.status(400).json({ message: "Please choose a file to upload." })
+    }
+    
+    const public_id = 'avatar-' + user.id
+    var updConfig = {
+      public_id: public_id,
+      folder: 'avatars',
+      overwrite: true,
+      width: 400, height: 400
+    }
+    const { findFace } = request.all()
+    if (findFace) {
+      updConfig.crop = "thumb"
+      updConfig.gravity = "face"
+    }
+
+    const result = await cloudinary.v2.uploader.upload(avatar.tmpPath, updConfig, (error, result) => {
+      return Promise.resolve(result)
+    }).catch((err) => {
+      console.log(err)
+      return Promise.reject(err)
+    })
+  
+    var profile = await user.profile().fetch()
+    
+    profile.avatar = result.secure_url + "?" + uuid()
+    await profile.save()
+
+    // fetch again to get generated full avatar URL
+    profile = await user.profile().fetch()
+    await logger('info','Avatar Updated', user.id, null, user.email)
+    
+    return response.status(200).json({ message: "Avatar updated.", url: profile.avatar, userId: user.id })
+
+  }
+  
+  // upload image locally
+  async updateAvatarLocal({ request, response, auth }) {
     const user = await auth.getUser();
     const avatar = request.file('avatar', {
       types: ['image'],

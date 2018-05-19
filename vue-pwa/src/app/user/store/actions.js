@@ -7,9 +7,10 @@ export const updateProfile = ({ dispatch, commit }, data) => {
   })
 }
 
-export const profileUpdateAvatar = ({ dispatch }, { imagefile }) => {
+export const profileUpdateAvatar = ({ dispatch }, { imagefile, findFace }) => {
   bus.$emit('showWait', 'Uploading avatar...')
   var formData = new FormData()
+  formData.append('findFace', findFace)
   formData.append('avatar', imagefile.files[0])
   return API.updateAvatar(formData).then(data => {
     bus.$emit('hideWait')
