@@ -22,7 +22,7 @@ export default [
       {
         path: '',
         name: 'dashboard',
-        component: () => import('@/pages/index'),
+        component: () => import('@/pages/dashboard'),
         meta: { requiresAuth: true }
       }
     ]

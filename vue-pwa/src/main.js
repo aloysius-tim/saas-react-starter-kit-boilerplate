@@ -10,17 +10,16 @@ import Vuetify from 'vuetify'
 import Croppa from 'vue-croppa'
 import BootstrapVue from 'bootstrap-vue'
 
-localforage.config({
-  driver: localforage.LOCALSTORAGE,
-  storeName: 'adonify'
-})
-
 Vue.use(Vuetify)
 Vue.use(Croppa)
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
+localforage.config({
+  driver: localforage.LOCALSTORAGE,
+  storeName: 'adonify'
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
