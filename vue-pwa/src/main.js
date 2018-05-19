@@ -20,18 +20,37 @@ localforage.config({
   driver: localforage.LOCALSTORAGE,
   storeName: 'adonify'
 })
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  mounted () {
-    bus.$emit('showWait', 'Please wait, Checking credentials...')
-    store.dispatch('auth/init').then(() => {
-      bus.$emit('authReady')
-      bus.$emit('hideWait')
-    })
-  },
-  components: { App },
-  template: '<App/>'
+store.dispatch('auth/init').then(() => {
+  bus.$emit('authReady')
+  bus.$emit('hideWait')
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    mounted () {
+      // bus.$emit('showWait', 'Please wait, Checking credentials...')
+      // store.dispatch('auth/init').then(() => {
+      //   bus.$emit('authReady')
+      //   bus.$emit('hideWait')
+      // })
+    },
+    components: { App },
+    template: '<App/>'
+  })
 })
+/* eslint-disable no-new */
+// new Vue({
+//   el: '#app',
+//   router,
+//   store,
+//   mounted () {
+//     // bus.$emit('showWait', 'Please wait, Checking credentials...')
+//     // store.dispatch('auth/init').then(() => {
+//     //   bus.$emit('authReady')
+//     //   bus.$emit('hideWait')
+//     // })
+//   },
+//   components: { App },
+//   template: '<App/>'
+// })

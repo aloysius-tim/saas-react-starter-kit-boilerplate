@@ -79,7 +79,8 @@ export const init = ({ dispatch, commit }) => {
       commit('SET_TOKEN', token)
       commit('SET_REFRESH_TOKEN', refreshToken)
       if (token) {
-        return dispatch('fetchMe')
+        dispatch('fetchMe')
+        // return dispatch('fetchMe')
       }
       return Promise.resolve(token)
     })

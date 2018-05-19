@@ -30,6 +30,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      'window.Quill': 'quill/dist/quill.js',
+      'Quill': 'quill/dist/quill.js'
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

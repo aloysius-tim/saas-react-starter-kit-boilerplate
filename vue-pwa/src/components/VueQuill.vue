@@ -12,10 +12,8 @@
 </template>
 <script>
 import { VueEditor, Quill } from 'vue2-editor'
-import { ImageDrop } from 'quill-image-drop-module'
 import ImageResize from 'quill-image-resize-module'
 import { axios } from '@/plugins/axios'
-Quill.register('modules/imageDrop', ImageDrop)
 Quill.register('modules/imageResize', ImageResize)
 export default {
   components: {
@@ -58,7 +56,6 @@ export default {
     editorSettings () {
       return {
         modules: {
-          imageDrop: true,
           imageResize: {}
         }
       }

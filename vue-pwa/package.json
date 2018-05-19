@@ -16,12 +16,10 @@
     "jquery": "^3.3.1",
     "localforage": "^1.7.1",
     "lodash": "^4.17.10",
-    "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "vue": "^2.5.2",
     "vue-croppa": "^1.3.6",
     "vue-router": "^3.0.1",
-    "vue-wysiwyg": "^1.7.0",
     "vue2-editor": "^2.4.4",
     "vuetify": "^1.0.0",
     "vuex": "^3.0.1"
