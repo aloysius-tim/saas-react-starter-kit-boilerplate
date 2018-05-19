@@ -2,7 +2,10 @@
 <v-layout row wrap>
   <v-flex xs12>
     <v-card>
-      <vue-editor :editorOptions="editorSettings" v-model="content" />
+      <vue-editor
+        useCustomImageHandler
+        @imageAdded="handleImageAdded"
+        :editorOptions="editorSettings" v-model="content" />
     </v-card>
   </v-flex>
 </v-layout>
@@ -11,6 +14,7 @@
 import { VueEditor, Quill } from 'vue2-editor'
 import { ImageDrop } from 'quill-image-drop-module'
 import ImageResize from 'quill-image-resize-module'
+import { axios } from '@/plugins/axios'
 Quill.register('modules/imageDrop', ImageDrop)
 Quill.register('modules/imageResize', ImageResize)
 export default {
@@ -25,6 +29,29 @@ export default {
   data () {
     return {
       content: ''
+    }
+  },
+  methods: {
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      // An example of using FormData
+      // NOTE: Your key could be different such as:
+      // formData.append('file', file)
+
+      var formData = new FormData()
+      formData.append('avatar', file)
+      formData.append('findFace', true)
+      axios({
+        // output will be '/profile/update/avatar' square pixel, set on server
+        url: '/profile/update/avatar',
+        method: 'POST',
+        data: formData
+      }).then((result) => {
+        let url = result.data.url // Get url from response
+        Editor.insertEmbed(cursorLocation, 'image', url)
+        resetUploader()
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   },
   computed: {
