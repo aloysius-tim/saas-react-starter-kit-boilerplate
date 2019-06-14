@@ -8,8 +8,8 @@
  */
 
 import React from 'react';
-import Layout from '../../components/Layout';
 import Register from './Register';
+import AuthLayout from "../../components/Layout/AuthLayout";
 
 const title = 'New User Registration';
 
@@ -18,10 +18,10 @@ function action() {
     chunks: ['register'],
     title,
     component: (
-      <Layout>
-        <Register title={title} />
-      </Layout>
-    ),
+      <AuthLayout>
+        <Register/>
+      </AuthLayout>
+      ),
   };
 }
 

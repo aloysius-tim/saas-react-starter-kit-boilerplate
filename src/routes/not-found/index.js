@@ -8,8 +8,8 @@
  */
 
 import React from 'react';
-import Layout from '../../components/Layout';
 import NotFound from './NotFound';
+import AuthLayout from "../../components/Layout/AuthLayout";
 
 const title = 'Page Not Found';
 
@@ -18,9 +18,9 @@ function action() {
     chunks: ['not-found'],
     title,
     component: (
-      <Layout>
+      <AuthLayout>
         <NotFound title={title} />
-      </Layout>
+      </AuthLayout>
     ),
     status: 404,
   };

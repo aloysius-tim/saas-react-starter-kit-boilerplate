@@ -8,8 +8,8 @@
  */
 
 import React from 'react';
-import Layout from '../../components/Layout';
 import Login from './Login';
+import AuthLayout from "../../components/Layout/AuthLayout";
 
 const title = 'Log In';
 
@@ -18,9 +18,9 @@ function action() {
     chunks: ['login'],
     title,
     component: (
-      <Layout>
-        <Login title={title} />
-      </Layout>
+      <AuthLayout>
+        <Login/>
+      </AuthLayout>
     ),
   };
 }

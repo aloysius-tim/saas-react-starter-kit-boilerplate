@@ -20,8 +20,8 @@ const routes = {
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
     {
-      path: '/contact',
-      load: () => import(/* webpackChunkName: 'contact' */ './contact'),
+      path: '/profile',
+      load: () => import(/* webpackChunkName: 'profile' */ './profile'),
     },
     {
       path: '/login',
@@ -30,18 +30,6 @@ const routes = {
     {
       path: '/register',
       load: () => import(/* webpackChunkName: 'register' */ './register'),
-    },
-    {
-      path: '/about',
-      load: () => import(/* webpackChunkName: 'about' */ './about'),
-    },
-    {
-      path: '/privacy',
-      load: () => import(/* webpackChunkName: 'privacy' */ './privacy'),
-    },
-    {
-      path: '/admin',
-      load: () => import(/* webpackChunkName: 'admin' */ './admin'),
     },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
