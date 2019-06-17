@@ -1,12 +1,12 @@
 export var CONST = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://127.0.0.1:3333/api',
 };
 
 if (process.env.NODE_ENV === 'production') {
   CONST = {
     production: true,
-    apiUrl: 'https://beemmo.fr/api',
+    apiUrl: 'https://0x0.run/api',
   };
 }
 

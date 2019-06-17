@@ -1,5 +1,6 @@
+import {CONST} from "../../env";
+
 var jwtDecode = require('jwt-decode');
-import {CONST} from "../env";
 
 export default class AuthService {
   constructor() {
@@ -9,23 +10,27 @@ export default class AuthService {
     this.getProfile = this.getProfile.bind(this);
   }
 
-  login(email, password) {
-    // Get a token
-    return this.fetch(`${this.domain}/auth/authorise`, {
+  *login(email, password) {
+    const data = yield this.fetch(`${this.domain}/auth/authorise`, {
       method: 'POST',
       body: JSON.stringify({
         email,
         password
       })
-    }).then(res => {
-      this.setToken(res.token);
-      return this.fetch(`${this.domain}/auth/me`, {
-        method: 'GET'
-      })
-    }).then(res => {
-      this.setProfile(res)
-      //return Promise.resolve(res)
-    })
+    });
+    this.setToken(data.token);
+    const decodedToken = jwtDecode(data.token);
+
+    const profile = yield this.fetch(`${this.domain}/auth/me`, {
+      method: 'GET'
+    });
+    this.setProfile(profile);
+
+    return {
+      ...data,
+      ...decodedToken,
+      ...profile
+    }
   }
 
   loggedIn(){
@@ -48,18 +53,18 @@ export default class AuthService {
 
   getProfile(){
     // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('profile')
+    const profile = localStorage.getItem('profile');
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
   setToken(idToken){
     // Saves user token to localStorage
-    localStorage.setItem('token', idToken)
+    localStorage.setItem('token', idToken);
   }
 
   getToken(){
     // Retrieves the user token from localStorage
-    return localStorage.getItem('token')
+    return localStorage.getItem('token');
   }
 
   logout(){

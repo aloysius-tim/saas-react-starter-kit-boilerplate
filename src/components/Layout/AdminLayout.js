@@ -18,6 +18,8 @@ import Header from '../Header';
 import Sidenav from "../Sidenav";
 import Navigation from "../Navigation";
 import FooterAdmin from "../Footer/FooterAdmin";
+import withAuth from "../../withAuth";
+import ReduxToastr from 'react-redux-toastr'
 
 class AdminLayout extends React.Component {
   static propTypes = {
@@ -25,6 +27,7 @@ class AdminLayout extends React.Component {
   };
 
   render() {
+
     return (
       <div>
         <Sidenav/>
@@ -36,9 +39,18 @@ class AdminLayout extends React.Component {
             <FooterAdmin/>
           </div>
         </div>
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick/>
       </div>
     );
   }
 }
 
-export default withStyles(normalizeCss, s)(AdminLayout);
+export default withStyles(normalizeCss, s)(withAuth(AdminLayout));
