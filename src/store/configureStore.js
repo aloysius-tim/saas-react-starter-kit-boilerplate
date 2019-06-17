@@ -5,6 +5,8 @@ import { name, version } from '../../package.json';
 import rootReducer from '../reducers';
 import createHelpers from './createHelpers';
 import createLogger from './logger';
+import createSagaMiddleware from 'redux-saga'
+import mySaga from "../saga";
 
 export default function configureStore(initialState, helpersConfig) {
   const helpers = createHelpers(helpersConfig);
@@ -27,8 +29,17 @@ export default function configureStore(initialState, helpersConfig) {
     enhancer = applyMiddleware(...middleware);
   }
 
+  const sagaMiddleware = createSagaMiddleware();
   // https://redux.js.org/docs/api/createStore.html
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(sagaMiddleware),
+    enhancer,
+  );
+
+  // then run the saga
+  sagaMiddleware.run(mySaga);
 
   // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
   if (__DEV__ && module.hot) {
