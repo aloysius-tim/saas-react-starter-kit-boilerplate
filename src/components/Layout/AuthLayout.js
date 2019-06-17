@@ -16,6 +16,7 @@ import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import NavigationAuth from "../Navigation/NavigationAuth";
 import FooterAuth from "../Footer/FooterAuth";
+import ReduxToastr from 'react-redux-toastr'
 
 class AuthLayout extends React.Component {
   static propTypes = {
@@ -30,6 +31,15 @@ class AuthLayout extends React.Component {
           {this.props.children}
         </div>
         <FooterAuth/>
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick/>
       </div>
     );
   }

@@ -57,6 +57,8 @@ class Html extends React.Component {
           />
         ))}
 
+        <link href="https://diegoddox.github.io/react-redux-toastr/7.1/react-redux-toastr.min.css" rel="stylesheet" type="text/css"/>
+        <link href={'https://cdnjs.cloudflare.com/ajax/libs/antd/3.19.0/antd.css'} rel={'stylesheet'}/>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
         {/* Icons */}
         <link href="/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet" />
