@@ -9,7 +9,6 @@
 
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import withAdminAuth from "../../components/withAdminAuth";
 
 class Admin extends React.Component {
 

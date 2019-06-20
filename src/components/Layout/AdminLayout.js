@@ -19,8 +19,7 @@ import Sidenav from "./Sidenav";
 import Navigation from "./Navigation";
 import FooterAdmin from "./Footer/FooterAdmin";
 import ReduxToastr from 'react-redux-toastr'
-import withMemberAuth from "../withMemberAuth";
-import withAdminAuth from "../withAdminAuth";
+import withAdminAuth from "./withAdminAuth";
 
 class MemberLayout extends React.Component {
   static propTypes = {

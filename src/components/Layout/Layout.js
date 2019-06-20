@@ -14,14 +14,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import Header from './Header';
-import Sidenav from "./Sidenav";
-import Navigation from "./Navigation";
-import FooterAdmin from "./Footer/FooterAdmin";
+import NavigationAuth from "./Navigation/NavigationAuth";
+import FooterAuth from "./Footer/FooterAuth";
 import ReduxToastr from 'react-redux-toastr'
-import withMemberAuth from "./withMemberAuth";
+import withNoAuth from "./withNoAuth";
 
-class MemberLayout extends React.Component {
+class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   };
@@ -29,15 +27,13 @@ class MemberLayout extends React.Component {
   render() {
     return (
       <div>
-        <Sidenav/>
+        {/*
         <div className="main-content">
-          <Navigation/>
-          <Header/>
-          <div className="container-fluid mt--7">
-            {this.props.children}
-            <FooterAdmin/>
-          </div>
+          <NavigationAuth/>
+          {this.props.children}
         </div>
+        <FooterAuth/>
+        */}
         <ReduxToastr
           timeOut={4000}
           newestOnTop={false}
@@ -52,4 +48,4 @@ class MemberLayout extends React.Component {
   }
 }
 
-export default withStyles(normalizeCss, s)(withMemberAuth(MemberLayout));
+export default withStyles(normalizeCss, s)(withNoAuth(Layout));

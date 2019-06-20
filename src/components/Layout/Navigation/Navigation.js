@@ -12,6 +12,7 @@ import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../../Link';
+import AuthService from "../../../services/AuthService";
 
 class Navigation extends React.Component {
   render() {
@@ -65,7 +66,7 @@ class Navigation extends React.Component {
                   <span>Support</span>
                 </a>
                 <div className="dropdown-divider" />
-                <a href="#!" className="dropdown-item">
+                <a href="#!" className="dropdown-item" onClick={() => AuthService.logout()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </a>

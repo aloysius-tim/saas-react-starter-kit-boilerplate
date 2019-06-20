@@ -33,7 +33,7 @@ class Login extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    if (typeof window !== 'undefined' && this.authService.loggedIn())
+    if (typeof window !== 'undefined' && AuthService.loggedIn())
       window.location = '/';
 
     return (

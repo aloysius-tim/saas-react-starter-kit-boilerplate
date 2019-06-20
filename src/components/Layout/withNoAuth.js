@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import AuthService from "../services/AuthService";
+import AuthService from "../../services/AuthService";
+import Loader from 'react-loader-advanced';
 
 export default function withMemberAuth(AuthComponent) {
   const Auth = new AuthService();
@@ -13,16 +14,19 @@ export default function withMemberAuth(AuthComponent) {
     }
 
     componentDidMount () {
-      if (!Auth.loggedIn()) {
-        console.log('not logged');
-        window.location = '/login'
-      }
-      else {
-        let role = Auth.getRole();
+      if (AuthService.loggedIn()) {
 
-        if (role !== 'member')
-          window.location = '/';
+        switch (AuthService.getRole()) {
+          case 'admin':
+          case 'superadmin':
+            return window.location = '/admin';
 
+          case 'member':
+            return window.location = '/member';
+          default:
+            return this.setState({ isLoading: false });
+        }
+      } else {
         this.setState({ isLoading: false })
       }
     }
@@ -31,7 +35,7 @@ export default function withMemberAuth(AuthComponent) {
       return (
         <div>
           {this.state.isLoading ? (
-            <div>LOADING....</div>
+            <div className="loading">Loading&#8230;</div>
           ) : (
             <AuthComponent {...this.props}  auth={Auth} />
           )}

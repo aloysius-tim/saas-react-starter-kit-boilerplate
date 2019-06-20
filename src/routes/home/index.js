@@ -8,18 +8,17 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../components/Layout/MemberLayout";
 import Home from "./Home";
-import AuthLayout from "../../components/Layout/AuthLayout";
+import Layout from "../../components/Layout";
 
 async function action({ fetch }) {
   return {
     title: 'React Starter Kit',
     chunks: ['home'],
     component: (
-      <AuthLayout>
+      <Layout>
         <Home/>
-      </AuthLayout>
+      </Layout>
     ),
   };
 }

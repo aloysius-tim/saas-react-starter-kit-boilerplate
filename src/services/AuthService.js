@@ -7,7 +7,7 @@ export default class AuthService {
     this.domain = CONST.apiUrl;
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
-    this.getProfile = this.getProfile.bind(this);
+    AuthService.getProfile = AuthService.getProfile.bind(this);
   }
 
   *login(email, password) {
@@ -18,13 +18,13 @@ export default class AuthService {
         password
       })
     });
-    this.setToken(data.token);
+    AuthService.setToken(data.token);
     const decodedToken = jwtDecode(data.token);
 
     const profile = yield this.fetch(`${this.domain}/auth/me`, {
       method: 'GET'
     });
-    this.setProfile(profile);
+    AuthService.setProfile(profile);
 
     return {
       ...data,
@@ -33,9 +33,9 @@ export default class AuthService {
     }
   }
 
-  loggedIn(){
+  static loggedIn(){
     // Checks if there is a saved token and it's still valid
-    const token = this.getToken();
+    const token = AuthService.getToken();
 
     if (!token)
       return false;
@@ -46,42 +46,43 @@ export default class AuthService {
     return decodedToken.exp <= dateNow.getTime();
   }
 
-  setProfile(profile){
+  static setProfile(profile){
     // Saves profile data to localStorage
     localStorage.setItem('profile', JSON.stringify(profile));
     localStorage.setItem('role', JSON.stringify(profile.role));
   }
 
-  getProfile(){
+  static getProfile(){
     // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile');
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
-  getRole() {
+  static getRole() {
     // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile');
     return profile ? JSON.parse(localStorage.profile).role : 'not-connected'
   }
 
 
-  setToken(idToken){
+  static setToken(idToken){
     // Saves user token to localStorage
     localStorage.setItem('token', idToken);
   }
 
-  getToken(){
+  static getToken(){
     // Retrieves the user token from localStorage
     return localStorage.getItem('token');
   }
 
-  logout(){
+  static logout(){
     // Clear user token and profile data from localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('profile');
+    window.location = '/auth/login'
   }
 
-  _checkStatus(response) {
+  static _checkStatus(response) {
     // raises an error in case response status is not a success
     if (response.status >= 200 && response.status < 300) {
       return response
@@ -99,15 +100,15 @@ export default class AuthService {
       'Content-Type': 'application/json'
     };
 
-    if (this.loggedIn()){
-      headers['Authorization'] = 'Bearer ' + this.getToken();
+    if (AuthService.loggedIn()){
+      headers['Authorization'] = 'Bearer ' + AuthService.getToken();
     }
 
     return fetch(url, {
       headers,
       ...options
     })
-      .then(this._checkStatus)
+      .then(AuthService._checkStatus)
       .then(response => response.json())
   }
 }
