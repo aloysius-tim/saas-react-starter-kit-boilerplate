@@ -14,10 +14,10 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import Header from '../Header';
-import Sidenav from "../Sidenav";
-import Navigation from "../Navigation";
-import FooterAdmin from "../Footer/FooterAdmin";
+import Header from './Header';
+import Sidenav from "./Sidenav";
+import Navigation from "./Navigation";
+import FooterAdmin from "./Footer/FooterAdmin";
 import withAuth from "../../withAuth";
 import ReduxToastr from 'react-redux-toastr'
 

@@ -11,7 +11,7 @@ import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
-import Link from '../Link';
+import Link from '../../Link';
 
 class Navigation extends React.Component {
   render() {
@@ -37,7 +37,7 @@ class Navigation extends React.Component {
               <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="./assets/img/theme/team-4-800x800.jpg" />
+                    <img alt="Image placeholder" src="/assets/img/theme/team-4-800x800.jpg" />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm  font-weight-bold">Jessica Jones</span>

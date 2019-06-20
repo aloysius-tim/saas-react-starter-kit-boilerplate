@@ -11,7 +11,7 @@ import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
-import Link from '../Link';
+import Link from '../../Link';
 
 class NavigationAuth extends React.Component {
   render() {
@@ -53,13 +53,13 @@ class NavigationAuth extends React.Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/register'}>
+                <Link className="nav-link nav-link-icon" to={'/auth/register'}>
                   <i className="ni ni-circle-08"/>
                   <span className="nav-link-inner--text">Register</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/login'} >
+                <Link className="nav-link nav-link-icon" to={'/auth/login'} >
                   <i className="ni ni-key-25"/>
                   <span className="nav-link-inner--text">Login</span>
                 </Link>

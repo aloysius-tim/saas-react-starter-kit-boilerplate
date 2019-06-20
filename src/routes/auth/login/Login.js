@@ -12,9 +12,9 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.css';
 import {connect} from "react-redux";
-import {loginAction} from "../../actions/authActions";
+import {loginAction} from "../../../actions/authActions";
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import AuthService from "../../services/AuthService";
+import AuthService from "../../../services/AuthService";
 import {toastr} from 'react-redux-toastr'
 import Loader from 'react-loader-advanced';
 

@@ -8,20 +8,20 @@
  */
 
 import React from 'react';
-import Login from './Login';
-import AuthLayout from "../../components/Layout/AuthLayout";
+import Register from './Register';
+import AuthLayout from "../../../components/Layout/AuthLayout";
 
-const title = 'Log In';
+const title = 'New User Registration';
 
 function action() {
   return {
-    chunks: ['login'],
+    chunks: ['register'],
     title,
     component: (
       <AuthLayout>
-        <Login/>
+        <Register/>
       </AuthLayout>
-    ),
+      ),
   };
 }
 

@@ -14,8 +14,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import NavigationAuth from "../Navigation/NavigationAuth";
-import FooterAuth from "../Footer/FooterAuth";
+import NavigationAuth from "./Navigation/NavigationAuth";
+import FooterAuth from "./Footer/FooterAuth";
 import ReduxToastr from 'react-redux-toastr'
 
 class AuthLayout extends React.Component {

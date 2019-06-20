@@ -8,21 +8,20 @@
  */
 
 import React from 'react';
-import NotFound from './NotFound';
-import AuthLayout from "../../components/Layout/AuthLayout";
+import AdminLayout from "../../../components/Layout/AdminLayout";
+import Profile from "./Profile";
 
-const title = 'Page Not Found';
+const title = 'Log In';
 
 function action() {
   return {
-    chunks: ['not-found'],
+    chunks: ['profile'],
     title,
     component: (
-      <AuthLayout>
-        <NotFound title={title} />
-      </AuthLayout>
+      <AdminLayout>
+        <Profile/>
+      </AdminLayout>
     ),
-    status: 404,
   };
 }
 

@@ -8,18 +8,16 @@
  */
 
 import React from 'react';
-import AdminLayout from "../../components/Layout/AdminLayout";
-import Profile from "./Profile";
+import AdminLayout from "../../../components/Layout/AdminLayout";
+import Dashboard from "./Dashboard";
 
-const title = 'Log In';
-
-function action() {
+async function action({ fetch }) {
   return {
-    chunks: ['profile'],
-    title,
+    title: 'React Starter Kit',
+    chunks: ['dashboard'],
     component: (
       <AdminLayout>
-        <Profile/>
+        <Dashboard/>
       </AdminLayout>
     ),
   };

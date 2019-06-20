@@ -11,7 +11,7 @@ import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Sidenav.css';
-import Link from '../Link';
+import Link from '../../Link';
 
 class Sidenav extends React.Component {
   render() {
@@ -24,7 +24,7 @@ class Sidenav extends React.Component {
           </button>
           {/* Brand */}
           <a className="navbar-brand pt-0" href="./index.html">
-            <img src="./assets/img/brand/blue.png" className="navbar-brand-img" alt="..." />
+            <img src="/assets/img/brand/blue.png" className="navbar-brand-img" alt="..." />
           </a>
           {/* User */}
           <ul className="nav align-items-center d-md-none">
@@ -43,7 +43,7 @@ class Sidenav extends React.Component {
               <a className="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg" />
+                    <img alt="Image placeholder" src="/assets/img/theme/team-1-800x800.jpg" />
                   </span>
                 </div>
               </a>
@@ -82,7 +82,7 @@ class Sidenav extends React.Component {
               <div className="row">
                 <div className="col-6 collapse-brand">
                   <a href="./index.html">
-                    <img src="./assets/img/brand/blue.png" />
+                    <img src="/assets/img/brand/blue.png" />
                   </a>
                 </div>
                 <div className="col-6 collapse-close">
@@ -132,14 +132,14 @@ class Sidenav extends React.Component {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./examples/login.html">
+                <Link className="nav-link" to={'/auth/login'}>
                   <i className="ni ni-key-25 text-info" /> Login
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="./examples/register.html">
+                <Link className="nav-link" to={'/auth/register'}>
                   <i className="ni ni-circle-08 text-pink" /> Register
-                </a>
+                </Link>
               </li>
             </ul>
             {/* Divider */}

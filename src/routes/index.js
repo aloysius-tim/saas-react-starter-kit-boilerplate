@@ -19,23 +19,39 @@ const routes = {
       path: '',
       load: () => import(/* webpackChunkName: 'home' */ './home'),
     },
+
     {
-      path: '/profile',
-      load: () => import(/* webpackChunkName: 'profile' */ './profile'),
+      path: '/auth',
+      children: [
+        {
+          path: '/login',
+          load: () => import(/* webpackChunkName: 'login' */ './auth/login'),
+        },
+        {
+          path: '/register',
+          load: () => import(/* webpackChunkName: 'register' */ './auth/register'),
+        },
+      ],
     },
+
     {
-      path: '/login',
-      load: () => import(/* webpackChunkName: 'login' */ './login'),
-    },
-    {
-      path: '/register',
-      load: () => import(/* webpackChunkName: 'register' */ './register'),
+      path: '/member',
+      children: [
+        {
+          path: '',
+          load: () => import(/* webpackChunkName: 'dashboard' */ './member/dashboard'),
+        },
+        {
+          path: '/profile',
+          load: () => import(/* webpackChunkName: 'profile' */ './member/profile'),
+        },
+      ],
     },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
     {
       path: '(.*)',
-      load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
+      load: () => import(/* webpackChunkName: 'not-found' */ './special/not-found'),
     },
   ],
 
@@ -44,7 +60,7 @@ const routes = {
     const route = await next();
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.reactstarterkit.com`;
+    route.title = `${route.title || 'Untitled Page'} - sAAsTr`;
     route.description = route.description || '';
 
     return route;
@@ -55,7 +71,7 @@ const routes = {
 if (__DEV__) {
   routes.children.unshift({
     path: '/error',
-    action: require('./error').default,
+    action: require('./special/error').default,
   });
 }
 
