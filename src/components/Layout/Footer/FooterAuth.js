@@ -26,7 +26,7 @@ class FooterAuth extends React.Component {
             <div className="col-xl-6">
               <ul className="nav nav-footer justify-content-center justify-content-xl-end">
                 <li className="nav-item">
-                  <a href="https://www.creative-tim.com" className="nav-link" target="_blank">Creative Tim</a>
+                  <a href="" className="nav-link" target="_blank">SaasTr</a>
                 </li>
                 <li className="nav-item">
                   <a href="https://www.creative-tim.com/presentation" className="nav-link" target="_blank">About Us</a>

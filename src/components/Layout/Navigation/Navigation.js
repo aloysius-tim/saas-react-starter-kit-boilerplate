@@ -20,8 +20,8 @@ class Navigation extends React.Component {
       <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div className="container-fluid">
           {/* Brand */}
-          <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./index.html">Dashboard</a>
-          {/* Form */}
+          <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Dashboard</a>
+          {/* Form
           <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <div className="form-group mb-0">
               <div className="input-group input-group-alternative">
@@ -31,17 +31,17 @@ class Navigation extends React.Component {
                 <input className="form-control" placeholder="Search" type="text" />
               </div>
             </div>
-          </form>
+          </form>*/}
           {/* User */}
           <ul className="navbar-nav align-items-center d-none d-md-flex">
             <li className="nav-item dropdown">
               <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="/assets/img/theme/team-4-800x800.jpg" />
+                    <img alt="Image placeholder" src={AuthService.getProfile().profile.avatar || '/assets/img/theme/team-4-800x800.jpg'} />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                    <span className="mb-0 text-sm  font-weight-bold">{AuthService.getProfile().username || 'Unknown'}</span>
                   </div>
                 </div>
               </a>
