@@ -20,7 +20,6 @@ import Navigation from "./Navigation";
 import FooterAdmin from "./Footer/FooterAdmin";
 import ReduxToastr from 'react-redux-toastr'
 import withMemberAuth from "../withMemberAuth";
-import withAdminAuth from "../withAdminAuth";
 
 class MemberLayout extends React.Component {
   static propTypes = {
@@ -53,4 +52,4 @@ class MemberLayout extends React.Component {
   }
 }
 
-export default withStyles(normalizeCss, s)(withAdminAuth(MemberLayout));
+export default withStyles(normalizeCss, s)(withMemberAuth(MemberLayout));

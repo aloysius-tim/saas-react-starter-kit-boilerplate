@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import AuthService from "./services/AuthService";
+import AuthService from "../services/AuthService";
 
-export default function withAuth(AuthComponent) {
+export default function withMemberAuth(AuthComponent) {
   const Auth = new AuthService();
 
   return class Authenticated extends Component {
@@ -17,8 +17,14 @@ export default function withAuth(AuthComponent) {
         console.log('not logged');
         window.location = '/login'
       }
-      else
+      else {
+        let role = Auth.getRole();
+
+        if (role !== 'member')
+          window.location = '/';
+
         this.setState({ isLoading: false })
+      }
     }
 
     render() {

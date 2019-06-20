@@ -8,19 +8,13 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../components/Layout/MemberLayout";
-import Home from "./Home";
-import AuthLayout from "../../components/Layout/AuthLayout";
+import SuperAdmin from "./SuperAdmin";
 
-async function action({ fetch }) {
+function action() {
   return {
-    title: 'React Starter Kit',
-    chunks: ['home'],
-    component: (
-      <AuthLayout>
-        <Home/>
-      </AuthLayout>
-    ),
+    title: 'SuperAdmin',
+    chunks: ['admin'],
+    component: <SuperAdmin />,
   };
 }
 

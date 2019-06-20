@@ -8,19 +8,14 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../components/Layout/MemberLayout";
-import Home from "./Home";
-import AuthLayout from "../../components/Layout/AuthLayout";
+import Admin from "./Admin";
+import AdminLayout from "../../components/Layout/AdminLayout";
 
-async function action({ fetch }) {
+function action() {
   return {
-    title: 'React Starter Kit',
-    chunks: ['home'],
-    component: (
-      <AuthLayout>
-        <Home/>
-      </AuthLayout>
-    ),
+    title: 'Admin',
+    chunks: ['admin'],
+    component: <AdminLayout><Admin/></AdminLayout>,
   };
 }
 

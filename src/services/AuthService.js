@@ -48,7 +48,8 @@ export default class AuthService {
 
   setProfile(profile){
     // Saves profile data to localStorage
-    localStorage.setItem('profile', JSON.stringify(profile))
+    localStorage.setItem('profile', JSON.stringify(profile));
+    localStorage.setItem('role', JSON.stringify(profile.role));
   }
 
   getProfile(){
@@ -56,6 +57,13 @@ export default class AuthService {
     const profile = localStorage.getItem('profile');
     return profile ? JSON.parse(localStorage.profile) : {}
   }
+
+  getRole() {
+    // Retrieves the profile data from localStorage
+    const profile = localStorage.getItem('profile');
+    return profile ? JSON.parse(localStorage.profile).role : 'not-connected'
+  }
+
 
   setToken(idToken){
     // Saves user token to localStorage

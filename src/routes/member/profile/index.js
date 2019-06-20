@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import AdminLayout from "../../../components/Layout/AdminLayout";
+import MemberLayout from "../../../components/Layout/MemberLayout";
 import Profile from "./Profile";
 
 const title = 'Log In';
@@ -18,9 +18,9 @@ function action() {
     chunks: ['profile'],
     title,
     component: (
-      <AdminLayout>
+      <MemberLayout>
         <Profile/>
-      </AdminLayout>
+      </MemberLayout>
     ),
   };
 }

@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import AdminLayout from "../../../components/Layout/AdminLayout";
+import MemberLayout from "../../../components/Layout/MemberLayout";
 import Dashboard from "./Dashboard";
 
 async function action({ fetch }) {
@@ -16,9 +16,9 @@ async function action({ fetch }) {
     title: 'React Starter Kit',
     chunks: ['dashboard'],
     component: (
-      <AdminLayout>
+      <MemberLayout>
         <Dashboard/>
-      </AdminLayout>
+      </MemberLayout>
     ),
   };
 }
