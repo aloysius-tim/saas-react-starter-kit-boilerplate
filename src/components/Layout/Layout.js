@@ -18,6 +18,9 @@ import NavigationAuth from "./Navigation/NavigationAuth";
 import FooterAuth from "./Footer/FooterAuth";
 import ReduxToastr from 'react-redux-toastr'
 import withNoAuth from "./withNoAuth";
+import Navigation from "./Navigation";
+import Header from "./Header";
+import FooterAdmin from "./Footer/FooterAdmin";
 
 class Layout extends React.Component {
   static propTypes = {
@@ -27,18 +30,19 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        {/*
         <div className="main-content">
-          <NavigationAuth/>
-          {this.props.children}
+          <Navigation showLogo={true}/>
+          <Header/>
+          <div className="container-fluid mt--7">
+            {this.props.children}
+            <FooterAdmin/>
+          </div>
         </div>
-        <FooterAuth/>
-        */}
         <ReduxToastr
           timeOut={4000}
           newestOnTop={false}
           preventDuplicates
-          position="top-right"
+          position="bottom-right"
           transitionIn="fadeIn"
           transitionOut="fadeOut"
           progressBar

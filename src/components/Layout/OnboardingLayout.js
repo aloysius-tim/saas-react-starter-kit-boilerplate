@@ -20,6 +20,7 @@ import Navigation from "./Navigation";
 import FooterAdmin from "./Footer/FooterAdmin";
 import ReduxToastr from 'react-redux-toastr'
 import withMemberAuth from "./withMemberAuth";
+import Card from "./Card";
 
 class MemberLayout extends React.Component {
   static propTypes = {
@@ -41,7 +42,7 @@ class MemberLayout extends React.Component {
           timeOut={4000}
           newestOnTop={false}
           preventDuplicates
-          position="top-right"
+          position="bottom-right"
           transitionIn="fadeIn"
           transitionOut="fadeOut"
           progressBar
