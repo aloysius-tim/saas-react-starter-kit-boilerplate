@@ -21987,3 +21987,10 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle
     transform: rotate(360deg);
   }
 }
+
+.alignleft {
+  float: left;
+}
+.alignright {
+  float: right;
+}

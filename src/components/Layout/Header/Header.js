@@ -16,7 +16,7 @@ import Navigation from '../Navigation';
 class Header extends React.Component {
   render() {
     return (
-      <div className="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div className="header bg-gradient-primary pb-6 pt-5 pt-md-8">
         <div className="container-fluid">
           <div className="header-body">
           </div>

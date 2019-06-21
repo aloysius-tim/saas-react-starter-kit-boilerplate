@@ -42,7 +42,7 @@ class Navigation extends React.Component {
                   </div>
                 </div>
               </a>
-              <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right" style={{zIndex: '1000000'}}>
                 <div className=" dropdown-header noti-title">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </div>
