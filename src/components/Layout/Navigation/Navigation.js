@@ -20,19 +20,16 @@ class Navigation extends React.Component {
       <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
         <div className="container-fluid">
           {/* Brand */}
-          <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Dashboard</a>
-          {/* Form
-          <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <div className="form-group mb-0">
-              <div className="input-group input-group-alternative">
-                <div className="input-group-prepend">
-                  <span className="input-group-text"><i className="fas fa-search" /></span>
-                </div>
-                <input className="form-control" placeholder="Search" type="text" />
-              </div>
-            </div>
-          </form>*/}
-          {/* User */}
+          <Link className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" to={'/'}>
+            {
+              !this.props.showLogo && <span>Dashboard</span>
+            }
+            {
+              this.props.showLogo &&
+              <img src="/assets/img/brand/white.png" className="navbar-brand-img" height={'50px'} />
+            }
+          </Link>
+
           <ul className="navbar-nav align-items-center d-none d-md-flex">
             <li className="nav-item dropdown">
               <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

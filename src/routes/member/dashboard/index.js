@@ -14,7 +14,7 @@ import Dashboard from "./Dashboard";
 async function action({ fetch }) {
   return {
     title: 'React Starter Kit',
-    chunks: ['dashboard'],
+    chunks: ['member'],
     component: (
       <MemberLayout>
         <Dashboard/>

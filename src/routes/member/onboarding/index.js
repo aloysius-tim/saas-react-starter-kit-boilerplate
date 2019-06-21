@@ -8,19 +8,17 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../../components/Layout/MemberLayout";
-import Profile from "./Profile";
+import Onboarding from "./Onboarding";
+import OnboardingLayout from "../../../components/Layout/OnboardingLayout";
 
-const title = 'Log In';
-
-function action() {
+async function action({ fetch }) {
   return {
+    title: 'React Starter Kit',
     chunks: ['member'],
-    title,
     component: (
-      <MemberLayout>
-        <Profile/>
-      </MemberLayout>
+      <OnboardingLayout>
+        <Onboarding/>
+      </OnboardingLayout>
     ),
   };
 }

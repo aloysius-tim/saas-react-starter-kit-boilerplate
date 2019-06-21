@@ -39,11 +39,16 @@ const routes = {
       children: [
         {
           path: '',
-          load: () => import(/* webpackChunkName: 'dashboard' */ './member/dashboard'),
+          load: () => import(/* webpackChunkName: 'member' */ './member/dashboard'),
         },
         {
           path: '/profile',
-          load: () => import(/* webpackChunkName: 'profile' */ './member/profile'),
+          load: () => import(/* webpackChunkName: 'member' */ './member/profile'),
+        },
+
+        {
+          path: '/onboarding',
+          load: () => import(/* webpackChunkName: 'member' */ './member/onboarding'),
         },
       ],
     },

@@ -23,9 +23,9 @@ class Sidenav extends React.Component {
             <span className="navbar-toggler-icon" />
           </button>
           {/* Brand */}
-          <a className="navbar-brand pt-0" href="./index.html">
+          <Link className="navbar-brand pt-0" to={'/'}>
             <img src="/assets/img/brand/blue.png" className="navbar-brand-img" alt="..." />
-          </a>
+          </Link>
           {/* User */}
           <ul className="nav align-items-center d-md-none">
             <li className="nav-item dropdown">

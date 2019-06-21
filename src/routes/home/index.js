@@ -10,15 +10,14 @@
 import React from 'react';
 import Home from "./Home";
 import Layout from "../../components/Layout";
+import OnboardingLayout from "../../components/Layout/OnboardingLayout";
 
 async function action({ fetch }) {
   return {
     title: 'React Starter Kit',
     chunks: ['home'],
     component: (
-      <Layout>
-        <Home/>
-      </Layout>
+      <OnboardingLayout/>
     ),
   };
 }
