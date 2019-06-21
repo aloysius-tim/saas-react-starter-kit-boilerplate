@@ -31,7 +31,9 @@
     "cloudinary": "^1.11.0",
     "gravatar": "^1.6.0",
     "mysql": "^2.15.0",
-    "sqlite3": "^4.0.0"
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.0",
+    "stripe": "^7.1.0"
   },
   "devDependencies": {},
   "autoload": {

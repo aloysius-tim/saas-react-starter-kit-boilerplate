@@ -33,12 +33,12 @@ class AuthController {
   // POST
   async signup({ request, response, auth }) {
 
-    const { username, email, password } = request.all()
-    const user = new User()
-    user.username = username
-    user.email = email
-    user.password = password
-    const res = await user.save()
+    const { username, email, password } = request.all();
+    const user = new User();
+    user.username = username;
+    user.email = email;
+    user.password = password;
+    const res = await user.save();
     if (res) {
       await Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : "verified" }, (message) => {
         message.from('noreply@shop.khare.co.in')
@@ -49,7 +49,7 @@ class AuthController {
       await logger('info','User Signup', user.id, user.id, user.email)
       return response.status(201).json(result)
     }
-    
+
     return response.status(500).json({
       message: 'Something went wrong. Try again or contact admin.',
     })
@@ -63,7 +63,7 @@ class AuthController {
     if(!passwordValid) {
       return response.status(400).json({ message: "Invalid current password."})
     }
-    
+
     user.password = await Hash.make(newPassword)
     user.reset_token = null
     const result = await user.save()
@@ -77,7 +77,7 @@ class AuthController {
       await logger('info','Password Updated', user.id, user.id, user.email)
       return response.status(200).json({ message: "Passoword Updated."}, result)
     }
-    
+
     return response.status(500).json({
       message: 'Something went wrong. Try again or contact admin.',
     })
@@ -91,13 +91,13 @@ class AuthController {
     if(!passwordValid) {
       return response.status(400).json({ message: "Invalid current password."})
     }
-    
+
     const hasUser = await User.findBy('email', email)
-    
+
     if(hasUser && hasUser.email !== user.email) {
       return response.status(400).json({ message: "Somebody is already using this email."})
     }
-    
+
     user.email = email
     user.confirmation_token = uuid()
     user.verified = false
@@ -112,7 +112,7 @@ class AuthController {
       await logger('info','Email Updated', user.id, user.id, user.email)
       return response.status(200).json({ message: "Email Updated, Recheck your email, Please verify your new email."}, user)
     }
-    
+
     return response.status(500).json({
       message: 'Something went wrong. Try again or contact admin.',
     })
@@ -142,7 +142,7 @@ class AuthController {
     // send response
     await logger('info','User Email Verify Link Sent', user.id, user.id, user.email)
     return response.status(200).json({ message: 'Email sent! Recheck your email. Please verify your account.' })
-    
+
   }
   // GET
   async confirmEmail({ request, response, params }) {
@@ -169,30 +169,30 @@ class AuthController {
   async toggleUserBan({ request, response, params, auth }) {
     const id = params.id
     const user = await User.find(id)
-    
+
     if (!user) {
       return response.status(404).json({ message: 'User not found' })
     }
-    
+
     const admin = await auth.getUser()
     if(admin.id === user.id){
       return response.status(400).json({ message : "You can't ban yourself." })
     }
-    
+
     if(user.role === User.roles[0]){
       return response.status(400).json({ message : User.roles[0] + " Can't be banned, degrade user role first." })
     }
 
     user.banned = !user.banned
     const result = await user.save()
-    
+
     if (result){
       await logger('info','User Banned: ' + user.banned, admin.id, user.id, user.email)
       return response.status(200).json({
         message: 'User  banned: ' + user.banned,
       })
     }
-    
+
     return response.status(500).json({
       message: 'Something went wrong.',
     })
@@ -202,29 +202,29 @@ class AuthController {
   async removeUser({ request, response, params, auth }) {
     const id = params.id
     const user = await User.find(id)
-    
+
     if (!user) {
       return response.status(404).json({ message: 'User not found' })
     }
-    
+
     const admin = await auth.getUser()
     if(admin.id === user.id){
       return response.status(400).json({ message : "You can't remove yourself." })
     }
-    
+
     if(user.role === User.roles[0]){
       return response.status(400).json({ message : User.roles[0] + " Can't be removed, degrade user role first." })
     }
 
     const result = await user.delete()
-    
+
     if (result){
       await logger('info','User Removed', admin.id, user.id, user)
       return response.status(200).json({
         message: 'User  Removed: ' + user.email,
       })
     }
-    
+
     return response.status(500).json({
       message: 'Something went wrong.',
     })
@@ -271,7 +271,7 @@ class AuthController {
     user.password = await Hash.make(data.password)
     user.reset_token = null
     await user.save()
-    
+
     await logger('info', 'User Passoword Reset', user.id, user.id, 'Password has been changed for ' + user.email + ', thank you.')
 
     return response.status(200).json({ message: "Password has been changed, thank you."})
@@ -293,12 +293,12 @@ class AuthController {
       const result = await auth.scheme('jwt').revokeTokens([refreshToken], true)
       return response.status(200).json(result)
     }
-    
+
     if (refreshToken && refreshToken.length > 10) {
       const result = await auth.scheme('jwt').revokeTokens([refreshToken])
       return response.status(200).json(result)
     }
-    
+
     return response.status(400).json({ message: "Invalid or missing refreshToken."})
   }
   // GET
@@ -317,7 +317,7 @@ class AuthController {
       const page = (request.all().page && !isNaN(parseInt(request.all().page))) ? parseInt(request.all().page) : 1
 
       var result = await User.query().paginate(page)
-      
+
       result = result.toJSON()
 
       result.data = await Promise.all(result.data.map(async (el) => {
@@ -333,25 +333,25 @@ class AuthController {
   async assignRole({ request, response, auth }) {
     const admin = await auth.getUser()
     const { userId, role } = request.only(["userId", "role"])
-    
+
     if(!role || !User.roles.includes(role)){
       return response.status(400).json({ message : "Role is not valid.", roles: User.roles })
     }
-    
+
     const user = await User.find(userId)
 
     if(!user) {
       return response.status(400).json({ message : "Invalid user id." })
     }
-    
+
     if(admin.id === user.id){
       return response.status(400).json({ message : "You can't assign a role to yourself." })
     }
-    
+
     if(user.role === role) {
       return response.status(400).json({ message : "This role is already assigned to the user." })
     }
-    
+
     user.role = role
 
     const result = await user.save()
@@ -365,10 +365,10 @@ class AuthController {
       await logger('info','User Role assign', user.id, admin.id, user.role)
       return response.status(200).json({ message: 'User role assigned.' })
     }
-    
+
     return response.status(500).json({ message: 'Something went wrong. Try again or contact admin.' })
   }
-  
+
   /*  #######  Pages with view  ######### */
   // GET
   async confirmEmailRender({ request, response, params, view }) {
@@ -397,7 +397,7 @@ class AuthController {
     }
     return view.render('auth.reset', { token: token })
   }
-  
+
 }
 
 module.exports = AuthController

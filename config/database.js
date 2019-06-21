@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const Env = use('Env')
-const Helpers = use('Helpers')
+const Env = use('Env');
+const Helpers = use('Helpers');
 
 module.exports = {
   /*
@@ -78,4 +78,4 @@ module.exports = {
     },
     debug: Env.get('DB_DEBUG', false)
   }
-}
+};
