@@ -9,16 +9,18 @@
 
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Pricing.css';
-import stripe from '../../config/stripe'
-import PricingPlan from "./PricingPlan";
+import stripe from '../../../config/stripe'
 import {injectStripe} from 'react-stripe-elements';
 import {CardElement} from 'react-stripe-elements';
+import s from './Onboarding.css';
 import {Elements} from 'react-stripe-elements';
 import {Drawer, Button, Input, Form, Icon} from 'antd';
-import Card from "../Layout/Card";
 import moment from "moment";
 import {toastr} from "react-redux-toastr";
+import Card from "../../../components/Layout/Card";
+import PricingPlan from "../../../components/Pricing/PricingPlan";
+import {paymentAction} from "../../../actions/paymentActions";
+import {connect} from "react-redux";
 
 class Pricing extends React.Component {
 
@@ -29,7 +31,6 @@ class Pricing extends React.Component {
       selectedPlan: null,
       visible: false,
       cardError: false,
-      loading: false
     }
   }
 
@@ -47,7 +48,6 @@ class Pricing extends React.Component {
       this.setState({
         ...this.state,
         cardError: true,
-        loading: false
       });
       displayError.textContent = error.message;
       toastr.error(error.message);
@@ -72,11 +72,7 @@ class Pricing extends React.Component {
     ev.preventDefault();
     let firstname;
     let lastname;
-
-    this.setState({
-      ...this.state,
-      loading: true
-    });
+    this.setState({...this.state, loading: true});
 
     this.props.form.validateFields((err, values) => {
       firstname = values.firstname;
@@ -98,6 +94,7 @@ class Pricing extends React.Component {
           console.log(token);
 
           this.props.paymentAction(paymentRequest);
+          this.setState({...this.state, loading: false});
         }
       });
   };
@@ -177,7 +174,7 @@ class Pricing extends React.Component {
                 <p style={{color: 'red'}} id={'card-errors'}></p>
                 <br/>
                 <Form.Item>
-                  <Button onClick={this.handlePayment} disabled={this.hasErrors(getFieldsError()) || this.state.loading} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.state.loading ? 'Wait a sec\', should not take long' : 'Pay !'}</Button>
+                  <Button onClick={this.handlePayment} disabled={this.hasErrors(getFieldsError()) || this.props.payment.loading || this.state.loading} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.props.payment.loading || this.state.loading ? 'Wait a sec\', should not take long' : 'Pay !'}</Button>
                 </Form.Item>
               </Form>
             </Card>
@@ -189,4 +186,17 @@ class Pricing extends React.Component {
   }
 }
 
-export default withStyles(s)(Form.create({ name: 'card' })(injectStripe(Pricing)));
+const mapDispatchToProps = dispatch => ({
+  paymentAction: data => dispatch(paymentAction(data)),
+});
+
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+    payment: state.payment
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(s)(Form.create({ name: 'card' })(injectStripe(Pricing))));

@@ -7,7 +7,7 @@ const initialState = {
   error: null,
 };
 
-export default function auth(state = initialState, action) {
+export default function payment(state = initialState, action) {
   const REQUEST = PAYMENT_REQUEST;
 
   switch (action.type) {

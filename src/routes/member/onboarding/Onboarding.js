@@ -13,7 +13,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Onboarding.css';
 import { Steps, Icon } from 'antd';
 import Card from "../../../components/Layout/Card";
-import Pricing from "../../../components/Pricing";
+import Pricing from "./Pricing";
 import {toastr} from "react-redux-toastr";
 const { Step } = Steps;
 import {Elements, StripeProvider} from 'react-stripe-elements';
@@ -53,7 +53,7 @@ class Onboarding extends React.Component {
 
             <StripeProvider stripe={this.state.stripe}>
               <Elements>
-                <Pricing paymentAction={this.props.paymentAction}/>
+                <Pricing/>
               </Elements>
             </StripeProvider>
           </Card>
