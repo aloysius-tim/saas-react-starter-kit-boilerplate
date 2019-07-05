@@ -13,7 +13,6 @@ import stripe from '../../../config/stripe'
 import {injectStripe} from 'react-stripe-elements';
 import {CardElement} from 'react-stripe-elements';
 import s from './Onboarding.css';
-import {Elements} from 'react-stripe-elements';
 import {Drawer, Button, Input, Form, Icon} from 'antd';
 import moment from "moment";
 import {toastr} from "react-redux-toastr";
@@ -70,6 +69,10 @@ class Pricing extends React.Component {
 
   handlePayment = (ev) => {
     ev.preventDefault();
+
+    if (this.hasErrors(this.props.form.getFieldsError()))
+      return;
+
     let firstname;
     let lastname;
     this.setState({...this.state, loading: true});
@@ -77,32 +80,37 @@ class Pricing extends React.Component {
     this.props.form.validateFields((err, values) => {
       firstname = values.firstname;
       lastname = values.lastname;
+
+      if (!err && !this.state.cardError){
+
+        // https://stripe.com/docs/stripe-js/reference#stripe-create-token
+        this.props.stripe.createToken({type: 'card'})
+          .then(token => {
+            if (token.error){
+              this.showCardError(token.error);
+              this.setState({...this.state, loading: false});
+            } else {
+              let paymentRequest = {
+                firstname,
+                lastname,
+                token: token.token,
+                plan: this.state.selectedPlan
+              };
+              console.log(token);
+
+              this.props.paymentAction(paymentRequest);
+              this.setState({...this.state, loading: false});
+            }
+          });
+
+      } else this.setState({...this.state, loading: false});
     });
-
-    // https://stripe.com/docs/stripe-js/reference#stripe-create-token
-    this.props.stripe.createToken({type: 'card'})
-      .then(token => {
-        if (token.error){
-          this.showCardError(token.error);
-        } else {
-          let paymentRequest = {
-            firstname,
-            lastname,
-            token: token.token,
-            plan: this.state.selectedPlan
-          };
-          console.log(token);
-
-          this.props.paymentAction(paymentRequest);
-          this.setState({...this.state, loading: false});
-        }
-      });
   };
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const firstnameError = isFieldTouched('firstname') && getFieldError('firstname');
-    const lastnameError = isFieldTouched('lastname') && getFieldError('lastname');
+    const firstnameError = getFieldError('firstname');
+    const lastnameError = getFieldError('lastname');
 
     return (
       <div className="background" style={{zIndex: '0'}}>
@@ -120,7 +128,7 @@ class Pricing extends React.Component {
             placement="right"
             closable={false}
             onClose={this.onClose}
-            visible={this.state.visible}
+            visible={this.state.visible && !this.props.onboarding.subscribed}
             width={'60%'}
           >
             <Card>
@@ -174,7 +182,7 @@ class Pricing extends React.Component {
                 <p style={{color: 'red'}} id={'card-errors'}></p>
                 <br/>
                 <Form.Item>
-                  <Button onClick={this.handlePayment} disabled={this.hasErrors(getFieldsError()) || this.props.payment.loading || this.state.loading} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.props.payment.loading || this.state.loading ? 'Wait a sec\', should not take long' : 'Pay !'}</Button>
+                  <Button htmlType="submit" disabled={this.hasErrors(getFieldsError()) || this.props.onboarding.loading || this.state.loading} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.props.onboarding.loading || this.state.loading ? 'Wait a sec\', should not take long' : 'Pay !'}</Button>
                 </Form.Item>
               </Form>
             </Card>
@@ -192,7 +200,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    payment: state.payment
+    onboarding: state.onboarding
   }
 };
 

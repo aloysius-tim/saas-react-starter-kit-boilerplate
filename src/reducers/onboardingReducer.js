@@ -5,9 +5,11 @@ const initialState = {
 
   loading: false,
   error: null,
+  subscribed: false,
+  step: 1,
 };
 
-export default function payment(state = initialState, action) {
+export default function onboarding(state = initialState, action) {
   const REQUEST = PAYMENT_REQUEST;
 
   switch (action.type) {
@@ -15,7 +17,9 @@ export default function payment(state = initialState, action) {
       state = {
         ...state,
         ...action.payload,
-        loading: false
+        loading: false,
+        subscribed: true,
+        step: state.step + 1,
       };
 
       return state;

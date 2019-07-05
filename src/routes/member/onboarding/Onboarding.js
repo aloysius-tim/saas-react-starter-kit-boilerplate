@@ -24,7 +24,9 @@ import {connect} from "react-redux";
 class Onboarding extends React.Component {
   constructor(props){
     super(props);
-    this.state = {stripe: null};
+    this.state = {
+      stripe: null,
+    };
   }
 
   componentDidMount(){
@@ -43,19 +45,26 @@ class Onboarding extends React.Component {
     return (
         <>
           <Card header={
-            <Steps>
-              <Step status="finish" title="Login" icon={<Icon type="user" />} />
-              <Step status="finish" title="Verification" icon={<Icon type="solution" />} />
-              <Step status="process" title="Pay" icon={<Icon type="loading" />} />
-              <Step status="wait" title="Done" icon={<Icon type="smile-o" />} />
+            <Steps current={this.props.onboarding.step}>
+              <Step title="Signup" icon={<Icon type="user" />} />
+              <Step title="Pay" icon={this.state.step === 1 ? <Icon type="loading" /> : <Icon type="dollar" />} />
+              <Step title="Done" icon={<Icon type="smile-o" />} />
             </Steps>
           }>
 
-            <StripeProvider stripe={this.state.stripe}>
-              <Elements>
-                <Pricing/>
-              </Elements>
-            </StripeProvider>
+            {
+              this.props.onboarding.step === 1 &&
+              <StripeProvider stripe={this.state.stripe}>
+                <Elements>
+                  <Pricing/>
+                </Elements>
+              </StripeProvider>
+            }
+
+            {
+              this.props.onboarding.step === 2 &&
+              <h1>DONE !</h1>
+            }
           </Card>
         </>
     );
@@ -68,7 +77,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    payment: state.payment
+    onboarding: state.onboarding
   }
 };
 
