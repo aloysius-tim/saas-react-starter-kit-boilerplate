@@ -5,7 +5,7 @@
   "description": "Adonisjs boilerplate for API server with pre-configured JWT AUTH and VueJS as frontend",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon --watch app server.js",
     "test": "node ace test"
   },
   "keywords": [
@@ -27,6 +27,7 @@
     "@adonisjs/lucid": "^5.0.3",
     "@adonisjs/mail": "^3.0.5",
     "@adonisjs/validator": "^5.0.3",
+    "adonis-stripe": "^1.0.6",
     "axios": "^0.18.0",
     "cloudinary": "^1.11.0",
     "gravatar": "^1.6.0",

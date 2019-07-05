@@ -13,14 +13,19 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
-  
+
   profile () {
     return this.hasOne('App/Models/Profile')
   }
-  
+
   logs () {
     return this.hasMany('App/Models/Log')
   }
+
+  subscriptions () {
+    return this.hasMany('App/Models/Subscription')
+  }
+
   // roles
   static get roles () {
     return ['superadmin', 'admin', 'manager', 'moderator', 'member']
@@ -33,4 +38,4 @@ class User extends Model {
 
 }
 
-module.exports = User
+module.exports = User;

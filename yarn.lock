@@ -175,6 +175,13 @@ acorn@^5.4.1:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
 
+adonis-stripe@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/adonis-stripe/-/adonis-stripe-1.0.6.tgz#e5d78a834c20096f344495ce1a700d7014dd5b18"
+  integrity sha512-y758OoQ5AO0WugsLbKkzSCi/Qs5HJFT5837yp+S2VlvYX/uvNYPqAw0AMejrtim2+UUycs6Ih+C7n1PU+e5wHA==
+  dependencies:
+    stripe "^6.26.0"
+
 ansi-bgblack@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ansi-bgblack/-/ansi-bgblack-0.1.1.tgz#a68ba5007887701b6aafbe3fa0dadfdfa8ee3ca2"
@@ -2981,6 +2988,16 @@ strip-color@^0.1.0:
 strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+
+stripe@^6.26.0:
+  version "6.36.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.36.0.tgz#546cb863a766674a86c02322e0d6d5d84c656fc4"
+  integrity sha512-7vjyVO4NCWvX38CH1AuSQH16uRxcQN+UhUTBPs4UHsIl5+SJXLBvCsHrMgd+bY9k1YDliT0fQB1fH9OI3GrEhw==
+  dependencies:
+    lodash.isplainobject "^4.0.6"
+    qs "^6.6.0"
+    safe-buffer "^5.1.1"
+    uuid "^3.3.2"
 
 stripe@^7.1.0:
   version "7.1.0"
