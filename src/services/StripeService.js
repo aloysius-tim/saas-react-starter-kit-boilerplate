@@ -9,7 +9,7 @@ export default class StripeService {
   *subscribe(paymentRequest) {
     console.log("Subscribe service", paymentRequest);
 
-    const data = yield fetch(`${this.domain}/payment/subscribe`, {
+    const data = yield fetch(`${this.domain}/subscription/subscribe`, {
       method: 'POST',
       body: JSON.stringify(paymentRequest)
     });

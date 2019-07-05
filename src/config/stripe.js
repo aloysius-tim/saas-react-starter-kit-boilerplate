@@ -8,7 +8,7 @@ module.exports = {
   plans: [
 
     {
-      id: 'personal__24',
+      id: 'plan_FNYLbAbbWZd8Tv',
       img: 'https://s22.postimg.cc/8mv5gn7w1/paper-plane.png',
       title: 'PERSONAL',
       price: '15€/m',
@@ -21,7 +21,7 @@ module.exports = {
     },
 
     {
-      id: 'personal__25',
+      id: 'plan_FNYLzABRllwVoG',
       img: 'https://s28.postimg.cc/ju5bnc3x9/plane.png',
       title: 'SMALL TEAM',
       price: '30€/m',
@@ -34,7 +34,7 @@ module.exports = {
     },
 
     {
-      id: 'personal__26',
+      id: 'plan_FNYMoUBlDHOlB0',
       img: 'https://s21.postimg.cc/tpm0cge4n/space-ship.png',
       title: 'ENTERPRISE',
       price: '100€/m',
@@ -42,6 +42,7 @@ module.exports = {
         'DEDICATED',
         'SIMPLE HORIZONTAL SCALABILITY'
       ],
+      freeTrial: true,
       featured: false
     }
 

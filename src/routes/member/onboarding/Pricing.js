@@ -93,7 +93,7 @@ class Pricing extends React.Component {
               let paymentRequest = {
                 firstname,
                 lastname,
-                token: token.token,
+                token: token.token.id,
                 plan: this.state.selectedPlan
               };
               console.log(token);
