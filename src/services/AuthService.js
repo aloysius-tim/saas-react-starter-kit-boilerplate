@@ -1,17 +1,17 @@
 import {CONST} from "../../env";
+import fetch from "../../tools/fetch";
 
 var jwtDecode = require('jwt-decode');
 
 export default class AuthService {
   constructor() {
     this.domain = CONST.apiUrl;
-    this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
     AuthService.getProfile = AuthService.getProfile.bind(this);
   }
 
   *login(email, password) {
-    const data = yield this.fetch(`${this.domain}/auth/authorise`, {
+    const data = yield fetch(`${this.domain}/auth/authorise`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -21,7 +21,7 @@ export default class AuthService {
     AuthService.setToken(data.token);
     const decodedToken = jwtDecode(data.token);
 
-    const profile = yield this.fetch(`${this.domain}/auth/me`, {
+    const profile = yield fetch(`${this.domain}/auth/me`, {
       method: 'GET'
     });
     AuthService.setProfile(profile);
@@ -80,35 +80,5 @@ export default class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('profile');
     window.location = '/auth/login'
-  }
-
-  static _checkStatus(response) {
-    // raises an error in case response status is not a success
-    if (response.status >= 200 && response.status < 300) {
-      return response
-    } else {
-      var error = new Error(response.statusText)
-      error.response = response
-      throw error
-    }
-  }
-
-  fetch(url, options){
-    // performs api calls sending the required authentication headers
-    const headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-
-    if (AuthService.loggedIn()){
-      headers['Authorization'] = 'Bearer ' + AuthService.getToken();
-    }
-
-    return fetch(url, {
-      headers,
-      ...options
-    })
-      .then(AuthService._checkStatus)
-      .then(response => response.json())
   }
 }

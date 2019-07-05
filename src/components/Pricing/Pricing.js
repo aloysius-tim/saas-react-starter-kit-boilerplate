@@ -15,22 +15,52 @@ import PricingPlan from "./PricingPlan";
 import {injectStripe} from 'react-stripe-elements';
 import {CardElement} from 'react-stripe-elements';
 import {Elements} from 'react-stripe-elements';
-import { Drawer, Button } from 'antd';
+import {Drawer, Button, Input, Form, Icon} from 'antd';
 import Card from "../Layout/Card";
 import moment from "moment";
+import {toastr} from "react-redux-toastr";
 
 class Pricing extends React.Component {
 
   constructor(props){
     super(props);
-    this.pay = this.pay.bind(this);
+    this.selectPlan = this.selectPlan.bind(this);
     this.state = {
       selectedPlan: null,
-      visible: false
+      visible: false,
+      cardError: false,
+      loading: false
     }
   }
 
-  pay(plan) {
+  componentDidMount(){
+    this.props.form.validateFields();
+  }
+
+  hasErrors = (fieldsError) => {
+    return Object.keys(fieldsError).some(field => fieldsError[field]) || this.state.cardError;
+  };
+
+  showCardError = (error) => {
+    const displayError = document.getElementById('card-errors');
+    if (error) {
+      this.setState({
+        ...this.state,
+        cardError: true,
+        loading: false
+      });
+      displayError.textContent = error.message;
+      toastr.error(error.message);
+    } else {
+      this.setState({
+        ...this.state,
+        cardError: false,
+      });
+      displayError.textContent = '';
+    }
+  };
+
+  selectPlan(plan) {
     this.setState({
       selectedPlan: plan,
       visible: true
@@ -38,12 +68,50 @@ class Pricing extends React.Component {
     console.log('Selected Plan: ', plan)
   };
 
+  handlePayment = (ev) => {
+    ev.preventDefault();
+    let firstname;
+    let lastname;
+
+    this.setState({
+      ...this.state,
+      loading: true
+    });
+
+    this.props.form.validateFields((err, values) => {
+      firstname = values.firstname;
+      lastname = values.lastname;
+    });
+
+    // https://stripe.com/docs/stripe-js/reference#stripe-create-token
+    this.props.stripe.createToken({type: 'card'})
+      .then(token => {
+        if (token.error){
+          this.showCardError(token.error);
+        } else {
+          let paymentRequest = {
+            firstname,
+            lastname,
+            token: token.token,
+            plan: this.state.selectedPlan
+          };
+          console.log(token);
+
+          this.props.paymentAction(paymentRequest);
+        }
+      });
+  };
+
   render() {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const firstnameError = isFieldTouched('firstname') && getFieldError('firstname');
+    const lastnameError = isFieldTouched('lastname') && getFieldError('lastname');
+
     return (
       <div className="background" style={{zIndex: '0'}}>
         <div className="container">
           <div className="panel pricing-table">
-            {stripe.plans.map(plan => <PricingPlan plan={plan} key={plan.id} pay={this.pay}/>)}
+            {stripe.plans.map(plan => <PricingPlan plan={plan} key={plan.id} selectPlan={this.selectPlan}/>)}
           </div>
         </div>
 
@@ -79,10 +147,39 @@ class Pricing extends React.Component {
                 <p>If you decide Rewardly isn't right for you, contact us within 30 days of being billed and we'll give you a full refund - no questions asked.</p>
               </div>
             </Card>
+
             <Card>
-              <CardElement style={{base: {fontSize: '18px'}, border: '1px solid black'}}/>
-              <br/>
-              <Button style={{width: '80%', height: '50px', margin: 'auto', marginTop: '30px'}} type={'primary'}>Pay !</Button>
+              <Form onSubmit={this.handlePayment} style={{width: '100%'}}>
+                <Form.Item validateStatus={firstnameError ? 'error' : ''} help={firstnameError || ''}>
+                  {getFieldDecorator('firstname', {
+                    rules: [{ required: true, message: 'Please input your first name!' }],
+                  })(
+                    <Input
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="FirstName"
+                    />,
+                  )}
+                </Form.Item>
+
+                <Form.Item validateStatus={lastnameError ? 'error' : ''} help={lastnameError || ''}>
+                  {getFieldDecorator('lastname', {
+                    rules: [{ required: true, message: 'Please input your Last Name!' }],
+                  })(
+                    <Input
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="Last Name"
+                    />,
+                  )}
+                </Form.Item>
+
+                <br/>
+                <CardElement onChange={(event) => {this.showCardError(event.error)}} style={{base: {fontSize: '18px'}, border: '1px solid black'}}/>
+                <p style={{color: 'red'}} id={'card-errors'}></p>
+                <br/>
+                <Form.Item>
+                  <Button onClick={this.handlePayment} disabled={this.hasErrors(getFieldsError()) || this.state.loading} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.state.loading ? 'Wait a sec\', should not take long' : 'Pay !'}</Button>
+                </Form.Item>
+              </Form>
             </Card>
 
           </Drawer>
@@ -92,4 +189,4 @@ class Pricing extends React.Component {
   }
 }
 
-export default withStyles(s)(injectStripe(Pricing));
+export default withStyles(s)(Form.create({ name: 'card' })(injectStripe(Pricing)));

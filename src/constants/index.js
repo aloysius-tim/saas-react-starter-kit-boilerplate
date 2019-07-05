@@ -4,6 +4,7 @@ import { createRoutine } from 'redux-saga-routines';
 export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
 export const LOGIN_REQUEST = createRoutine('LOGIN_REQUEST');
+export const PAYMENT_REQUEST = createRoutine('PAYMENT_REQUEST');
 
 
 //routine.trigger(payload) === { type: 'ACTION_TYPE_PREFIX/TRIGGER', payload };

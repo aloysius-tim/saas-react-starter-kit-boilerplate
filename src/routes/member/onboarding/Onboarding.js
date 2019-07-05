@@ -18,6 +18,8 @@ import {toastr} from "react-redux-toastr";
 const { Step } = Steps;
 import {Elements, StripeProvider} from 'react-stripe-elements';
 import stripe from '../../../config/stripe'
+import {paymentAction} from "../../../actions/paymentActions";
+import {connect} from "react-redux";
 
 class Onboarding extends React.Component {
   constructor(props){
@@ -34,8 +36,6 @@ class Onboarding extends React.Component {
         this.setState({stripe: window.Stripe(stripe.pk)});
       });
     }
-
-
     toastr.info('Please select a plan to continue');
   }
 
@@ -53,7 +53,7 @@ class Onboarding extends React.Component {
 
             <StripeProvider stripe={this.state.stripe}>
               <Elements>
-                <Pricing/>
+                <Pricing paymentAction={this.props.paymentAction}/>
               </Elements>
             </StripeProvider>
           </Card>
@@ -62,4 +62,17 @@ class Onboarding extends React.Component {
   }
 }
 
-export default withStyles(s)(Onboarding);
+const mapDispatchToProps = dispatch => ({
+  paymentAction: data => dispatch(paymentAction(data)),
+});
+
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+    payment: state.payment
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(s)(Onboarding));

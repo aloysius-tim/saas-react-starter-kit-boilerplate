@@ -26,7 +26,7 @@ class Card extends React.Component {
               </div>
             }
 
-            <div className="card-body">
+            <div className="card-body" style={{backgroundColor: '#F5F9FB'}}>
               <div className={'row'}>
                 {this.props.children}
               </div>

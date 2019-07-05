@@ -24,7 +24,7 @@ class PricingPlan extends React.Component {
           }
         </ul>
         <span className="pricing-price">{this.props.plan.price}</span>
-        <a href="#" className="pricing-button" onClick={() => this.props.pay(this.props.plan)}>Sign up</a>
+        <a href="#" className="pricing-button" onClick={() => this.props.selectPlan(this.props.plan)}>Sign up</a>
       </div>
     )
   }
