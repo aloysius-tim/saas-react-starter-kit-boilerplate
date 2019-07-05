@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AuthService from "../../services/AuthService";
 import Loader from 'react-loader-advanced';
+import history from '../../history.js'
 
 export default function withMemberAuth(AuthComponent) {
   const Auth = new AuthService();
@@ -19,12 +20,12 @@ export default function withMemberAuth(AuthComponent) {
         switch (AuthService.getRole()) {
           case 'admin':
           case 'superadmin':
-            return window.location = '/admin';
+            return history.push('/admin');
           case 'member':
             if (localStorage.getItem('onboarded') === "false")
-              return window.location = '/member/onboarding';
+              return history.push('/member/onboarding');
             else
-              return window.location = '/member';
+              return history.push('/member');
           default:
             return this.setState({ isLoading: false });
         }

@@ -17,6 +17,7 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import AuthService from "../../../services/AuthService";
 import {toastr} from 'react-redux-toastr'
 import Loader from 'react-loader-advanced';
+import history from "../../../history";
 
 class Login extends React.Component {
   authService = new AuthService();
@@ -34,7 +35,7 @@ class Login extends React.Component {
     const { getFieldDecorator } = this.props.form;
 
     if (typeof window !== 'undefined' && AuthService.loggedIn())
-      window.location = '/';
+      history.push('/');
 
     return (
       <div>

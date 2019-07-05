@@ -2,6 +2,7 @@ import {CONST} from "../../env";
 import fetch from "../../tools/fetch";
 
 var jwtDecode = require('jwt-decode');
+import history from '../history.js'
 
 export default class AuthService {
   constructor() {
@@ -82,6 +83,6 @@ export default class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('role');
     localStorage.removeItem('onboarded');
-    window.location = '/auth/login'
+    history.push('/auth/login');
   }
 }

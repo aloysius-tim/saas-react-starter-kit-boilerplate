@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import AuthService from "../../services/AuthService";
+import history from '../../history.js'
 
 export default function withMemberAuth(AuthComponent) {
   const Auth = new AuthService();
@@ -15,16 +16,16 @@ export default function withMemberAuth(AuthComponent) {
     componentDidMount () {
       if (!AuthService.loggedIn()) {
         console.log('not logged');
-        window.location = '/auth/login'
+        history.push('/auth/login');
       }
       else {
         let role = AuthService.getRole();
 
         if (role !== 'member')
-          window.location = '/';
+          history.push('/');
         else {
           if (localStorage.getItem('onboarded') === "false" && window.location.pathname !== '/member/onboarding')
-            window.location = '/member/onboarding';
+            history.push('/member/onboarding');
           else this.setState({ isLoading: false })
         }
       }

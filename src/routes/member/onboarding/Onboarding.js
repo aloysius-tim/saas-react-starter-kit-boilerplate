@@ -20,6 +20,7 @@ import {Elements, StripeProvider} from 'react-stripe-elements';
 import stripe from '../../../config/stripe'
 import {paymentAction} from "../../../actions/paymentActions";
 import {connect} from "react-redux";
+import history from "../../../history";
 
 class Onboarding extends React.Component {
   constructor(props){
@@ -31,7 +32,7 @@ class Onboarding extends React.Component {
 
   componentDidMount(){
     if (localStorage.getItem('onboarded') === "true")
-      window.location = '/member';
+      history.push('/member');
 
     if (window.Stripe) {
       this.setState({stripe: window.Stripe(stripe.pk)});
