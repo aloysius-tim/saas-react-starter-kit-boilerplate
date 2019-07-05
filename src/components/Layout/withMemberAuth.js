@@ -22,8 +22,11 @@ export default function withMemberAuth(AuthComponent) {
 
         if (role !== 'member')
           window.location = '/';
-        else
-          this.setState({ isLoading: false })
+        else {
+          if (localStorage.getItem('onboarded') === "false" && window.location.pathname !== '/member/onboarding')
+            window.location = '/member/onboarding';
+          else this.setState({ isLoading: false })
+        }
       }
     }
 

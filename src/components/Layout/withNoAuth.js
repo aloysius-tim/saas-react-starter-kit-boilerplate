@@ -20,9 +20,11 @@ export default function withMemberAuth(AuthComponent) {
           case 'admin':
           case 'superadmin':
             return window.location = '/admin';
-
           case 'member':
-            return window.location = '/member';
+            if (localStorage.getItem('onboarded') === "false")
+              return window.location = '/member/onboarding';
+            else
+              return window.location = '/member';
           default:
             return this.setState({ isLoading: false });
         }

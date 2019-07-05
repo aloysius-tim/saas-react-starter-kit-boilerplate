@@ -46,22 +46,23 @@ export default class AuthService {
     return decodedToken.exp <= dateNow.getTime();
   }
 
-  static setProfile(profile){
+  static setProfile(user){
     // Saves profile data to localStorage
-    localStorage.setItem('profile', JSON.stringify(profile));
-    localStorage.setItem('role', JSON.stringify(profile.role));
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('role', JSON.stringify(user.role));
+    localStorage.setItem('onboarded', JSON.stringify(user.onboarded));
   }
 
   static getProfile(){
     // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('profile');
-    return profile ? JSON.parse(localStorage.profile) : {}
+    const profile = localStorage.getItem('user');
+    return profile ? JSON.parse(localStorage.user) : {}
   }
 
   static getRole() {
     // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('profile');
-    return profile ? JSON.parse(localStorage.profile).role : 'not-connected'
+    const profile = localStorage.getItem('user');
+    return profile ? JSON.parse(localStorage.user).role : 'not-connected'
   }
 
 
@@ -78,7 +79,9 @@ export default class AuthService {
   static logout(){
     // Clear user token and profile data from localStorage
     localStorage.removeItem('token');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    localStorage.removeItem('onboarded');
     window.location = '/auth/login'
   }
 }

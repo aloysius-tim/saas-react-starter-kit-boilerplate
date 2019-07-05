@@ -30,6 +30,9 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount(){
+    if (localStorage.getItem('onboarded') === "true")
+      window.location = '/member';
+
     if (window.Stripe) {
       this.setState({stripe: window.Stripe(stripe.pk)});
     } else {
