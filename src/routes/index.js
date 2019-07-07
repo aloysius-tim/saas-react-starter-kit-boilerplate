@@ -28,6 +28,10 @@ const routes = {
           load: () => import(/* webpackChunkName: 'login' */ './auth/login'),
         },
         {
+          path: '/login/:token',
+          load: () => import(/* webpackChunkName: 'login' */ './auth/login'),
+        },
+        {
           path: '/register',
           load: () => import(/* webpackChunkName: 'register' */ './auth/register'),
         },

@@ -30,7 +30,7 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        <div className="main-content">
+        /*<div className="main-content">
           <Navigation showLogo={true}/>
           <Header/>
           <div className="container-fluid mt--7">
@@ -46,7 +46,7 @@ class Layout extends React.Component {
           transitionIn="fadeIn"
           transitionOut="fadeOut"
           progressBar
-          closeOnToastrClick/>
+          closeOnToastrClick/>*/
       </div>
     );
   }

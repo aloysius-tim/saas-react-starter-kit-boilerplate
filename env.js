@@ -1,6 +1,6 @@
 export var CONST = {
   production: false,
-  apiUrl: 'http://127.0.0.1:3333/api',
+  apiUrl: 'http://localhost:3333/api',
 };
 
 if (process.env.NODE_ENV === 'production') {

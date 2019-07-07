@@ -12,12 +12,14 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.css';
 import {connect} from "react-redux";
-import {loginAction} from "../../../actions/authActions";
+import {loginAction, socialLoginAction} from "../../../actions/authActions";
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import AuthService from "../../../services/AuthService";
 import {toastr} from 'react-redux-toastr'
 import Loader from 'react-loader-advanced';
 import history from "../../../history";
+import {CONST} from '../../../../env'
+import Link from "../../../components/Link";
 
 class Login extends React.Component {
   authService = new AuthService();
@@ -31,6 +33,13 @@ class Login extends React.Component {
     });
   };
 
+  componentDidMount(): void {
+    if (this.props.token) {
+      console.log('Token ',this.props.token);
+      this.props.socialLoginAction(this.props.token);
+    }
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -39,6 +48,7 @@ class Login extends React.Component {
 
     return (
       <div>
+        {this.props.token && <div className="loading">Loading&#8230;</div>}
         <div className="header bg-gradient-primary py-7 py-lg-8">
           <div className="container">
             <div className="header-body text-center mb-7">
@@ -66,11 +76,11 @@ class Login extends React.Component {
                 <div className="card-header bg-transparent pb-5">
                   <div className="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
                   <div className="btn-wrapper text-center">
-                    <a href="#" className="btn btn-neutral btn-icon">
+                    <a href={`${CONST.apiUrl}/auth/github`} className="btn btn-neutral btn-icon">
                       <span className="btn-inner--icon"><img src="/assets/img/icons/common/github.svg" /></span>
-                      <span className="btn-inner--text" onClick={() => toastr.success('The title', 'The message')}>Github</span>
+                      <span className="btn-inner--text">Github</span>
                     </a>
-                    <a href="#" className="btn btn-neutral btn-icon">
+                    <a href={`${CONST.apiUrl}/auth/google`} className="btn btn-neutral btn-icon">
                       <span className="btn-inner--icon"><img src="/assets/img/icons/common/google.svg" /></span>
                       <span className="btn-inner--text">Google</span>
                     </a>
@@ -145,6 +155,7 @@ const WrappedNormalLoginForm = Form.create({ name: 'login' })(Login);
 
 const mapDispatchToProps = dispatch => ({
   loginAction: data => dispatch(loginAction(data)),
+  socialLoginAction: data => dispatch(socialLoginAction(data)),
 });
 
 const mapStateToProps = (state /*, ownProps*/) => {

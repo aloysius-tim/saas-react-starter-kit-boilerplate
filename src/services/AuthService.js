@@ -34,20 +34,38 @@ export default class AuthService {
     }
   }
 
-  static loggedIn(){
-    // Checks if there is a saved token and it's still valid
-    const token = AuthService.getToken();
-
-    if (!token)
-      return false;
-
+  *socialLogin(token) {
+    console.log('Social Login', token);
+    AuthService.setToken(token);
     const decodedToken = jwtDecode(token);
-    let dateNow = new Date();
 
-    return decodedToken.exp <= dateNow.getTime();
+    const profile = yield fetch(`${this.domain}/auth/me`, {
+      method: 'GET'
+    });
+    AuthService.setProfile(profile);
+    return;
+  }
+
+  static loggedIn(){
+    try {
+      // Checks if there is a saved token and it's still valid
+      const token = AuthService.getToken();
+
+      if (!token)
+        return false;
+
+      const decodedToken = jwtDecode(token);
+      let dateNow = new Date();
+
+      return decodedToken.exp <= dateNow.getTime();
+    } catch (e) {
+      localStorage.removeItem('token');
+      return false;
+    }
   }
 
   static setProfile(user){
+    console.log(user);
     // Saves profile data to localStorage
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('role', JSON.stringify(user.role));

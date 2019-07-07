@@ -13,13 +13,13 @@ import AuthLayout from "../../../components/Layout/AuthLayout";
 
 const title = 'Log In';
 
-function action() {
+function action(context) {
   return {
     chunks: ['login'],
     title,
     component: (
       <AuthLayout>
-        <Login/>
+        <Login token={context.params.token}/>
       </AuthLayout>
     ),
   };

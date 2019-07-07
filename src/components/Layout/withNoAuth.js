@@ -31,6 +31,7 @@ export default function withMemberAuth(AuthComponent) {
         }
       } else {
         this.setState({ isLoading: false })
+        return history.push('/auth/login');
       }
     }
 
