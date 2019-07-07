@@ -46,8 +46,7 @@ class AuthController {
 
       /** If user is already registered with SSO **/
       let authUser = await User.query().where({
-        'provider': provider,
-        'provider_id': userData.getId()
+        [provider + '_id']: userData.getId()
       }).first();
       if (!(authUser === null)) {
         console.log('User is already registered with sso');
@@ -62,8 +61,8 @@ class AuthController {
       }).first();
       if (!(authUser === null)) {
         console.log('User is registered only with username/password');
-        authUser.provider_id = userData.getId();
-        authUser.provider = provider;
+        authUser[provider + '_id'] = userData.getId();
+        //authUser.provider = provider;
         authUser = await authUser.save();
 
         user = await User.query().where({'email': email}).first();
@@ -81,8 +80,8 @@ class AuthController {
       console.log('User is not registered at all');
       user.username = userData.getNickname() || userData.getName() || userData.getEmail();
       user.email = userData.getEmail();
-      user.provider_id = userData.getId();
-      user.provider = provider;
+      user[provider + '_id'] = userData.getId();
+      //user.provider = provider;
       await user.save();
 
       user = await User.query().where({'email': email}).first();
