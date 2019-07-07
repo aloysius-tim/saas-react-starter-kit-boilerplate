@@ -20,6 +20,7 @@ class UserSchema extends Schema {
       table.json('customer');
       table.string('stripe_cus_id');
 
+      table.string('provider').nullable();
       table.string('facebook_id').nullable();
       table.string('google_id').nullable();
       table.string('github_id').nullable();

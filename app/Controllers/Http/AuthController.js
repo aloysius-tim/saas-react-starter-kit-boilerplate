@@ -62,6 +62,7 @@ class AuthController {
       if (!(authUser === null)) {
         console.log('User is registered only with username/password');
         authUser[provider + '_id'] = userData.getId();
+        user.provider = "social"
         await authUser.save();
 
         jwt = await auth.withRefreshToken().generate(user);
@@ -73,6 +74,7 @@ class AuthController {
       console.log('User is not registered at all');
       user.username = userData.getNickname() || userData.getName() || userData.getEmail();
       user.email = userData.getEmail();
+      user.provider = "social"
       user[provider + '_id'] = userData.getId();
       await user.save();
 
