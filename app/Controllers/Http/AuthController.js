@@ -62,14 +62,7 @@ class AuthController {
       if (!(authUser === null)) {
         console.log('User is registered only with username/password');
         authUser[provider + '_id'] = userData.getId();
-        //authUser.provider = provider;
-        authUser = await authUser.save();
-
-        user = await User.query().where({'email': email}).first();
-        let profile = await user.profile().fetch();
-        profile.avatar = userData.getAvatar();
-        profile.name = userData.getName();
-        await profile.save();
+        await authUser.save();
 
         jwt = await auth.withRefreshToken().generate(user);
         console.log(jwt);
@@ -81,7 +74,6 @@ class AuthController {
       user.username = userData.getNickname() || userData.getName() || userData.getEmail();
       user.email = userData.getEmail();
       user[provider + '_id'] = userData.getId();
-      //user.provider = provider;
       await user.save();
 
       user = await User.query().where({'email': email}).first();
@@ -94,9 +86,7 @@ class AuthController {
       return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
     } catch (e) {
       console.log(e);
-      return response.status(500).json({
-        message: 'Something went wrong. Try again or contact admin.',
-      })
+      return response.redirect(`${Env.get('APP_URL')}/auth/login`);
     }
   }
 

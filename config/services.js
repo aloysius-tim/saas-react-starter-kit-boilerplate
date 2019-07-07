@@ -90,6 +90,18 @@ module.exports = {
       clientId: Env.get('FOURSQUARE_ID'),
       clientSecret: Env.get('FOURSQUARE_SECRET'),
       redirectUri: `${Env.get('API_URL')}/api/auth/authenticated/foursquare`
+    },
+
+    linkedin: {
+      clientId: Env.get('LINKEDIN_ID'),
+      clientSecret: Env.get('LINKEDIN_SECRET'),
+      redirectUri: `${Env.get('API_URL')}/api/auth/authenticated/linkedin`
+    },
+
+    twitter: {
+      clientId: Env.get('TWITTER_ID'),
+      clientSecret: Env.get('TWITTER_SECRET'),
+      redirectUri: `${Env.get('API_URL')}/api/auth/authenticated/twitter`
     }
   }
-}
+};

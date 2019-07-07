@@ -11,6 +11,8 @@ class UserSocialauthSchema extends Schema {
       table.string('github_id').nullable();
       table.string('instagram_id').nullable();
       table.string('foursquare_id').nullable();
+      table.string('twitter_id').nullable();
+      table.string('linkedin_id').nullable();
     })
   }
 
