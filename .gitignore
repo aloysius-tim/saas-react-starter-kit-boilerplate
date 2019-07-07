@@ -35,3 +35,5 @@ quasar-client/.thumbs.db
 
 vue-pwa/node_modules
 vue-pwa/dist
+
+.idea
