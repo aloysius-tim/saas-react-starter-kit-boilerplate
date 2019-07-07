@@ -9,6 +9,10 @@ class User extends Model {
     this.addHook('beforeCreate', ['UserHook.setDefaults', 'UserHook.hashPassword'])
     this.addHook('afterCreate', ['UserHook.createProfile'])
   }
+
+  static get primaryKey() {
+    return 'id'
+  }
   // Relations
   tokens () {
     return this.hasMany('App/Models/Token')

@@ -5,6 +5,7 @@ const uuid = use('uuid/v1')
 const User = use('App/Models/User')
 const { validate } = use('Validator')
 const logger = use('App/Helpers/Logger')
+const Env = use('Env');
 
 class AuthController {
   // POST
@@ -30,6 +31,81 @@ class AuthController {
       })
     }
   }
+
+  async redirectToProvider ({ally, params}) {
+    await ally.driver(params.provider).redirect();
+  }
+
+  async handleProviderCallback ({params, ally, auth, response}) {
+    const provider = params.provider;
+    let jwt;
+    try {
+      const userData = await ally.driver(params.provider).getUser();
+      let email = userData.getEmail();
+      let user = new User();
+
+      /** If user is already registered with SSO **/
+      let authUser = await User.query().where({
+        'provider': provider,
+        'provider_id': userData.getId()
+      }).first();
+      if (!(authUser === null)) {
+        console.log('User is already registered with sso');
+        jwt = await auth.withRefreshToken().generate(authUser);
+        console.log(jwt);
+        return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
+      }
+
+      /** If user is registered only with username/password **/
+      authUser = await User.query().where({
+        'email': email
+      }).first();
+      if (!(authUser === null)) {
+        console.log('User is registered only with username/password');
+        authUser.provider_id = userData.getId();
+        authUser.provider = provider;
+        authUser = await authUser.save();
+
+        user = await User.query().where({'email': email}).first();
+        let profile = await user.profile().fetch();
+        profile.avatar = userData.getAvatar();
+        profile.name = userData.getName();
+        await profile.save();
+
+        jwt = await auth.withRefreshToken().generate(user);
+        console.log(jwt);
+        return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
+      }
+
+      /** If user is not registered at all **/
+      console.log('User is not registered at all');
+      user.username = userData.getNickname() || userData.getName() || userData.getEmail();
+      user.email = userData.getEmail();
+      user.provider_id = userData.getId();
+      user.provider = provider;
+      await user.save();
+
+      user = await User.query().where({'email': email}).first();
+      let profile = await user.profile().fetch();
+      profile.avatar = userData.getAvatar();
+      profile.name = userData.getName();
+      await profile.save();
+
+      jwt = await auth.withRefreshToken().generate(user);
+      return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
+    } catch (e) {
+      console.log(e);
+      return response.status(500).json({
+        message: 'Something went wrong. Try again or contact admin.',
+      })
+    }
+  }
+
+  async logout ({auth, response}) {
+    await auth.logout();
+    response.redirect('/');
+  }
+
   // POST
   async signup({ request, response, auth }) {
 

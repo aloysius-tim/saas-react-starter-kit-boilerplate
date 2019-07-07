@@ -19,8 +19,9 @@ const providers = [
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
-  'adonis-stripe/providers/StripeProvider'
-]
+  'adonis-stripe/providers/StripeProvider',
+  '@adonisjs/ally/providers/AllyProvider'
+];
 
 /*
 |--------------------------------------------------------------------------

@@ -4,7 +4,7 @@ const Route = use('Route')
 
  Route.get('/', ({ request }) => {
    return { message: 'Welcome to Adonis API Starter' }
- }).as('home')
+ }).as('home');
 
 Route.group(use('App/Routes/Auth')).prefix('api/auth');
 Route.group(use('App/Routes/Profile')).prefix('api/profile');

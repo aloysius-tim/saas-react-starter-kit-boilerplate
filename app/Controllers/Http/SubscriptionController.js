@@ -27,6 +27,7 @@ class SubscriptionController {
         }
       );
 
+      let profile = await user.profile().update({ first_name: request.post().firstname, last_name: request.post().lastname });
       user.stripe_cus_id = s_customer.id;
       user.customer = s_customer;
       user = await user.save();

@@ -1,10 +1,15 @@
-'use strict'
+'use strict';
 
-const Route = use('Route')
+const Route = use('Route');
 
 module.exports = () => {
   Route.post('authorise', 'AuthController.authorise').validator('auth/Authorise');
   Route.post('signup', 'AuthController.signup').validator('auth/Signup');
+  Route.get('logout', 'AuthController.logout').as('logout');
+  Route.get('me', 'AuthController.me').middleware('jwtAuth');
+
+  Route.get(':provider', 'AuthController.redirectToProvider').as('social.login');
+  Route.get('authenticated/:provider', 'AuthController.handleProviderCallback').as('social.login.callback');
 
   Route.post('resend/email/verification/code', 'AuthController.resendEmailVerificationCode');
   Route.get('confirm/email/:token', 'AuthController.confirmEmail');
@@ -19,7 +24,6 @@ module.exports = () => {
 
   Route.post('update/email', 'AuthController.updateEmail').middleware('jwtAuth').validator('auth/UpdateEmail').as('auth.update.email');
   Route.post('update/password', 'AuthController.updatePassword').middleware('jwtAuth').validator('auth/UpdatePassword').as('auth.update.password');
-  Route.get('me', 'AuthController.me').middleware('jwtAuth');
   Route.get('my/tokens', 'AuthController.myTokens').middleware('jwtAuth');
 
   Route.post('assign/role', 'AuthController.assignRole').validator('auth/AssignRole').middleware('jwtAuthSuperAdmin');
