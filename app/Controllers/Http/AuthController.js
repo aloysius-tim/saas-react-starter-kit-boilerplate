@@ -99,10 +99,9 @@ class AuthController {
 
   // POST
   async signup({ request, response, auth }) {
-
-    const { username, email, password } = request.all();
+    const { name, email, password } = request.all();
     const user = new User();
-    user.username = username;
+    user.username = name;
     user.email = email;
     user.password = password;
     const res = await user.save();
@@ -111,7 +110,7 @@ class AuthController {
         message.from('noreply@shop.khare.co.in')
         message.subject('Welcome to Khare\'s Shop')
         message.to(user.email)
-      })
+      });
       const result = await auth.withRefreshToken().generate(user)
       await logger('info','User Signup', user.id, user.id, user.email)
       return response.status(201).json(result)

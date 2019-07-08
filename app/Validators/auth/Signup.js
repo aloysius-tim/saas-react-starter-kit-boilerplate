@@ -4,7 +4,6 @@ class Signup {
 
   get rules () {
     return {
-      username: 'required|unique:users',
       email: 'required|email|unique:users',
       password: 'required|min:6'
     }
@@ -13,7 +12,7 @@ class Signup {
    get data () {
     const requestBody = this.ctx.request.all()
     requestBody.email = (requestBody.email) ? requestBody.email.trim().toLowerCase() : null
-    requestBody.username = (requestBody.username) ? requestBody.username.trim().toLowerCase() : null
+    requestBody.name = (requestBody.name) ? requestBody.name.trim().toLowerCase() : null
     return requestBody
   }
 
@@ -27,8 +26,6 @@ class Signup {
 
   get messages () {
     return {
-      'username.required': 'Username is required',
-      'username.unique': 'This username is already taken by someone else',
       'email.required': 'Enter email address to be used for login',
       'email.email': 'Email address is not valid',
       'email.unique': 'There\'s already an account with this email address',
