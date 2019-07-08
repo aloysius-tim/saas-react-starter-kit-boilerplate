@@ -8,7 +8,7 @@ import AuthService from "../services/AuthService";
 import {toastr} from "react-redux-toastr";
 import history from '../history.js'
 
-function* loginSaga(action) {
+export function* loginSaga(action) {
   let REQUEST_ACTION = LOGIN_REQUEST;
 
   try {
@@ -20,9 +20,29 @@ function* loginSaga(action) {
     yield put(REQUEST_ACTION.success(data));
     toastr.success('Success', 'You\'re logged in');
   } catch (e) {
-    console.log(e);
+    console.log('Error ', e);
     yield put(REQUEST_ACTION.failure(e));
-    toastr.error('Failure', e.message);
+    toastr.error(e.statusText, e.body.message);
+  } finally {
+    yield put(REQUEST_ACTION.fulfill());
+  }
+}
+
+export function* registerSaga(action) {
+  let REQUEST_ACTION = LOGIN_REQUEST;
+  let  data;
+  try {
+    yield put(REQUEST_ACTION.request());
+
+    let authService = new AuthService();
+    data = yield authService.signup(action.payload.email, action.payload.password, action.payload.name);
+
+    yield put(REQUEST_ACTION.success(data));
+    toastr.success('Success', 'You\'re logged in');
+  } catch (e) {
+    console.log('Error ', e);
+    yield put(REQUEST_ACTION.failure(e));
+    toastr.error(e.body.message, e.body.errors[0].message);
   } finally {
     yield put(REQUEST_ACTION.fulfill());
   }
@@ -49,5 +69,3 @@ export function* socialLoginSaga(action) {
     yield put(REQUEST_ACTION.fulfill());
   }
 }
-
-export default loginSaga;

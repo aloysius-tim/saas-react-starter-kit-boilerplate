@@ -1,5 +1,37 @@
 import AuthService from "../src/services/AuthService";
 
+const checkStatus = response => {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
+
+  return response.json().then(json => {
+    return Promise.reject({
+      status: response.status,
+      ok: false,
+      statusText: response.statusText,
+      body: json
+    });
+  });
+};
+
+const parseJSON = response => {
+  if (response.status === 204 || response.status === 205) {
+    return null;
+  }
+  return response.json();
+};
+
+const handleError = error => {
+  console.log("Cannot connect. Please make sure you are connected to internet.");
+  return Promise.reject({
+    status: 0,
+    ok: false,
+    statusText: "Cannot connect. Please make sure you are connected to internet.",
+    body: {message: "Error"}
+  });
+};
+
 export default function fetchUrl (url, options) {
   // performs api calls sending the required authentication headers
   const headers = {
@@ -15,16 +47,10 @@ export default function fetchUrl (url, options) {
     headers,
     ...options
   })
-    .then((response) => {
-      // raises an error in case response status is not a success
-      if (response.status >= 200 && response.status < 300) {
-        return response
-      } else {
-        console.log('Error in Fetch', response);
-        var error = new Error(response.statusText);
-        error.response = response;
-        throw error
-      }
-    })
-    .then(response => response.json())
+    .catch(handleError) // handle network issues
+    .then(checkStatus)
+    .then(parseJSON)
+    .catch(error => {
+      throw error;
+    });
 }

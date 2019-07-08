@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import {LOGIN_REQUEST} from "../constants";
+import {REGISTER_REQUEST} from "../constants";
 import {SOCIAL_LOGIN_REQUEST} from "../constants";
 
 export function loginAction({ email, password }) {
@@ -8,6 +9,15 @@ export function loginAction({ email, password }) {
     type: LOGIN_REQUEST.TRIGGER,
     payload: {
       email, password
+    },
+  };
+}
+
+export function registerAction({ email, password, name }) {
+  return {
+    type: REGISTER_REQUEST.TRIGGER,
+    payload: {
+      email, password, name
     },
   };
 }

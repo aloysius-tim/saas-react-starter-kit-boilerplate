@@ -35,6 +35,30 @@ export default class AuthService {
     }
   }
 
+  *signup(email, password, name) {
+    const data = yield fetch(`${this.domain}/auth/signup`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+        name
+      })
+    });
+    AuthService.setToken(data.token);
+    const decodedToken = jwtDecode(data.token);
+
+    const profile = yield fetch(`${this.domain}/auth/me`, {
+      method: 'GET'
+    });
+    AuthService.setProfile(profile);
+
+    return {
+      ...data,
+      ...decodedToken,
+      ...profile
+    }
+  }
+
   static getAuthProvider(){
     return auth.providers;
   }
