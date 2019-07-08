@@ -14,13 +14,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import NavigationAuth from "./Navigation/NavigationAuth";
-import FooterAuth from "./Footer/FooterAuth";
-import ReduxToastr from 'react-redux-toastr'
 import withNoAuth from "./withNoAuth";
-import Navigation from "./Navigation";
-import Header from "./Header";
-import FooterAdmin from "./Footer/FooterAdmin";
 
 class Layout extends React.Component {
   static propTypes = {
@@ -29,25 +23,7 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <div>
-        /*<div className="main-content">
-          <Navigation showLogo={true}/>
-          <Header/>
-          <div className="container-fluid mt--7">
-            {this.props.children}
-            <FooterAdmin/>
-          </div>
-        </div>
-        <ReduxToastr
-          timeOut={4000}
-          newestOnTop={false}
-          preventDuplicates
-          position="bottom-right"
-          transitionIn="fadeIn"
-          transitionOut="fadeOut"
-          progressBar
-          closeOnToastrClick/>*/
-      </div>
+      <div>{this.props.children}</div>
     );
   }
 }

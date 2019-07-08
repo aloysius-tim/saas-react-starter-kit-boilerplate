@@ -16,7 +16,9 @@ async function action({ fetch }) {
     title: 'React Starter Kit',
     chunks: ['home'],
     component: (
-      <Layout/>
+      <Layout>
+        <Home/>
+      </Layout>
     ),
   };
 }

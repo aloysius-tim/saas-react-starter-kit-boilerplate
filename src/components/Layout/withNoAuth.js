@@ -3,7 +3,7 @@ import AuthService from "../../services/AuthService";
 import Loader from 'react-loader-advanced';
 import history from '../../history.js'
 
-export default function withMemberAuth(AuthComponent) {
+export default function withNoAuth(AuthComponent) {
   const Auth = new AuthService();
 
   return class Authenticated extends Component {
