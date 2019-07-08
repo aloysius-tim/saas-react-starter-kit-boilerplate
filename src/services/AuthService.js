@@ -3,6 +3,7 @@ import fetch from "../../tools/fetch";
 
 var jwtDecode = require('jwt-decode');
 import history from '../history.js'
+import auth from '../config/auth'
 
 export default class AuthService {
   constructor() {
@@ -32,6 +33,10 @@ export default class AuthService {
       ...decodedToken,
       ...profile
     }
+  }
+
+  static getAuthProvider(){
+    return auth.providers;
   }
 
   *socialLogin(token) {
