@@ -13,12 +13,12 @@ import Profile from "./Profile";
 
 const title = 'Log In';
 
-function action() {
+function action(context) {
   return {
     chunks: ['member'],
     title,
     component: (
-      <MemberLayout>
+      <MemberLayout context={context} sidenav={true}>
         <Profile/>
       </MemberLayout>
     ),

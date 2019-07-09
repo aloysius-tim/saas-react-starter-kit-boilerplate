@@ -11,12 +11,12 @@ import React from 'react';
 import MemberLayout from "../../../components/Layout/MemberLayout";
 import Dashboard from "./Dashboard";
 
-async function action({ fetch }) {
+async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <MemberLayout>
+      <MemberLayout context={context} sidenav={true}>
         <Dashboard/>
       </MemberLayout>
     ),

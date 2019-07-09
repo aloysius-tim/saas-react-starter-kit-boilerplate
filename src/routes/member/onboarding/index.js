@@ -9,16 +9,16 @@
 
 import React from 'react';
 import Onboarding from "./Onboarding";
-import OnboardingLayout from "../../../components/Layout/OnboardingLayout";
+import MemberLayout from "../../../components/Layout/MemberLayout";
 
-async function action({ fetch }) {
+async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <OnboardingLayout>
-        <Onboarding/>
-      </OnboardingLayout>
+      <MemberLayout context={context} sidenav={false}>
+        <Onboarding context={context}/>
+      </MemberLayout>
     ),
   };
 }

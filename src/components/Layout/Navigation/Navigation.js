@@ -15,6 +15,7 @@ import Link from '../../Link';
 import AuthService from "../../../services/AuthService";
 
 class Navigation extends React.Component {
+
   render() {
     return (
       <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
@@ -35,10 +36,10 @@ class Navigation extends React.Component {
               <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src={AuthService.getProfile().profile.avatar || '/assets/img/theme/team-4-800x800.jpg'} />
+                    <img alt="Image placeholder" src={this.props.avatar || '/assets/img/theme/team-4-800x800.jpg'} />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm  font-weight-bold">{AuthService.getProfile().username || 'Unknown'}</span>
+                    <span className="mb-0 text-sm  font-weight-bold">{this.props.name || 'Unknown'}</span>
                   </div>
                 </div>
               </a>
@@ -46,22 +47,22 @@ class Navigation extends React.Component {
                 <div className=" dropdown-header noti-title">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </div>
-                <a href="./examples/profile.html" className="dropdown-item">
+                <Link to={'/member/profile'} className="dropdown-item">
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
-                </a>
+                </Link>
                 <a href="./examples/profile.html" className="dropdown-item">
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
                 </a>
-                <a href="./examples/profile.html" className="dropdown-item">
+                <Link to={'/member'} className="dropdown-item">
                   <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </a>
-                <a href="./examples/profile.html" className="dropdown-item">
+                  <span>Dashboard</span>
+                </Link>
+                <Link to={'/member/onboarding'} className="dropdown-item">
                   <i className="ni ni-support-16" />
-                  <span>Support</span>
-                </a>
+                  <span>Onboarding</span>
+                </Link>
                 <div className="dropdown-divider" />
                 <a href="#!" className="dropdown-item" onClick={() => AuthService.logout()}>
                   <i className="ni ni-user-run" />

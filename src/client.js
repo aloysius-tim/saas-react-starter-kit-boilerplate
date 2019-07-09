@@ -33,6 +33,30 @@ const context = {
       removeCss.forEach(f => f());
     };
   },
+  user: {
+    loggedIn: false,
+    populated: false,
+    email: "member@keynes.fr",
+    facebook_id: null,
+    foursquare_id: null,
+    github_id: null,
+    google_id: null,
+    id: 2,
+    instagram_id: null,
+    linkedin_id: null,
+    //onboarded: false,
+    profile: {
+      avatar: "https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x",
+      created_at: "2019-07-08 19:44:23",
+      first_name: "null",
+      id: 2,
+      last_name: "null",
+      name: "loading...",
+      remote_avatar: "https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x",
+      updated_at: "2019-07-08 23:38:29",
+      user_id: 2,
+    }
+  },
   // Universal HTTP client
   fetch: createFetch(fetch, {
     baseUrl: window.App.apiUrl,

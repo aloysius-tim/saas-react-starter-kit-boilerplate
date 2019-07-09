@@ -21,8 +21,6 @@ export default function onboarding(state = initialState, action) {
         subscribed: true,
         step: state.step + 1,
       };
-      localStorage.setItem('onboarded', 'true');
-
       return state;
     case REQUEST.FAILURE:
       state = {

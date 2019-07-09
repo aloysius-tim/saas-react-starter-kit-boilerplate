@@ -1,9 +1,9 @@
 import {CONST} from "../../env";
-import fetch from "../../tools/fetch";
-
-var jwtDecode = require('jwt-decode');
+import fetchUrl from "../../tools/fetch";
 import history from '../history.js'
 import auth from '../config/auth'
+
+var jwtDecode = require('jwt-decode');
 
 export default class AuthService {
   constructor() {
@@ -13,7 +13,7 @@ export default class AuthService {
   }
 
   *login(email, password) {
-    const data = yield fetch(`${this.domain}/auth/authorise`, {
+    const data = yield fetchUrl(`${this.domain}/auth/authorise`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -23,7 +23,7 @@ export default class AuthService {
     AuthService.setToken(data.token);
     const decodedToken = jwtDecode(data.token);
 
-    const profile = yield fetch(`${this.domain}/auth/me`, {
+    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
       method: 'GET'
     });
     AuthService.setProfile(profile);
@@ -36,7 +36,7 @@ export default class AuthService {
   }
 
   *signup(email, password, name) {
-    const data = yield fetch(`${this.domain}/auth/signup`, {
+    const data = yield fetchUrl(`${this.domain}/auth/signup`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -47,7 +47,7 @@ export default class AuthService {
     AuthService.setToken(data.token);
     const decodedToken = jwtDecode(data.token);
 
-    const profile = yield fetch(`${this.domain}/auth/me`, {
+    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
       method: 'GET'
     });
     AuthService.setProfile(profile);
@@ -68,11 +68,18 @@ export default class AuthService {
     AuthService.setToken(token);
     const decodedToken = jwtDecode(token);
 
-    const profile = yield fetch(`${this.domain}/auth/me`, {
+    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
       method: 'GET'
     });
     AuthService.setProfile(profile);
     return;
+  }
+
+  async fetchUser(){
+    console.log("Update USER infos");
+    return fetchUrl(`${CONST.apiUrl}/auth/me`, {
+      method: 'GET'
+    });
   }
 
   static loggedIn(){
@@ -94,11 +101,11 @@ export default class AuthService {
   }
 
   static setProfile(user){
-    console.log(user);
+    /*console.log(user);
     // Saves profile data to localStorage
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('role', JSON.stringify(user.role));
-    localStorage.setItem('onboarded', JSON.stringify(user.onboarded));
+    localStorage.setItem('onboarded', JSON.stringify(user.onboarded));*/
   }
 
   static getProfile(){
@@ -112,7 +119,6 @@ export default class AuthService {
     const profile = localStorage.getItem('user');
     return profile ? JSON.parse(localStorage.user).role : 'not-connected'
   }
-
 
   static setToken(idToken){
     // Saves user token to localStorage

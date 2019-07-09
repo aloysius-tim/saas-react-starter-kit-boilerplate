@@ -10,11 +10,11 @@
 import React from 'react';
 import SuperAdmin from "./SuperAdmin";
 
-function action() {
+function action(context) {
   return {
     title: 'SuperAdmin',
     chunks: ['admin'],
-    component: <SuperAdmin />,
+    component: <SuperAdmin context={context}/>,
   };
 }
 

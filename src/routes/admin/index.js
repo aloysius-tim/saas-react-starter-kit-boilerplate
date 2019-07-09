@@ -11,11 +11,11 @@ import React from 'react';
 import Admin from "./Admin";
 import AdminLayout from "../../components/Layout/AdminLayout";
 
-function action() {
+function action(context) {
   return {
     title: 'Admin',
     chunks: ['admin'],
-    component: <AdminLayout><Admin/></AdminLayout>,
+    component: <AdminLayout context={context}><Admin/></AdminLayout>,
   };
 }
 

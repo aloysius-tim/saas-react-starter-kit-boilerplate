@@ -31,7 +31,7 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount(){
-    if (localStorage.getItem('onboarded') === "true")
+    if (this.props.context.user.onboarded === true)
       history.push('/member');
 
     if (window.Stripe) {
@@ -43,6 +43,15 @@ class Onboarding extends React.Component {
       });
     }
     toastr.info('Please select a plan to continue');
+  }
+
+  onboarded() {
+    this.props.context.user.onboarded = true;
+  }
+
+  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+    if (this.props.context.user.onboarded === true)
+      history.push('/member');
   }
 
   render() {
@@ -67,7 +76,7 @@ class Onboarding extends React.Component {
 
             {
               this.props.onboarding.step === 2 &&
-              <h1>DONE !</h1>
+              <button onClick={() => this.onboarded()}>DONE !</button>
             }
           </Card>
         </>
