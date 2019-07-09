@@ -1,34 +1,54 @@
-'use strict'
-const Hash = use('Hash')
-const Mail = use('Mail')
-const uuid = use('uuid/v1')
-const User = use('App/Models/User')
-const { validate } = use('Validator')
-const logger = use('App/Helpers/Logger')
+'use strict';
+const Hash = use('Hash');
+const Mail = use('Mail');
+const uuid = use('uuid/v1');
+const User = use('App/Models/User');
+const { validate } = use('Validator');
+const logger = use('App/Helpers/Logger');
 const Env = use('Env');
 
 class AuthController {
   // POST
   async authorise({ request, response, auth }) {
-    const { email, password } = request.all()
+    const { email, password } = request.all();
     try {
-      const result = await auth.withRefreshToken().attempt(email, password)
-      const user = await User.findBy('email', email)
+      const user = await User.findBy('email', email);
+      user.profile = await user.profile().fetch();
+
+      const result = await auth.withRefreshToken().attempt(email, password, {user: user});
       if(user.banned) {
         // revoke all tokens
-        await auth.scheme('jwt').revokeTokens()
-        return response.status(401).json({ message: 'You are banned from this site. Contact admin.'})
+        await auth.scheme('jwt').revokeTokens();
+        return response.status(401).json({ message: 'You are banned from this site. Contact admin.'});
       }
-      await logger('info','User Login', user.id, null, email)
-      return response.status(200).json(result)
+      await logger('info','User Login', user.id, null, email);
+      return response.status(200).json(result);
     }
     catch (errors) {
-      console.log(errors)
-      errors.email = email
-      await logger('error','User Login: Failed', null, null, errors)
+      console.log(errors);
+      errors.email = email;
+      await logger('error','User Login: Failed', null, null, errors);
       return response.status(401).json({
         message: "Darn! Can't authorise you with those details."
       })
+    }
+  }
+
+  async updateToken({request, response, auth}){
+    try {
+      var user = await auth.getUser();
+      user.profile = await user.profile().fetch()
+
+      let jwt = await auth.generate(user, {user: user});
+      return response.status(200).json(jwt);
+    }
+    catch (errors) {
+      console.log(errors);
+      await logger('error','User update token: Failed', null, null, errors);
+      return response.status(401).json({
+        message: "Darn! Can't authorise you with those details.",
+        errors
+      });
     }
   }
 
@@ -50,7 +70,8 @@ class AuthController {
       }).first();
       if (!(authUser === null)) {
         console.log('User is already registered with sso');
-        jwt = await auth.withRefreshToken().generate(authUser);
+        authUser.profile = await authUser.profile().fetch();
+        jwt = await auth.withRefreshToken().generate(authUser, {user: authUser});
         console.log(jwt);
         return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
       }
@@ -60,21 +81,20 @@ class AuthController {
         'email': email
       }).first();
       if (!(authUser === null)) {
-        console.log('User is registered only with username/password');
         authUser[provider + '_id'] = userData.getId();
-        user.provider = "social"
+        user.provider = "social";
         await authUser.save();
+        authUser.profile = await authUser.profile().fetch();
 
-        jwt = await auth.withRefreshToken().generate(user);
+        jwt = await auth.withRefreshToken().generate(authUser, {user: authUser});
         console.log(jwt);
         return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
       }
 
       /** If user is not registered at all **/
-      console.log('User is not registered at all');
       user.username = userData.getNickname() || userData.getName() || userData.getEmail();
       user.email = userData.getEmail();
-      user.provider = "social"
+      user.provider = "social";
       user[provider + '_id'] = userData.getId();
       await user.save();
 
@@ -82,9 +102,11 @@ class AuthController {
       let profile = await user.profile().fetch();
       profile.avatar = userData.getAvatar();
       profile.name = userData.getName();
-      await profile.save();
+      user.profile = await profile.save();
+      /*user = await User.query().where({'email': email}).first();*/
+      user.profile = await user.profile().fetch();
 
-      jwt = await auth.withRefreshToken().generate(user);
+      jwt = await auth.withRefreshToken().generate(user, {user: user});
       return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
     } catch (e) {
       console.log(e);
@@ -100,20 +122,24 @@ class AuthController {
   // POST
   async signup({ request, response, auth }) {
     const { name, email, password } = request.all();
-    const user = new User();
+    let user = new User();
     user.username = name;
     user.email = email;
     user.password = password;
     const res = await user.save();
     if (res) {
       await Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : "verified" }, (message) => {
-        message.from('noreply@shop.khare.co.in')
-        message.subject('Welcome to Khare\'s Shop')
+        message.from('noreply@shop.khare.co.in');
+        message.subject('Welcome to Khare\'s Shop');
         message.to(user.email)
       });
-      const result = await auth.withRefreshToken().generate(user)
-      await logger('info','User Signup', user.id, user.id, user.email)
-      return response.status(201).json(result)
+
+      user = await User.query().where({'email': email}).first();
+      user.profile = await user.profile().fetch();
+
+      const result = await auth.withRefreshToken().generate(user, {user: user});
+      await logger('info','User Signup', user.id, user.id, user.email);
+      return response.status(201).json(result);
     }
 
     return response.status(500).json({

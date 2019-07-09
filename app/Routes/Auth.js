@@ -7,6 +7,7 @@ module.exports = () => {
   Route.post('signup', 'AuthController.signup').validator('auth/Signup');
   Route.get('logout', 'AuthController.logout').as('logout');
   Route.get('me', 'AuthController.me').middleware('jwtAuth');
+  Route.get('me/refresh', 'AuthController.updateToken').middleware('jwtAuth');
 
   Route.get(':provider', 'AuthController.redirectToProvider').as('social.login');
   Route.get('authenticated/:provider', 'AuthController.handleProviderCallback').as('social.login.callback');
@@ -33,7 +34,4 @@ module.exports = () => {
   /*  #######  Pages with view  ######### */;
   Route.get('view/confirm/email/:token', 'AuthController.confirmEmailRender').as('auth.confirm.email');
   Route.get('view/reset/password/:token', 'AuthController.resetPasswordForm').as('auth.reset.password.form');
-
-}
-
-
+};
