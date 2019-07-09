@@ -30,10 +30,9 @@ class MemberLayout extends React.Component {
   constructor(props) {
     super(props);
     this.authService = new AuthService();
+    this.user = {};
     this.state = {
       isLoading: true,
-      name: "Initial val",
-      avatar: ""
     };
   }
 
@@ -46,44 +45,35 @@ class MemberLayout extends React.Component {
   }
 
   _updateUserContext(){
-    if (AuthService.loggedIn()) {
+    let jwt;
+    if ((jwt = AuthService.loggedIn(this.props.context))) {
+      this.user = jwt.data.user;
       this.props.context.user.loggedIn = true;
 
-      this.authService.fetchUser().then(
-        (fetchedUser) => {
-          this.props.context.user = {
-            loggedIn: true,
-            populated: true,
-            ...fetchedUser
-          };
-          console.log(fetchedUser)
-          this.setState({...this.state, name: fetchedUser.username, avatar: fetchedUser.profile.avatar});
-          console.log('User context updated', this.props.context.user);
-          this._checkAndRedirect();
-          this.setState({isLoading: false});
-        }
-      );
+      this._checkAndRedirect();
     } else {
       history.push('/auth/login');
     }
   }
 
   _checkAndRedirect() {
-    console.log("Check & Redirect")
-    if (!AuthService.loggedIn()) {
+    let jwt = AuthService.loggedIn(this.props.context);
+    this.user = jwt.data.user;
+
+    if (!jwt) {
+      if (!this.state.isLoading) this.setState({isLoading: true});
       this.props.context.user.loggedIn = false;
-      this.setState({ isLoading: false })
       history.push('/auth/login');
     } else {
-      let populated = this.props.context.user.populated;
-      if (!populated)
-        return this._updateUserContext();
-
-      let role = this.props.context.user.role;
-      console.log(role);
+      let role = this.user.role;
 
       if (role !== 'admin' && role !== 'superadmin')
-        history.push('/');
+      {
+        if (!this.state.isLoading) this.setState({isLoading: true});
+        history.push('/unauthorized');
+      } else {
+        if (this.state.isLoading) this.setState({isLoading: false});
+      }
     }
   }
 
@@ -96,7 +86,7 @@ class MemberLayout extends React.Component {
           <div>
             <Sidenav/>
             <div className="main-content">
-              <Navigation avatar={this.state.avatar} name={this.state.name}/>
+              <Navigation user={this.user}/>
               <Header/>
               <div className="container-fluid mt--7">
                 {this.props.children}

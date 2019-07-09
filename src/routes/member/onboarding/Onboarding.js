@@ -21,17 +21,24 @@ import stripe from '../../../config/stripe'
 import {paymentAction} from "../../../actions/paymentActions";
 import {connect} from "react-redux";
 import history from "../../../history";
+import AuthService from "../../../services/AuthService";
+import UserService from "../../../services/UserService";
 
 class Onboarding extends React.Component {
   constructor(props){
     super(props);
+    this.user = {};
     this.state = {
       stripe: null,
+      loading: false
     };
   }
 
   componentDidMount(){
-    if (this.props.context.user.onboarded === true)
+    let jwt = AuthService.loggedIn();
+    this.user = jwt.data.user;
+
+    if (this.user.onboarded === true)
       history.push('/member');
 
     if (window.Stripe) {
@@ -45,18 +52,24 @@ class Onboarding extends React.Component {
     toastr.info('Please select a plan to continue');
   }
 
-  onboarded() {
-    this.props.context.user.onboarded = true;
-  }
+  onboarded = () => {
+    this.setState({...this.state, loading: true});
+    UserService.onboarded().then(() => {
+      AuthService.updateToken().then(() => {
+        history.push('/member');
+      })
+    });
+  };
 
   componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-    if (this.props.context.user.onboarded === true)
+    if (AuthService.loggedIn().data.user.onboarded === true)
       history.push('/member');
   }
 
   render() {
     return (
         <>
+          {this.state.loading && <div className="loading">Loading&#8230;</div>}
           <Card header={
             <Steps current={this.props.onboarding.step}>
               <Step title="Signup" icon={<Icon type="user" />} />
@@ -76,7 +89,7 @@ class Onboarding extends React.Component {
 
             {
               this.props.onboarding.step === 2 &&
-              <button onClick={() => this.onboarded()}>DONE !</button>
+              <button onClick={this.onboarded}>DONE !</button>
             }
           </Card>
         </>

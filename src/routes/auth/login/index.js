@@ -18,8 +18,8 @@ function action(context) {
     chunks: ['login'],
     title,
     component: (
-      <AuthLayout>
-        <Login token={context.params.token}/>
+      <AuthLayout context={context}>
+        <Login token={context.params.token} context={context}/>
       </AuthLayout>
     ),
   };

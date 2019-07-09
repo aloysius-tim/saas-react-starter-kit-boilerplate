@@ -18,9 +18,7 @@ function action() {
     chunks: ['not-found'],
     title,
     component: (
-      <AuthLayout>
-        <NotFound title={title} />
-      </AuthLayout>
+      <NotFound title={title} />
     ),
     status: 404,
   };

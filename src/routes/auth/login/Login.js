@@ -186,7 +186,7 @@ class Login extends React.Component {
                   </div>
                 }
                 <div className="col-6 text-right">
-                  <a href="#" className="text-light"><small>Create new account</small></a>
+                  <Link to={'/auth/register'} className="text-light"><small>Create new account</small></Link>
                 </div>
               </div>
             </div>

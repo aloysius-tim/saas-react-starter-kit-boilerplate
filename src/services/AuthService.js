@@ -9,7 +9,6 @@ export default class AuthService {
   constructor() {
     this.domain = CONST.apiUrl;
     this.login = this.login.bind(this);
-    AuthService.getProfile = AuthService.getProfile.bind(this);
   }
 
   *login(email, password) {
@@ -21,18 +20,7 @@ export default class AuthService {
       })
     });
     AuthService.setToken(data.token);
-    const decodedToken = jwtDecode(data.token);
-
-    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
-      method: 'GET'
-    });
-    AuthService.setProfile(profile);
-
-    return {
-      ...data,
-      ...decodedToken,
-      ...profile
-    }
+    return data;
   }
 
   *signup(email, password, name) {
@@ -45,79 +33,85 @@ export default class AuthService {
       })
     });
     AuthService.setToken(data.token);
-    const decodedToken = jwtDecode(data.token);
-
-    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
-      method: 'GET'
-    });
-    AuthService.setProfile(profile);
-
-    return {
-      ...data,
-      ...decodedToken,
-      ...profile
-    }
+    return data;
   }
 
   static getAuthProvider(){
     return auth.providers;
   }
 
-  *socialLogin(token) {
-    console.log('Social Login', token);
-    AuthService.setToken(token);
-    const decodedToken = jwtDecode(token);
-
-    const profile = yield fetchUrl(`${this.domain}/auth/me`, {
-      method: 'GET'
-    });
-    AuthService.setProfile(profile);
-    return;
-  }
-
   async fetchUser(){
-    console.log("Update USER infos");
     return fetchUrl(`${CONST.apiUrl}/auth/me`, {
       method: 'GET'
     });
   }
 
-  static loggedIn(){
+  static async updateToken(){
+    console.log("Update token");
+    const data = await fetchUrl(`${CONST.apiUrl}/auth/me/refresh`, {
+      method: 'GET',
+    });
+    AuthService.setToken(data.token);
+    return data;
+  }
+
+  /**
+   * Redirect to his domain (member / admin / superadmin...) the user if connected
+   */
+  static redirectUser(context = null) {
+    let jwt;
+    if ((jwt = AuthService.loggedIn(context))) {
+      let user = jwt.data.user;
+
+      switch (user.role) {
+        case 'admin':
+        case 'superadmin':
+          return history.push('/admin');
+        case 'member':
+          return history.push('/member');
+        default:
+          AuthService.logout();
+          return history.push('/auth/login');
+      }
+    } else {
+      AuthService.logout();
+      return history.push('/auth/login');
+    }
+  }
+
+  static loggedIn(context = null){
     try {
       // Checks if there is a saved token and it's still valid
       const token = AuthService.getToken();
 
-      if (!token)
+      if (!token) {
+        if (context) {
+          context.user = {
+            loggedIn: false,
+            populated: false,
+          };
+        }
         return false;
+      }
 
       const decodedToken = jwtDecode(token);
       let dateNow = new Date();
 
-      return decodedToken.exp <= dateNow.getTime();
+      if (context) {
+        context.user = {
+          loggedIn: true,
+          populated: true,
+          ...decodedToken.data.user
+        };
+      }
+
+      if ((decodedToken.exp <= dateNow.getTime()) === false)
+        return false;
+      return decodedToken;
     } catch (e) {
       localStorage.removeItem('token');
       return false;
     }
-  }
-
-  static setProfile(user){
-    /*console.log(user);
-    // Saves profile data to localStorage
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('role', JSON.stringify(user.role));
-    localStorage.setItem('onboarded', JSON.stringify(user.onboarded));*/
-  }
-
-  static getProfile(){
-    // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('user');
-    return profile ? JSON.parse(localStorage.user) : {}
-  }
-
-  static getRole() {
-    // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('user');
-    return profile ? JSON.parse(localStorage.user).role : 'not-connected'
   }
 
   static setToken(idToken){
@@ -133,9 +127,6 @@ export default class AuthService {
   static logout(){
     // Clear user token and profile data from localStorage
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
-    localStorage.removeItem('onboarded');
     history.push('/auth/login');
   }
 }

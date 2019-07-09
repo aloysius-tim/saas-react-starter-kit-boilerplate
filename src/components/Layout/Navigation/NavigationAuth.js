@@ -47,12 +47,6 @@ class NavigationAuth extends React.Component {
             {/* Navbar items */}
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/'}>
-                  <i className="ni ni-planet"/>
-                  <span className="nav-link-inner--text">Dashboard</span>
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link nav-link-icon" to={'/auth/register'}>
                   <i className="ni ni-circle-08"/>
                   <span className="nav-link-inner--text">Register</span>
@@ -62,12 +56,6 @@ class NavigationAuth extends React.Component {
                 <Link className="nav-link nav-link-icon" to={'/auth/login'} >
                   <i className="ni ni-key-25"/>
                   <span className="nav-link-inner--text">Login</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/profile'}>
-                  <i className="ni ni-single-02"/>
-                  <span className="nav-link-inner--text">Profile</span>
                 </Link>
               </li>
             </ul>

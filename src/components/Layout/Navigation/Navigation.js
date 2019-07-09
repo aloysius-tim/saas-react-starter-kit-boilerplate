@@ -36,10 +36,10 @@ class Navigation extends React.Component {
               <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div className="media align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src={this.props.avatar || '/assets/img/theme/team-4-800x800.jpg'} />
+                    <img alt="Image placeholder" src={this.props.user.profile.avatar || '/assets/img/theme/team-4-800x800.jpg'} />
                   </span>
                   <div className="media-body ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm  font-weight-bold">{this.props.name || 'Unknown'}</span>
+                    <span className="mb-0 text-sm  font-weight-bold">{this.props.user.username || 'Unknown'}</span>
                   </div>
                 </div>
               </a>

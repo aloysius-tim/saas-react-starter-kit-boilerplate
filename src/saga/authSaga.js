@@ -56,7 +56,7 @@ export function* socialLoginSaga(action) {
 
     let authService = new AuthService();
     console.log(action.payload);
-    const data = yield authService.socialLogin(action.payload);
+    const data = yield AuthService.setToken(action.payload);
 
     yield put(REQUEST_ACTION.success(data));
     toastr.success('Success', 'You\'re logged in');

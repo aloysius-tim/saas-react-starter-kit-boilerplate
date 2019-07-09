@@ -25,6 +25,7 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.authService = new AuthService();
+    this.user = {};
     this.state = {
       isLoading: true,
     };
@@ -34,52 +35,8 @@ class Layout extends React.Component {
     this._checkAndRedirect();
   }
 
-  _updateUserContext(){
-    if (AuthService.loggedIn()) {
-      this.props.context.user.loggedIn = true;
-
-      this.authService.fetchUser().then(
-        (fetchedUser) => {
-          this.props.context.user = {
-            loggedIn: true,
-            populated: true,
-            ...fetchedUser
-          };
-          console.log(fetchedUser)
-          this.setState({...this.state, name: fetchedUser.username, avatar: fetchedUser.profile.avatar});
-          console.log('User context updated', this.props.context.user);
-          this._checkAndRedirect();
-          this.setState({isLoading: false});
-        }
-      );
-    } else {
-      history.push('/auth/login');
-    }
-  }
-
   _checkAndRedirect() {
-    console.log("Check & Redirect");
-    if (AuthService.loggedIn()) {
-      let populated = this.props.context.user.role;
-      if (!populated)
-        return this._updateUserContext();
-
-      switch (this.props.context.user.role) {
-        case 'admin':
-        case 'superadmin':
-          return history.push('/admin');
-        case 'member':
-          if (localStorage.getItem('onboarded') === "false")
-            return history.push('/member/onboarding');
-          else
-            return history.push('/member');
-        default:
-          return this.setState({ isLoading: false });
-      }
-    } else {
-      this.setState({ isLoading: false })
-      return history.push('/auth/login');
-    }
+    AuthService.redirectUser(this.props.context);
   }
 
   render() {

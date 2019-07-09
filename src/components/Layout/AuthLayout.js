@@ -17,11 +17,33 @@ import s from './Layout.css';
 import NavigationAuth from "./Navigation/NavigationAuth";
 import FooterAuth from "./Footer/FooterAuth";
 import ReduxToastr from 'react-redux-toastr'
+import AuthService from "../../services/AuthService";
+import history from "../../history";
 
 class AuthLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   };
+
+  constructor(props){
+    super(props);
+    this.user = {};
+  }
+
+  componentDidMount() {
+    this._checkAndRedirect();
+  }
+
+  componentDidUpdate() {
+    this._checkAndRedirect();
+  }
+
+  _checkAndRedirect() {
+    let jwt = AuthService.loggedIn(this.props.context);
+
+    if (jwt)
+      history.push('/');
+  }
 
   render() {
     return (

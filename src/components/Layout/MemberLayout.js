@@ -30,10 +30,9 @@ class MemberLayout extends React.Component {
   constructor(props) {
     super(props);
     this.authService = new AuthService();
+    this.user = {};
     this.state = {
       isLoading: true,
-      name: "Initial val",
-      avatar: ""
     };
   }
 
@@ -46,47 +45,42 @@ class MemberLayout extends React.Component {
   }
 
   _updateUserContext(){
-    if (AuthService.loggedIn()) {
+    let jwt;
+    if ((jwt = AuthService.loggedIn(this.props.context))) {
+      this.user = jwt.data.user;
       this.props.context.user.loggedIn = true;
 
-      this.authService.fetchUser().then(
-        (fetchedUser) => {
-          this.props.context.user = {
-            loggedIn: true,
-            populated: true,
-            ...fetchedUser
-          };
-          console.log(fetchedUser)
-          this.setState({...this.state, name: fetchedUser.username, avatar: fetchedUser.profile.avatar});
-          console.log('User context updated', this.props.context.user);
-          this._checkAndRedirect();
-          this.setState({isLoading: false});
-        }
-      );
+      this._checkAndRedirect();
+      if (this.state.isLoading) this.setState({isLoading: false});
     } else {
       history.push('/auth/login');
     }
   }
 
   _checkAndRedirect() {
-    if (!AuthService.loggedIn()) {
+    let jwt = AuthService.loggedIn(this.props.context);
+
+    if (!jwt) {
+      if (!this.state.isLoading) this.setState({isLoading: true});
       this.props.context.user.loggedIn = false;
       history.push('/auth/login');
     } else {
-      let populated = this.props.context.user.role;
-      if (!populated)
-        return this._updateUserContext();
+      this.user = jwt.data.user;
+      console.log(this.user);
+      let role = this.user.role;
 
-      let role = this.props.context.user.role;
-      console.log(role);
-
-      if (role !== 'member')
-        history.push('/');
+      if (role !== 'member') {
+        if (!this.state.isLoading) this.setState({isLoading: true});
+        history.push('/unauthorized');
+      }
       else {
-        if (this.props.context.user.onboarded === false && window.location.pathname !== '/member/onboarding')
+        /**
+         * If user need onboarding
+         */
+        if (this.user.onboarded === false && window.location.pathname !== '/member/onboarding') {
+          if (!this.state.isLoading) this.setState({isLoading: true});
           history.push('/member/onboarding');
-        else if (this.props.context.user.onboarded === true && window.location.pathname === '/member/onboarding')
-          history.push('/member');
+        } else if (this.state.isLoading) this.setState({isLoading: false});
       }
     }
   }
@@ -100,7 +94,7 @@ class MemberLayout extends React.Component {
           <div>
             {this.props.sidenav && <Sidenav/>}
             <div className="main-content">
-              <Navigation showLogo={!this.props.sidenav} context={this.props.context} avatar={this.state.avatar} name={this.state.name}/>
+              <Navigation showLogo={!this.props.sidenav} context={this.props.context} user={this.user}/>
               <Header/>
               <div className="container-fluid mt--7">
                 {this.props.children}

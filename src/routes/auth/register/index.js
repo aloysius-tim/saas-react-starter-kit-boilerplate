@@ -13,12 +13,12 @@ import AuthLayout from "../../../components/Layout/AuthLayout";
 
 const title = 'New User Registration';
 
-function action() {
+function action(context) {
   return {
     chunks: ['register'],
     title,
     component: (
-      <AuthLayout>
+      <AuthLayout context={context}>
         <Register/>
       </AuthLayout>
       ),
