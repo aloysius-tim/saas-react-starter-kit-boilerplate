@@ -92,7 +92,7 @@ class MemberLayout extends React.Component {
           <div className="loading">Loading&#8230;</div>
         ) : (
           <div>
-            {this.props.sidenav && <Sidenav/>}
+            {this.props.sidenav && <Sidenav user={this.user}/>}
             <div className="main-content">
               <Navigation showLogo={!this.props.sidenav} context={this.props.context} user={this.user} title={this.props.title}/>
               <Header/>
