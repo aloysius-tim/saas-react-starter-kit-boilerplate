@@ -26,10 +26,6 @@ class User extends Model {
     return this.hasMany('App/Models/Log')
   }
 
-  subscriptions () {
-    return this.hasMany('App/Models/Subscription')
-  }
-
   // roles
   static get roles () {
     return ['superadmin', 'admin', 'manager', 'moderator', 'member']

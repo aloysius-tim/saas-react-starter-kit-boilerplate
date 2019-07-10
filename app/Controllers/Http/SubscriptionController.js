@@ -37,11 +37,6 @@ class SubscriptionController {
         trial_end: moment().add(15, 'days').unix()
       });
 
-      let subscription = new Subscription();
-      subscription.user_id = user.id;
-      subscription.stripe_plan_id = s_subscription.plan.id;
-      subscription = await subscription.save();
-
     } catch (e) {
       console.log(e.message);
       return response.status(500).json(e)
