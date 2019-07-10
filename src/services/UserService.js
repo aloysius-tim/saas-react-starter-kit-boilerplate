@@ -11,4 +11,10 @@ export default class UserService {
       method: 'GET',
     });
   }
+
+  static async me() {
+    return await fetch(`${CONST.apiUrl}/user/me`, {
+      method: 'GET',
+    });
+  }
 }

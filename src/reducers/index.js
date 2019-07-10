@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import user from './user';
+import {user} from './userReducer';
 import runtime from './runtime';
-import auth from './authReducer'
-import onboarding from './onboardingReducer'
+import {auth} from './authReducer'
+import {onboarding} from './onboardingReducer'
 import {reducer as toastrReducer} from 'react-redux-toastr'
+import {payment} from "./paymentReducer";
 
 export default combineReducers({
   user,
   auth,
   runtime,
   onboarding,
+  payment,
   toastr: toastrReducer
 });

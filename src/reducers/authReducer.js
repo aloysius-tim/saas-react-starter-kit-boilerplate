@@ -11,7 +11,7 @@ const initialState = {
   token: null,
 };
 
-export default function auth(state = initialState, action) {
+export function auth(state = initialState, action) {
   switch (action.type) {
     /**
      * LOGIN_REQUEST
@@ -20,7 +20,9 @@ export default function auth(state = initialState, action) {
       state = {
         ...state,
         ...action.payload,
-        loading: false
+        loading: false,
+        error: false,
+        errorMessage: null
       };
       return state;
     case LOGIN_REQUEST.FAILURE:

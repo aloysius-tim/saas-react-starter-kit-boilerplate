@@ -3,11 +3,23 @@ import { createRoutine } from 'redux-saga-routines';
 
 export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
+/**
+ * AUTH
+ */
 export const LOGIN_REQUEST = createRoutine('LOGIN_REQUEST');
 export const REGISTER_REQUEST = createRoutine('REGISTER_REQUEST');
 export const SOCIAL_LOGIN_REQUEST = createRoutine('SOCIAL_LOGIN_REQUEST');
-export const PAYMENT_REQUEST = createRoutine('PAYMENT_REQUEST');
 
+/**
+ * PAYMENT
+ */
+export const PAYMENT_REQUEST = createRoutine('PAYMENT_REQUEST');
+export const FETCH_CUSTOMER = createRoutine('FETCH_CUSTOMER');
+
+/**
+ * USER
+ */
+export const FETCH_USER_ME = createRoutine('FETCH_USER_ME');
 
 //routine.trigger(payload) === { type: 'ACTION_TYPE_PREFIX/TRIGGER', payload };
 //routine.request(payload) === { type: 'ACTION_TYPE_PREFIX/REQUEST', payload };

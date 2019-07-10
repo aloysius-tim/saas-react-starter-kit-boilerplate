@@ -7,22 +7,23 @@ const initialState = {
   error: null,
   subscribed: false,
   step: 1,
+  errorMessage: null,
 };
 
-export default function onboarding(state = initialState, action) {
-  const REQUEST = PAYMENT_REQUEST;
-
+export function onboarding(state = initialState, action) {
   switch (action.type) {
-    case REQUEST.SUCCESS:
+    case PAYMENT_REQUEST.SUCCESS:
       state = {
         ...state,
         ...action.payload,
         loading: false,
         subscribed: true,
         step: state.step + 1,
+        error: false,
+        errorMessage: null
       };
       return state;
-    case REQUEST.FAILURE:
+    case PAYMENT_REQUEST.FAILURE:
       state = {
         ...state,
         error: true,
@@ -30,7 +31,7 @@ export default function onboarding(state = initialState, action) {
         loading: false
       };
       return state;
-    case REQUEST.REQUEST, REQUEST.TRIGGER:
+    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
       state = {
         ...state,
         error: false,

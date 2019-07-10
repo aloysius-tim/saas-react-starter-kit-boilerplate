@@ -1,4 +1,4 @@
-import {PAYMENT_REQUEST} from "../constants";
+import {FETCH_USER_ME} from "../constants";
 
 const initialState = {
   data: null,
@@ -8,19 +8,18 @@ const initialState = {
   errorMessage: null
 };
 
-export default function auth(state = initialState, action) {
+export function user(state = initialState, action) {
   switch (action.type) {
-    case PAYMENT_REQUEST.SUCCESS:
+    case FETCH_USER_ME.SUCCESS:
       state = {
         ...state,
         ...action.payload,
-        loading: false,
         error: false,
         errorMessage: null,
+        loading: false,
       };
       return state;
-
-    case PAYMENT_REQUEST.FAILURE:
+    case FETCH_USER_ME.FAILURE:
       state = {
         ...state,
         error: true,
@@ -28,8 +27,7 @@ export default function auth(state = initialState, action) {
         loading: false
       };
       return state;
-
-    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
+    case FETCH_USER_ME.REQUEST, FETCH_USER_ME.TRIGGER:
       state = {
         ...state,
         error: false,

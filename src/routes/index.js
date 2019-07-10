@@ -46,10 +46,18 @@ const routes = {
           load: () => import(/* webpackChunkName: 'member' */ './member/dashboard'),
         },
         {
-          path: '/profile',
-          load: () => import(/* webpackChunkName: 'member' */ './member/profile'),
+          path: '/settings',
+          children: [
+            {
+              path: '/profile',
+              load: () => import(/* webpackChunkName: 'member' */ './member/settings/profile'),
+            },
+            {
+              path: '/billing',
+              load: () => import(/* webpackChunkName: 'member' */ './member/settings/billing'),
+            },
+          ]
         },
-
         {
           path: '/onboarding',
           load: () => import(/* webpackChunkName: 'member' */ './member/onboarding'),

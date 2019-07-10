@@ -8,18 +8,18 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../../components/Layout/MemberLayout";
-import Profile from "./Profile";
+import MemberLayout from "../../../../components/Layout/MemberLayout";
+import Billing from "./Billing";
 
-const title = 'Log In';
+const title = 'User billing';
 
 function action(context) {
   return {
     chunks: ['member'],
     title,
     component: (
-      <MemberLayout context={context} sidenav={true}>
-        <Profile/>
+      <MemberLayout context={context} sidenav={true} title={'Billing'}>
+        <Billing/>
       </MemberLayout>
     ),
   };
