@@ -29,7 +29,6 @@ class SubscriptionController {
 
       let profile = await user.profile().update({ first_name: request.post().firstname, last_name: request.post().lastname });
       user.stripe_cus_id = s_customer.id;
-      user.customer = s_customer;
       user = await user.save();
 
       s_subscription = await Stripe.subscriptions.create({
@@ -40,7 +39,6 @@ class SubscriptionController {
 
       let subscription = new Subscription();
       subscription.user_id = user.id;
-      subscription.subscription = s_subscription;
       subscription.stripe_plan_id = s_subscription.plan.id;
       subscription = await subscription.save();
 
@@ -52,36 +50,18 @@ class SubscriptionController {
     return response.status(200).json({s_customer, s_subscription})
   }
 
-  /*async customer ({request, response}){
-    console.log(request.post());
+  async getCustomer({request, response, auth}){
+    let s_customer;
 
-    let user = await User.update({
-      email: request.post().email
-    }, {...request.post()}, {upsert: true});
-    console.log('user saved', user);
+    let user = await auth.getUser();
 
-    let customer = await Stripe.customers.create(
-      {
-        email: request.post().email,
-        metadata: {
-          referral: 'tim'
-        },
-        source: request.post().id
-      }
-    );
-    console.log('customer creation', customer);
+    if (!user.stripe_cus_id)
+      return response.status(500).json({message: 'User is not a Stripe USER',});
 
-    const subscription = await Stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{plan: 'plan_DhW80O86SjjNdL'}],
-      trial_end: moment().add(14, 'days').unix()
-    });
-    console.log('subscription', subscription);
+    s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
 
-    user = await User.update({email: request.post().email}, {subscription, customer}, {upsert: true});
-
-    response.send({user});
-  }*/
+    return response.status(200).json(s_customer);
+  }
 }
 
 module.exports = SubscriptionController;

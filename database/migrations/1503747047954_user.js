@@ -17,7 +17,6 @@ class UserSchema extends Schema {
       table.boolean('banned')
 
       table.boolean('onboarded').defaultTo(false);
-      table.json('customer');
       table.string('stripe_cus_id');
 
       table.string('provider').nullable();
