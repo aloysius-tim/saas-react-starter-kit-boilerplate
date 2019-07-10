@@ -16,7 +16,7 @@ async function action(context) {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <MemberLayout context={context} sidenav={false}>
+      <MemberLayout context={context} sidenav={false} title={'Onboarding'}>
         <Onboarding context={context}/>
       </MemberLayout>
     ),

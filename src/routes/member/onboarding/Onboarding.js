@@ -49,7 +49,6 @@ class Onboarding extends React.Component {
         this.setState({stripe: window.Stripe(stripe.pk)});
       });
     }
-    toastr.info('Please select a plan to continue');
   }
 
   onboarded = () => {

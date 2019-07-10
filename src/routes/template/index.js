@@ -18,7 +18,7 @@ function action() {
     chunks: ['XXX'],
     title,
     component: (
-      <AuthLayout>
+      <AuthLayout title={title}>
         <Login/>
       </AuthLayout>
     ),

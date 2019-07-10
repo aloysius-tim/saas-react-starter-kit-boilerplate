@@ -23,7 +23,7 @@ class Navigation extends React.Component {
           {/* Brand */}
           <Link className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" to={'/'}>
             {
-              !this.props.showLogo && <span>Dashboard</span>
+              !this.props.showLogo && <span>{this.props.title}</span>
             }
             {
               this.props.showLogo &&
@@ -47,9 +47,13 @@ class Navigation extends React.Component {
                 <div className=" dropdown-header noti-title">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </div>
-                <Link to={'/member/profile'} className="dropdown-item">
+                <Link to={'/member/settings/profile'} className="dropdown-item">
                   <i className="ni ni-single-02" />
-                  <span>My profile</span>
+                  <span>Update profile</span>
+                </Link>
+                <Link to={'/member/settings/billing'} className="dropdown-item">
+                  <i className="ni ni-single-02" />
+                  <span>Billing</span>
                 </Link>
                 <a href="./examples/profile.html" className="dropdown-item">
                   <i className="ni ni-settings-gear-65" />

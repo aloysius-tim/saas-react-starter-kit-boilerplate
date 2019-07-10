@@ -10,13 +10,14 @@
 import React from 'react';
 import Home from "./Home";
 import Layout from "../../components/Layout";
+import AuthLayout from "../../components/Layout/AuthLayout";
 
 async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['home'],
     component: (
-      <Layout context={context}>
+      <Layout context={context} title={'Home'}>
         <Home/>
       </Layout>
     ),

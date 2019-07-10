@@ -94,7 +94,7 @@ class MemberLayout extends React.Component {
           <div>
             {this.props.sidenav && <Sidenav/>}
             <div className="main-content">
-              <Navigation showLogo={!this.props.sidenav} context={this.props.context} user={this.user}/>
+              <Navigation showLogo={!this.props.sidenav} context={this.props.context} user={this.user} title={this.props.title}/>
               <Header/>
               <div className="container-fluid mt--7">
                 {this.props.children}

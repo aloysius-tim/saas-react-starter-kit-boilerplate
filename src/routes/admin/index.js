@@ -15,7 +15,7 @@ function action(context) {
   return {
     title: 'Admin',
     chunks: ['admin'],
-    component: <AdminLayout context={context}><Admin/></AdminLayout>,
+    component: <AdminLayout context={context} title={'Admin'}><Admin/></AdminLayout>,
   };
 }
 

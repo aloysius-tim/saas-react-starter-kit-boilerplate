@@ -14,7 +14,7 @@ function action(context) {
   return {
     title: 'SuperAdmin',
     chunks: ['admin'],
-    component: <SuperAdmin context={context}/>,
+    component: <SuperAdmin context={context} title={'SuperAdmin'}/>,
   };
 }
 

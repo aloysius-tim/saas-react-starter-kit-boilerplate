@@ -19,6 +19,7 @@ import FooterAuth from "./Footer/FooterAuth";
 import ReduxToastr from 'react-redux-toastr'
 import AuthService from "../../services/AuthService";
 import history from "../../history";
+import Navigation from "./Navigation";
 
 class AuthLayout extends React.Component {
   static propTypes = {
@@ -49,7 +50,7 @@ class AuthLayout extends React.Component {
     return (
       <div>
         <div className="main-content">
-          <NavigationAuth/>
+          <NavigationAuth title={this.props.title}/>
           {this.props.children}
         </div>
         <FooterAuth/>

@@ -18,7 +18,7 @@ function action(context) {
     chunks: ['register'],
     title,
     component: (
-      <AuthLayout context={context}>
+      <AuthLayout context={context} title={title}>
         <Register/>
       </AuthLayout>
       ),

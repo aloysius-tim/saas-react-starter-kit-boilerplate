@@ -10,13 +10,14 @@
 import React from 'react';
 import MemberLayout from "../../../components/Layout/MemberLayout";
 import Dashboard from "./Dashboard";
+import AuthLayout from "../../../components/Layout/AuthLayout";
 
 async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <MemberLayout context={context} sidenav={true}>
+      <MemberLayout context={context} sidenav={true} title={'Dashboard'}>
         <Dashboard/>
       </MemberLayout>
     ),
