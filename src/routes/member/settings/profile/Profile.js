@@ -36,12 +36,6 @@ class Profile extends React.Component {
             </div>
             <div className="card-body">
 
-              <div>
-                <pre>
-                  {JSON.stringify(this.props.user, null, 2)}
-                </pre>
-              </div>
-
               <form>
                 <h6 className="heading-small text-muted mb-4">User information</h6>
                 <div className="pl-lg-4">
@@ -75,6 +69,12 @@ class Profile extends React.Component {
                   </div>
                 </div>
               </form>
+
+              <div>
+                <pre>
+                  {JSON.stringify(this.props.user, null, 2)}
+                </pre>
+              </div>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    user: state.user
+    user: state.userReducer
   }
 };
 

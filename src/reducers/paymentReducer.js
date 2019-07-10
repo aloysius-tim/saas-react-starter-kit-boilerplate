@@ -2,12 +2,19 @@ import {FETCH_CUSTOMER} from "../constants";
 
 const initialState = {
   data: null,
-
-  s_customer: {},
-
   loading: false,
   error: false,
   errorMessage: null,
+
+  s_customer: {
+    subscriptions: {
+      data: []
+    },
+    sources: {
+      data: []
+    },
+    default_source: ''
+  },
 };
 
 export function payment(state = initialState, action) {

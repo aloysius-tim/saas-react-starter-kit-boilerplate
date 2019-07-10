@@ -28,7 +28,7 @@ export function* paymentSaga(action) {
   }
 }
 
-export function* fetchCustomerSaga(action) {
+export function* fetchCustomerSaga() {
   let REQUEST_ACTION = FETCH_CUSTOMER;
   const stripeService = new StripeService();
 

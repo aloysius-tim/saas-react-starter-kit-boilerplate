@@ -126,7 +126,7 @@ class Pricing extends React.Component {
           <Drawer
             title={`Subscribe to ${this.state.selectedPlan.title}`}
             placement="right"
-            closable={false}
+            closable={true}
             onClose={this.onClose}
             visible={this.state.visible && !this.props.onboarding.subscribed}
             width={'60%'}

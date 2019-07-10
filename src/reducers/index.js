@@ -7,7 +7,7 @@ import {reducer as toastrReducer} from 'react-redux-toastr'
 import {payment} from "./paymentReducer";
 
 export default combineReducers({
-  user,
+  userReducer: user,
   auth,
   runtime,
   onboarding,
