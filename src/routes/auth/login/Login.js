@@ -69,7 +69,7 @@ class Login extends React.Component {
 
         <div className="container mt--8 pb-5">
           <div className="row justify-content-center">
-            <div className="col-lg-5 col-md-7">
+            <div className="col-lg-7 col-md-9">
               <Loader show={this.props.auth.loading} message={'loading'}>
 
               <div className="card bg-secondary shadow border-0">
@@ -174,6 +174,9 @@ class Login extends React.Component {
                         </div>
                       </Form.Item>
                     </Form>
+                    <i style={{lineHeight: "none", textAlign: 'center', fontSize: '10px'}}>
+                      By continuing, you agree to our <Link to={'/privacy'}>Privacy Policy</Link> and <Link to={'/terms'}>Terms of Use</Link>.
+                    </i>
                   </div>
                 }
               </div>
