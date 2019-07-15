@@ -22,4 +22,11 @@ export default class StripeService {
       method: 'GET',
     });
   }
+
+  *newCard(token) {
+    return yield fetch(`${this.domain}/payment/newCreditCard`, {
+      method: 'POST',
+      body: JSON.stringify({token})
+    });
+  }
 }

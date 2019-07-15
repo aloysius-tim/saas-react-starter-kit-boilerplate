@@ -15,6 +15,7 @@ export const SOCIAL_LOGIN_REQUEST = createRoutine('SOCIAL_LOGIN_REQUEST');
  */
 export const PAYMENT_REQUEST = createRoutine('PAYMENT_REQUEST');
 export const FETCH_CUSTOMER = createRoutine('FETCH_CUSTOMER');
+export const NEW_CARD_REQUEST = createRoutine('NEW_CARD_REQUEST');
 
 /**
  * USER

@@ -5,10 +5,10 @@ import {
   SOCIAL_LOGIN_REQUEST,
   REGISTER_REQUEST,
   FETCH_CUSTOMER,
-  FETCH_USER_ME
+  FETCH_USER_ME, NEW_CARD_REQUEST
 } from "../constants";
 import {socialLoginSaga, loginSaga, registerSaga} from "./authSaga";
-import {paymentSaga, fetchCustomerSaga} from "./paymentSaga";
+import {paymentSaga, fetchCustomerSaga, newCardRequestSaga} from "./paymentSaga";
 import {userMeSaga} from "./userSaga";
 
 function* mySaga() {
@@ -25,6 +25,7 @@ function* mySaga() {
    */
   yield takeLatest(PAYMENT_REQUEST.TRIGGER, paymentSaga);
   yield takeLatest(FETCH_CUSTOMER.TRIGGER, fetchCustomerSaga);
+  yield takeLatest(NEW_CARD_REQUEST.TRIGGER, newCardRequestSaga);
 
   /**
    * USER

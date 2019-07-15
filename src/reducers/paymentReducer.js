@@ -1,4 +1,4 @@
-import {FETCH_CUSTOMER} from "../constants";
+import {FETCH_CUSTOMER, NEW_CARD_REQUEST} from "../constants";
 
 const initialState = {
   data: null,
@@ -19,6 +19,9 @@ const initialState = {
 
 export function payment(state = initialState, action) {
   switch (action.type) {
+    /************************************************************
+     * FETCH_CUSTOMER
+     */
     case FETCH_CUSTOMER.SUCCESS:
       state = {
         ...state,
@@ -28,7 +31,6 @@ export function payment(state = initialState, action) {
         errorMessage: null,
       };
       return state;
-
     case FETCH_CUSTOMER.FAILURE:
       state = {
         ...state,
@@ -37,8 +39,36 @@ export function payment(state = initialState, action) {
         loading: false
       };
       return state;
-
     case FETCH_CUSTOMER.REQUEST, FETCH_CUSTOMER.TRIGGER:
+      state = {
+        ...state,
+        error: false,
+        loading: true
+      };
+      return state;
+
+
+    /************************************************************
+     * NEW_CARD_REQUEST
+     */
+    case NEW_CARD_REQUEST.SUCCESS:
+      state = {
+        ...state,
+        s_customer: action.payload,
+        loading: false,
+        error: false,
+        errorMessage: null,
+      };
+      return state;
+    case NEW_CARD_REQUEST.FAILURE:
+      state = {
+        ...state,
+        error: true,
+        errorMessage: action.payload,
+        loading: false
+      };
+      return state;
+    case NEW_CARD_REQUEST.REQUEST, NEW_CARD_REQUEST.TRIGGER:
       state = {
         ...state,
         error: false,

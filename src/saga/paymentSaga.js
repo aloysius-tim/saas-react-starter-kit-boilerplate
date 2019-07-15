@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import request from '../../tools/request';
 import {CONST} from "../../env";
-import {FETCH_CUSTOMER, PAYMENT_REQUEST} from "../constants";
+import {FETCH_CUSTOMER, NEW_CARD_REQUEST, PAYMENT_REQUEST} from "../constants";
 
 import AuthService from "../services/AuthService";
 import {toastr} from "react-redux-toastr";
@@ -37,6 +37,26 @@ export function* fetchCustomerSaga() {
 
     const data = yield stripeService.customer();
 
+    yield put(REQUEST_ACTION.success(data));
+  } catch (e) {
+    console.log(e);
+    yield put(REQUEST_ACTION.failure(e));
+    toastr.error('Failure', e.message);
+  } finally {
+    yield put(REQUEST_ACTION.fulfill());
+  }
+}
+
+export function* newCardRequestSaga(action) {
+  let REQUEST_ACTION = NEW_CARD_REQUEST;
+  const stripeService = new StripeService();
+
+  try {
+    yield put(REQUEST_ACTION.request());
+
+    const data = yield stripeService.newCard(action.payload.token);
+
+    toastr.success('Success', 'You can now use this new credit card');
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
     console.log(e);

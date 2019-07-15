@@ -11,15 +11,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Billing.css';
-import {fetchCustomerAction} from "../../../../actions/paymentActions";
+import {addNewCardAction, fetchCustomerAction} from "../../../../actions/paymentActions";
 import {connect} from "react-redux";
 import {Table, Divider, Tag, Button, Form, Input, Icon, Drawer} from 'antd';
 import moment from 'moment';
 import stripe from "../../../../config/stripe";
-import {CardElement, Elements, StripeProvider} from "react-stripe-elements";
+import {CardElement, Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 import Pricing from "../../onboarding/Pricing";
 import Card from "../../../../components/Layout/Card";
 import {toastr} from "react-redux-toastr";
+import NewCard from "./NewCard";
 
 class Billing extends React.Component {
   constructor(props){
@@ -63,8 +64,11 @@ class Billing extends React.Component {
     this.props.fetchPaymentCustomerInfo();
   }
 
+  close = () => {
+    this.setState({...this.state, showNewCardForm: false})
+  };
+
   render() {
-    console.log(this.props.payment);
     return (
       <div>
         <div className="row">
@@ -157,24 +161,7 @@ class Billing extends React.Component {
 
         <StripeProvider stripe={this.state.stripe}>
           <Elements>
-            <div>
-                <Drawer
-                  title={`Update card`}
-                  placement="right"
-                  closable={true}
-                  onClose={() => this.setState({...this.state, showNewCardForm: false})}
-                  visible={this.state.showNewCardForm}
-                  width={'60%'}
-                >
-                  <Card>
-                    <CardElement onChange={(event) => {this.showCardError(event.error)}} style={{base: {fontSize: '18px'}, border: '1px solid black'}}/>
-                    <p style={{color: 'red'}} id={'card-errors'}></p>
-                    <br/>
-                    <Button htmlType="submit" disabled={this.state.cardError} style={{width: '100%', height: '50px', margin: 'auto', marginTop: '5px'}} type={'primary'}>{this.props.payment.loading || this.state.loading ? 'Wait a sec\', should not take long' : 'Add this new card !'}</Button>
-                  </Card>
-
-                </Drawer>
-            </div>
+            <NewCard showNewCardForm={this.state.showNewCardForm} close={this.close}/>
           </Elements>
         </StripeProvider>
       </div>
