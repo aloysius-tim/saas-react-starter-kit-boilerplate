@@ -8,7 +8,7 @@ const moment = use('Moment');
 class PaymentController {
 
   /**
-   * Suscribe a new customer to a plan with a new credit card
+   * Suscribe a customer to a plan with a new credit card
    * @param request
    * @param response
    * @param auth
@@ -19,9 +19,9 @@ class PaymentController {
     let s_customer, s_subscription;
 
     try {
-      s_customer = await Stripe.customers.create(
+      s_customer = await Stripe.customers.update(
+        user.stripe_cus_id,
         {
-          email: user.email,
           name: request.post().firstname + " " + request.post().lastname,
           source: request.post().token,
         }
@@ -31,8 +31,6 @@ class PaymentController {
         first_name: request.post().firstname,
         last_name: request.post().lastname
       });
-      user.stripe_cus_id = s_customer.id;
-      user = await user.save();
 
       s_subscription = await Stripe.subscriptions.create({
         customer: s_customer.id,

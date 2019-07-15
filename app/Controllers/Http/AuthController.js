@@ -126,6 +126,12 @@ class AuthController {
     user.username = name;
     user.email = email;
     user.password = password;
+
+    let s_customer = await Stripe.customers.create({
+      email: user.email
+    });
+    user.stripe_cus_id = s_customer.id;
+
     const res = await user.save();
     if (res) {
       await Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : "verified" }, (message) => {
