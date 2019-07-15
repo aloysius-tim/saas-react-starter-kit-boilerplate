@@ -9,7 +9,7 @@ const Route = use('Route')
 Route.group(use('App/Routes/Auth')).prefix('api/auth');
 Route.group(use('App/Routes/Profile')).prefix('api/profile');
 Route.group(use('App/Routes/Logs')).prefix('api/logs').middleware('jwtAuth');
-Route.group(use('App/Routes/Subscription')).prefix('api/payment').middleware('jwtAuth');
+Route.group(use('App/Routes/Payment')).prefix('api/payment').middleware('jwtAuth');
 Route.group(use('App/Routes/User')).prefix('api/user').middleware('jwtAuth');
 
 //Route.any('/quasar', ({ view }) => view.render('frontend/quasar')).as('quasar')
