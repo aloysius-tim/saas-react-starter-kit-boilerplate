@@ -14,7 +14,7 @@ class PaymentController {
    * @param auth
    * @returns {Promise<*>}
    */
-  async subscribeNewCustomer({ request, response, auth }) {
+  async subscribeNewCustomer({request, response, auth}) {
     let user = await auth.getUser();
     let s_customer, s_subscription;
 
@@ -27,7 +27,10 @@ class PaymentController {
         }
       );
 
-      let profile = await user.profile().update({ first_name: request.post().firstname, last_name: request.post().lastname });
+      let profile = await user.profile().update({
+        first_name: request.post().firstname,
+        last_name: request.post().lastname
+      });
       user.stripe_cus_id = s_customer.id;
       user = await user.save();
 
@@ -45,15 +48,34 @@ class PaymentController {
     return response.status(200).json({s_customer, s_subscription})
   }
 
-  async newCreditCard({request, response, auth}){
+  async setDefaultCard({request, response, auth}) {
     let user = await auth.getUser();
+    let cardId = request.params.cardId;
 
-    try{
+    try {
       if (!user.stripe_cus_id)
-        return response.status(500).json({message: 'User is not a Stripe USER',});
+        return response.status(500).json({message: 'User is not a Stripe USER'});
+      await Stripe.customers.update(
+        user.stripe_cus_id, {default_source: cardId}
+      );
+      let s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
+      return response.status(200).json(s_customer);
 
-      let source = await Stripe.customers.update(
-        user.stripe_cus_id, {source: request.post().token}
+    } catch (e) {
+      return response.status(500).json(e);
+    }
+  }
+
+  async newCreditCard({request, response, auth}) {
+    let user = await auth.getUser();
+    let tokenId = request.params.tokenId;
+
+    try {
+      if (!user.stripe_cus_id)
+        return response.status(500).json({message: 'User is not a Stripe USER'});
+
+      await Stripe.customers.update(
+        user.stripe_cus_id, {source: tokenId}
       );
       let s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
       return response.status(200).json(s_customer);
@@ -62,7 +84,24 @@ class PaymentController {
     }
   }
 
-    async getCustomer({request, response, auth}){
+  async deleteCard({request, response, auth}) {
+    let user = await auth.getUser();
+    let cardId = request.params.cardId;
+
+    try {
+      if (!user.stripe_cus_id)
+        return response.status(500).json({message: 'User is not a Stripe USER'});
+
+      await Stripe.customers.deleteSource(user.stripe_cus_id, cardId);
+      let s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
+      return response.status(200).json(s_customer);
+    } catch(e){
+      console.log(e);
+      return response.status(500).json(e);
+    }
+  }
+
+  async getCustomer({request, response, auth}) {
     let s_customer;
 
     let user = await auth.getUser();
@@ -73,6 +112,23 @@ class PaymentController {
     s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
 
     return response.status(200).json(s_customer);
+  }
+
+  async cancelSubscription({request, response, auth}) {
+    let user = await auth.getUser();
+    let subId = request.params.subId;
+
+    try {
+      if (!user.stripe_cus_id)
+        return response.status(500).json({message: 'User is not a Stripe USER'});
+
+      await Stripe.subscriptions.del(subId);
+      let s_customer = await Stripe.customers.retrieve(user.stripe_cus_id);
+      return response.status(200).json(s_customer);
+    } catch (e) {
+      console.log(e);
+      return response.status(500).json(e);
+    }
   }
 }
 
