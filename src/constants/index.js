@@ -16,6 +16,9 @@ export const SOCIAL_LOGIN_REQUEST = createRoutine('SOCIAL_LOGIN_REQUEST');
 export const PAYMENT_REQUEST = createRoutine('PAYMENT_REQUEST');
 export const FETCH_CUSTOMER = createRoutine('FETCH_CUSTOMER');
 export const NEW_CARD_REQUEST = createRoutine('NEW_CARD_REQUEST');
+export const SET_DEFAULT_CARD = createRoutine('SET_DEFAULT_CARD');
+export const DELETE_CARD = createRoutine('DELETE_CARD');
+export const CANCEL_SUBSCRIPTION = createRoutine('CANCEL_SUBSCRIPTION');
 
 /**
  * USER

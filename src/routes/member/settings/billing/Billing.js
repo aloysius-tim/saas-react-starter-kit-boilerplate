@@ -11,7 +11,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Billing.css';
-import {addNewCardAction, fetchCustomerAction} from "../../../../actions/paymentActions";
+import {
+  addNewCardAction, cancelSubscriptionAction,
+  deleteCardAction,
+  fetchCustomerAction,
+  setDefaultCardAction
+} from "../../../../actions/paymentActions";
 import {connect} from "react-redux";
 import {Table, Divider, Tag, Button, Form, Input, Icon, Drawer} from 'antd';
 import moment from 'moment';
@@ -61,7 +66,7 @@ class Billing extends React.Component {
       });
     }
 
-    this.props.fetchPaymentCustomerInfo();
+    this.props.fetchCustomer();
   }
 
   close = () => {
@@ -87,7 +92,7 @@ class Billing extends React.Component {
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">Your subscription</h6>
                   <div className="pl-lg-4">
-                    <Table columns={[
+                    <Table pagination={false} columns={[
                       {
                         title: 'Plan',
                         key: 'plan',
@@ -116,16 +121,17 @@ class Billing extends React.Component {
                       {
                         title: 'Actions',
                         key: 'action',
-                        render: (text, record) => <Button type="danger">Cancel subscription</Button>
+                        render: (text, record) => <Button type="danger" onClick={() => this.props.cancelSubscription(record.id)}>Cancel subscription</Button>
                       },
                     ]} dataSource={this.props.payment.s_customer.subscriptions.data}/>
+                    <Button type={'primary'} style={{width: '100%'}}>Subscribe to a plan</Button>
                   </div>
 
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">Your payment methods</h6>
                   <div className="pl-lg-4">
-                    <Table columns={[
+                    <Table pagination={false} columns={[
                       {
                         title: 'Credit card',
                         key: 'creditcard',
@@ -134,18 +140,31 @@ class Billing extends React.Component {
                       {
                         title: 'Expiration date',
                         key: 'expiration',
-                        render: (text, record) => <span>{record.exp_month}/{record.exp_year}</span>
+                        render: (text, record) => {
+                          if (moment(`01/${record.exp_month}/${record.exp_year}`, 'DD/MM/YYYY').isBefore(moment()))
+                            return <span style={{color: 'red'}}>Expired</span>;
+                          else return <span>{record.exp_month}/{record.exp_year}</span>;
+                        }
                       },
                       {
                         title: '',
                         key: 'default',
                         render: (text, record) => {
                           if (record.id === this.props.payment.s_customer.default_source)
-                            return <span><Button type="primary" onClick={()=> this.setState({...this.state, showNewCardForm: true})}>New payment method</Button></span>
+                            return <span>Default</span>;
+                          else if (moment(`01/${record.exp_month}/${record.exp_year}`, 'DD/MM/YYYY').isBefore(moment()))
+                            return <Button type="danger" onClick={() => this.props.deleteCard(record.id)}>Delete</Button>
+                          else
+                            return (<div>
+                                      <Button type="dashed" onClick={() => this.props.setDefaultCard(record.id)}>Make
+                                        default</Button>
+                                      <Button type="danger" onClick={() => this.props.deleteCard(record.id)}>Delete</Button>
+                                    </div>);
+                          }
                         }
-                      },
                     ]} dataSource={this.props.payment.s_customer.sources.data}/>
 
+                    <Button style={{width: '100%'}} type="primary" onClick={()=> this.setState({...this.state, showNewCardForm: true})}>Add new card</Button>
                   </div>
 
                   <div>
@@ -170,7 +189,10 @@ class Billing extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchPaymentCustomerInfo: () => dispatch(fetchCustomerAction()),
+  fetchCustomer: () => dispatch(fetchCustomerAction()),
+  setDefaultCard: (cardId) => dispatch(setDefaultCardAction(cardId)),
+  deleteCard: (cardId) => dispatch(deleteCardAction(cardId)),
+  cancelSubscription: (subId) => dispatch(cancelSubscriptionAction(subId)),
 });
 
 const mapStateToProps = (state /*, ownProps*/) => {

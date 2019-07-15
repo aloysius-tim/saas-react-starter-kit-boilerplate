@@ -7,7 +7,7 @@ export default class StripeService {
   }
 
   *subscribe(paymentRequest) {
-    const data = yield fetch(`${this.domain}/payment/subscribe`, {
+    const data = yield fetch(`${this.domain}/payment/subscription/subscribe`, {
       method: 'POST',
       body: JSON.stringify(paymentRequest)
     });
@@ -23,10 +23,27 @@ export default class StripeService {
     });
   }
 
-  *newCard(token) {
-    return yield fetch(`${this.domain}/payment/newCreditCard`, {
-      method: 'POST',
-      body: JSON.stringify({token})
+  *newCard(tokenId) {
+    return yield fetch(`${this.domain}/payment/card/new/${tokenId}`, {
+      method: 'GET',
+    });
+  }
+
+  *setDefaultCard(cardId) {
+    return yield fetch(`${this.domain}/payment/card/default/${cardId}`, {
+      method: 'GET',
+    });
+  }
+
+  *deleteCard(cardId) {
+    return yield fetch(`${this.domain}/payment/card/delete/${cardId}`, {
+      method: 'GET',
+    });
+  }
+
+  *cancelSub(subId) {
+    return yield fetch(`${this.domain}/payment/subscription/cancel/${subId}`, {
+      method: 'GET',
     });
   }
 }
