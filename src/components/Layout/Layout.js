@@ -10,43 +10,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-// external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import AuthService from "../../services/AuthService";
-import history from "../../history";
+import NavigationAuth from "./Navigation/NavigationAuth";
+import ReduxToastr from 'react-redux-toastr'
+import Link from "../Link";
+import Footer from "./Footer";
 
 class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   };
 
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.authService = new AuthService();
     this.user = {};
-    this.state = {
-      isLoading: true,
-    };
-  }
-
-  componentDidMount() {
-    this._checkAndRedirect();
-  }
-
-  _checkAndRedirect() {
-    AuthService.redirectUser(this.props.context);
   }
 
   render() {
     return (
       <div>
-        {this.state.isLoading ? (
-          <div className="loading">Loading&#8230;</div>
-        ) : (
-          <div>{this.props.children}</div>
-        )}
+        <div className="main-content">
+          <NavigationAuth title={this.props.title}/>
+          {this.props.children}
+        </div>
+        <footer className="py-5">
+          <div className="container">
+            <div className="row align-items-center justify-content-xl-between">
+              <div className="col-xl-6">
+                <div className="copyright text-center text-xl-left text-muted">
+                  © 2019 <Link to={'/'} className="font-weight-bold ml-1" target="_blank">SaaStr</Link>
+                </div>
+              </div>
+              <Footer/>
+            </div>
+          </div>
+        </footer>
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="bottom-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick/>
       </div>
     );
   }

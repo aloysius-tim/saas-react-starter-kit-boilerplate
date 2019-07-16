@@ -17,7 +17,7 @@ const routes = {
   children: [
     {
       path: '',
-      load: () => import(/* webpackChunkName: 'home' */ './home'),
+      load: () => import(/* webpackChunkName: 'auth' */ './auth/login'),
     },
 
     {
@@ -25,15 +25,15 @@ const routes = {
       children: [
         {
           path: '/login',
-          load: () => import(/* webpackChunkName: 'login' */ './auth/login'),
+          load: () => import(/* webpackChunkName: 'auth' */ './auth/login'),
         },
         {
           path: '/login/:token',
-          load: () => import(/* webpackChunkName: 'login' */ './auth/login'),
+          load: () => import(/* webpackChunkName: 'auth' */ './auth/login'),
         },
         {
           path: '/register',
-          load: () => import(/* webpackChunkName: 'register' */ './auth/register'),
+          load: () => import(/* webpackChunkName: 'auth' */ './auth/register'),
         },
       ],
     },
@@ -82,6 +82,22 @@ const routes = {
           load: () => import(/* webpackChunkName: 'admin' */ './admin'),
         },
       ],
+    },
+    {
+      path: '/legal-notice',
+      load: () => import(/* webpackChunkName: 'special-page' */ './special/legal'),
+    },
+    {
+      path: '/privacy-policy',
+      load: () => import(/* webpackChunkName: 'special-page' */ './special/privacy'),
+    },
+    {
+      path: '/refund-policy',
+      load: () => import(/* webpackChunkName: 'special-page' */ './special/refund'),
+    },
+    {
+      path: '/terms-and-conditions',
+      load: () => import(/* webpackChunkName: 'special-page' */ './special/terms'),
     },
 
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)

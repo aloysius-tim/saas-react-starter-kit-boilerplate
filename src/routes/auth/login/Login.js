@@ -43,9 +43,6 @@ class Login extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    if (typeof window !== 'undefined' && AuthService.loggedIn())
-      history.push('/');
-
     return (
       <div>
         {this.props.token && <div className="loading">Loading&#8230;</div>}
@@ -175,7 +172,7 @@ class Login extends React.Component {
                       </Form.Item>
                     </Form>
                     <i style={{lineHeight: "none", textAlign: 'center', fontSize: '10px'}}>
-                      By continuing, you agree to our <Link to={'/privacy'}>Privacy Policy</Link> and <Link to={'/terms'}>Terms of Use</Link>.
+                      By continuing, you agree to our <Link to={'/privacy-policy'}>Privacy Policy</Link> and <Link to={'/terms-and-conditions'}>Terms of Use</Link>.
                     </i>
                   </div>
                 }

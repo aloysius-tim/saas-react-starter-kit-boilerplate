@@ -9,18 +9,18 @@
 
 import React from 'react';
 import Register from './Register';
-import AuthLayout from "../../../components/Layout/AuthLayout";
+import AuthPageLayout from "../../../components/Layout/AuthPageLayout";
 
 const title = 'New User Registration';
 
 function action(context) {
   return {
-    chunks: ['register'],
+    chunks: ['auth'],
     title,
     component: (
-      <AuthLayout context={context} title={title}>
+      <AuthPageLayout context={context} title={title}>
         <Register/>
-      </AuthLayout>
+      </AuthPageLayout>
       ),
   };
 }

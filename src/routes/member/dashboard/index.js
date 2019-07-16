@@ -10,7 +10,7 @@
 import React from 'react';
 import MemberLayout from "../../../components/Layout/MemberLayout";
 import Dashboard from "./Dashboard";
-import AuthLayout from "../../../components/Layout/AuthLayout";
+import AuthLayout from "../../../components/Layout/AuthPageLayout";
 
 async function action(context) {
   return {

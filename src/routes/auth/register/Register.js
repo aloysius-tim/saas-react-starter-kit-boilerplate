@@ -32,9 +32,6 @@ class Register extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    if (typeof window !== 'undefined' && AuthService.loggedIn())
-      history.push('/');
-
     return (
       <div>
         {this.props.auth.loading && <div className="loading">Loading&#8230;</div>}
@@ -178,7 +175,7 @@ class Register extends React.Component {
                       </Form.Item>
                     </Form>
                     <i style={{lineHeight: "none", textAlign: 'center', fontSize: '10px'}}>
-                      By clicking the "Register" button, I expressly agree to our <Link to={'/terms'}>Terms of Use</Link> and understand that my account information will be used according to our <Link to={'/privacy'}>Privacy Policy</Link>.
+                      By clicking the "Register" button, I expressly agree to our <Link to={'/terms-and-conditions'}>Terms of Use</Link> and understand that my account information will be used according to our <Link to={'/privacy-policy'}>Privacy Policy</Link>.
                     </i>
                   </div>
                 }

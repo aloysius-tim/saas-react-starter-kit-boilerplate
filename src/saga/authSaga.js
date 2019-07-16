@@ -18,6 +18,7 @@ export function* loginSaga(action) {
     const data = yield authService.login(action.payload.email, action.payload.password);
 
     yield put(REQUEST_ACTION.success(data));
+    AuthService.redirectUser();
     toastr.success('Success', 'You\'re logged in');
   } catch (e) {
     console.log('Error ', e);
@@ -39,6 +40,7 @@ export function* registerSaga(action) {
 
     yield put(REQUEST_ACTION.success(data));
     toastr.success('Success', 'You\'re logged in');
+    AuthService.redirectUser();
   } catch (e) {
     console.log('Error ', e);
     yield put(REQUEST_ACTION.failure(e));
@@ -60,7 +62,7 @@ export function* socialLoginSaga(action) {
 
     yield put(REQUEST_ACTION.success(data));
     toastr.success('Success', 'You\'re logged in');
-    history.push('/');
+    AuthService.redirectUser();
   } catch (e) {
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));

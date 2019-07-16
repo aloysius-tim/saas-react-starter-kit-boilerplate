@@ -18,9 +18,9 @@ class NavigationAuth extends React.Component {
     return (
       <nav className="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div className="container px-4">
-          <a className="navbar-brand" href="../index.html">
+          <Link className="navbar-brand" to={'/'}>
             <img src="/assets/img/brand/white.png"/>
-          </a>
+          </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
                   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"/>

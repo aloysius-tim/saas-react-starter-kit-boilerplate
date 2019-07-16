@@ -9,18 +9,18 @@
 
 import React from 'react';
 import Login from './Login';
-import AuthLayout from "../../../components/Layout/AuthLayout";
+import AuthPageLayout from "../../../components/Layout/AuthPageLayout";
 
 const title = 'Log In';
 
 function action(context) {
   return {
-    chunks: ['login'],
+    chunks: ['auth'],
     title,
     component: (
-      <AuthLayout context={context} title={title}>
+      <AuthPageLayout context={context} title={title}>
         <Login token={context.params.token} context={context}/>
-      </AuthLayout>
+      </AuthPageLayout>
     ),
   };
 }

@@ -8,15 +8,14 @@
  */
 
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Home.css';
+import Privacy from "./Privacy";
+import Layout from "../../../components/Layout/Layout";
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div></div>
-    );
-  }
+function action() {
+  return {
+    title: 'Privacy policy',
+    component: <Layout><Privacy /></Layout>,
+  };
 }
 
-export default withStyles(s)(Home);
+export default action;

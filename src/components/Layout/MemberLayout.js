@@ -10,17 +10,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-// external-global styles must be imported in your JS.
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from './Header';
 import Sidenav from "./Sidenav";
 import Navigation from "./Navigation";
-import FooterAdmin from "./Footer/FooterAdmin";
 import ReduxToastr from 'react-redux-toastr'
 import AuthService from "../../services/AuthService";
 import history from "../../history";
+import Footer from "./Footer";
+import Link from "../Link";
 
 class MemberLayout extends React.Component {
   static propTypes = {
@@ -95,7 +94,16 @@ class MemberLayout extends React.Component {
               <Header/>
               <div className="container-fluid mt--7">
                 {this.props.children}
-                <FooterAdmin/>
+                <footer className="footer">
+                  <div className="row align-items-center justify-content-xl-between">
+                    <div className="col-xl-6">
+                      <div className="copyright text-center text-xl-left text-muted">
+                        © 2019 <Link to={'/'} className="font-weight-bold ml-1" target="_blank">SaaStr</Link>
+                      </div>
+                    </div>
+                    <Footer/>
+                  </div>
+                </footer>
               </div>
             </div>
             <ReduxToastr

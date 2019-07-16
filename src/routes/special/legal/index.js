@@ -8,19 +8,13 @@
  */
 
 import React from 'react';
-import Home from "./Home";
-import Layout from "../../components/Layout";
-import AuthLayout from "../../components/Layout/AuthLayout";
+import Legal from "./Legal";
+import Layout from "../../../components/Layout/Layout";
 
-async function action(context) {
+function action() {
   return {
-    title: 'React Starter Kit',
-    chunks: ['home'],
-    component: (
-      <Layout context={context} title={'Home'}>
-        <Home/>
-      </Layout>
-    ),
+    title: 'Legal Notice',
+    component: <Layout><Legal /></Layout>,
   };
 }
 

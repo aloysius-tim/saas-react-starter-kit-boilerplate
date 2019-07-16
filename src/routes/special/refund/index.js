@@ -8,20 +8,13 @@
  */
 
 import React from 'react';
-import Login from './Login';
-import AuthLayout from "../../components/Layout/AuthPageLayout";
-
-const title = 'XYZ';
+import Refund from "./Refund";
+import Layout from "../../../components/Layout/Layout";
 
 function action() {
   return {
-    chunks: ['XXX'],
-    title,
-    component: (
-      <AuthLayout title={title}>
-        <Login/>
-      </AuthLayout>
-    ),
+    title: 'Refund policy',
+    component: <Layout><Refund /></Layout>,
   };
 }
 
