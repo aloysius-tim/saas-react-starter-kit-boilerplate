@@ -17,9 +17,14 @@ module.exports = () => {
   /**********************************************************
    * SUBSCRIPTION
    */
-  Route.post('/subscription/subscribe', 'PaymentController.subscribeNewCustomer')
+  Route.post('/subscription/subscribe', 'PaymentController.subscribeCustomer')
     .validator('payment/subscribe')
     .middleware('jwtAuth');
+
+  Route.post('/subscription', 'PaymentController.subscribe')
+    .validator('payment/subscribePlan')
+    .middleware('jwtAuth');
+
   Route.get('/subscription/cancel/:subId', 'PaymentController.cancelSubscription')
     .middleware('jwtAuth');
 

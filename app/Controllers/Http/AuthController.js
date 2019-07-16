@@ -6,6 +6,7 @@ const User = use('App/Models/User');
 const { validate } = use('Validator');
 const logger = use('App/Helpers/Logger');
 const Env = use('Env');
+const Stripe = use('Stripe');
 
 class AuthController {
   // POST
