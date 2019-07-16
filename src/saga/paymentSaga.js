@@ -1,12 +1,11 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import request from '../../tools/request';
 import {CONST} from "../../env";
 import {CANCEL_SUBSCRIPTION, FETCH_CUSTOMER, NEW_CARD_REQUEST, PAYMENT_REQUEST, SET_DEFAULT_CARD} from "../constants";
 
-import AuthService from "../services/AuthService";
 import {toastr} from "react-redux-toastr";
 import StripeService from "../services/StripeService";
-
+import history from '../history'
 
 export function* paymentSaga(action) {
   let REQUEST_ACTION = PAYMENT_REQUEST;
@@ -19,6 +18,7 @@ export function* paymentSaga(action) {
 
     yield put(REQUEST_ACTION.success(data));
     toastr.success('Success', 'You\'ve been subscibed successfully');
+    history.push('/member');
   } catch (e) {
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));

@@ -59,6 +59,15 @@ const routes = {
           ]
         },
         {
+          path: '/subscription',
+          children: [
+            {
+              path: '/',
+              load: () => import(/* webpackChunkName: 'member' */ './member/subscription'),
+            },
+          ]
+        },
+        {
           path: '/onboarding',
           load: () => import(/* webpackChunkName: 'member' */ './member/onboarding'),
         },

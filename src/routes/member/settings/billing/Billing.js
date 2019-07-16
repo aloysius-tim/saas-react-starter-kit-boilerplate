@@ -26,6 +26,7 @@ import Pricing from "../../onboarding/Pricing";
 import Card from "../../../../components/Layout/Card";
 import {toastr} from "react-redux-toastr";
 import NewCard from "./NewCard";
+import Link from "../../../../components/Link";
 
 class Billing extends React.Component {
   constructor(props){
@@ -106,14 +107,16 @@ class Billing extends React.Component {
                       {
                         title: 'Price',
                         key: 'price',
-                        render: (text, record) => <span>{record.plan.amount}{record.plan.currency} / {record.plan.interval}</span>
+                        render: (text, record) => <span>{record.plan.amount / 100}{record.plan.currency} / {record.plan.interval}</span>
                       },
                       {
                         title: 'Billing period',
                         key: 'billingPeriod',
                         render: (text, record) => {
-                          if (moment.unix(record.trial_end).isAfter(moment()))
-                            return <span>Trial ends on {moment.unix(record.trial_end).format('DD/MM/YY')}</span>
+                          if (moment.unix(record.trial_end).isAfter(moment()) && !record.cancel_at_period_end)
+                            return <span>Trial ends on {moment.unix(record.trial_end).format('DD/MM/YY')}</span>;
+                          else if (record.cancel_at_period_end)
+                            return <span>Plan will be canceled the {moment.unix(record.cancel_at).format('DD/MM/YY')}</span>
                           else
                             return <span>Plan renew on {moment.unix(record.current_period_end).format('DD/MM/YY')}</span>
                         }
@@ -121,10 +124,21 @@ class Billing extends React.Component {
                       {
                         title: 'Actions',
                         key: 'action',
-                        render: (text, record) => <Button type="danger" onClick={() => this.props.cancelSubscription(record.id)}>Cancel subscription</Button>
+                        render: (text, record) => <div>
+                            {
+                              !record.cancel_at_period_end &&
+                              <Button type="danger" onClick={() => this.props.cancelSubscription(record.id)}>Cancel
+                                subscription</Button>
+                            }
+                          <Link to={'/member/subscription'}><Button type="primary">Change
+                            subscription</Button></Link>
+                        </div>
                       },
                     ]} dataSource={this.props.payment.s_customer.subscriptions.data}/>
-                    <Button type={'primary'} style={{width: '100%'}}>Subscribe to a plan</Button>
+                    {
+                      this.props.payment.s_customer.subscriptions.data.length === 0 &&
+                      <Link to={'/member/subscription'}><Button style={{width: '100%'}} type="primary">Subscribe to a plan</Button></Link>
+                    }
                   </div>
 
                   <hr className="my-4" />

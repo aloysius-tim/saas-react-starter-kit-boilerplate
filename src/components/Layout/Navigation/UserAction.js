@@ -50,6 +50,10 @@ class UserAction extends React.Component {
               <i className="ni ni-calendar-grid-58" />
               <span>Dashboard</span>
             </Link>
+            <Link to={'/member/subscription'} className="dropdown-item">
+              <i className="ni ni-support-16" />
+              <span>Subscription</span>
+            </Link>
             <Link to={'/member/onboarding'} className="dropdown-item">
               <i className="ni ni-support-16" />
               <span>Onboarding</span>

@@ -1,10 +1,23 @@
-import {FETCH_CUSTOMER, NEW_CARD_REQUEST, SET_DEFAULT_CARD, DELETE_CARD, CANCEL_SUBSCRIPTION} from "../constants";
+import {
+  FETCH_CUSTOMER,
+  NEW_CARD_REQUEST,
+  SET_DEFAULT_CARD,
+  DELETE_CARD,
+  CANCEL_SUBSCRIPTION,
+  PAYMENT_REQUEST
+} from "../constants";
 
 const initialState = {
   data: null,
   loading: false,
   error: false,
   errorMessage: null,
+
+  haveSubscription: false,
+  haveCard: false,
+
+  subscribed: false,
+  step: 1,
 
   s_customer: {
     subscriptions: {
@@ -19,6 +32,38 @@ const initialState = {
 
 export function payment(state = initialState, action) {
   switch (action.type) {
+    /**
+     * PAYMENT_REQUEST
+     */
+    case PAYMENT_REQUEST.SUCCESS:
+      state = {
+        ...state,
+        ...action.payload,
+        loading: false,
+        subscribed: true,
+        step: state.step + 1,
+        error: false,
+        errorMessage: null
+      };
+      return state;
+    case PAYMENT_REQUEST.FAILURE:
+      state = {
+        ...state,
+        error: true,
+        errorMessage: action.payload,
+        subscribed: false,
+        loading: false
+      };
+      return state;
+    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
+      state = {
+        ...state,
+        error: false,
+        subscribed: false,
+        loading: true
+      };
+      return state;
+
     /************************************************************
      * FETCH_CUSTOMER
      */
@@ -26,6 +71,10 @@ export function payment(state = initialState, action) {
       state = {
         ...state,
         s_customer: action.payload,
+
+        haveCard: action.payload.sources.data.length !== 0,
+        haveSubscription: action.payload.subscriptions.data.length !== 0,
+
         loading: false,
         error: false,
         errorMessage: null,

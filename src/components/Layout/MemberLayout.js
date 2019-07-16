@@ -73,15 +73,12 @@ class MemberLayout extends React.Component {
         if (!this.state.isLoading) this.setState({isLoading: true});
         history.push('/unauthorized');
       }
-      else {
-        /**
-         * If user need onboarding
-         */
+      /*else {
         if (this.user.onboarded === false && window.location.pathname !== '/member/onboarding') {
           if (!this.state.isLoading) this.setState({isLoading: true});
           history.push('/member/onboarding');
         } else if (this.state.isLoading) this.setState({isLoading: false});
-      }
+      }*/
     }
   }
 

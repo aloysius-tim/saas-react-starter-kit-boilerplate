@@ -13,24 +13,26 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Onboarding.css';
 import { Steps, Icon } from 'antd';
 import Card from "../../../components/Layout/Card";
-import Pricing from "./Pricing";
+import Pay from "./Pay";
 import {toastr} from "react-redux-toastr";
 const { Step } = Steps;
 import {Elements, StripeProvider} from 'react-stripe-elements';
 import stripe from '../../../config/stripe'
-import {paymentAction} from "../../../actions/paymentActions";
+import {fetchCustomerAction, paymentAction} from "../../../actions/paymentActions";
 import {connect} from "react-redux";
 import history from "../../../history";
 import AuthService from "../../../services/AuthService";
 import UserService from "../../../services/UserService";
+import Plans from "../../../components/Pricing/Plans";
 
-class Onboarding extends React.Component {
+class Subscription extends React.Component {
   constructor(props){
     super(props);
     this.user = {};
     this.state = {
       stripe: null,
-      loading: false
+      loading: false,
+      visible: false,
     };
   }
 
@@ -38,8 +40,7 @@ class Onboarding extends React.Component {
     let jwt = AuthService.loggedIn();
     this.user = jwt.data.user;
 
-    /*if (this.user.onboarded === true)
-      history.push('/member');*/
+    this.props.fetchCustomer();
 
     if (window.Stripe) {
       this.setState({stripe: window.Stripe(stripe.pk)});
@@ -51,45 +52,34 @@ class Onboarding extends React.Component {
     }
   }
 
-  onboarded = () => {
-    this.setState({...this.state, loading: true});
-    UserService.onboarded().then(() => {
-      AuthService.updateToken().then(() => {
-        history.push('/member');
-      })
+  selectPlan = (plan) => {
+    this.setState({
+      selectedPlan: plan,
+      visible: true
     });
   };
-
-  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-    /*if (AuthService.loggedIn().data.user.onboarded === true)
-      history.push('/member');*/
-  }
 
   render() {
     return (
         <>
-          {this.state.loading && <div className="loading">Loading&#8230;</div>}
-          <Card header={
-            <Steps current={this.props.onboarding.step}>
-              <Step title="Signup" icon={<Icon type="user" />} />
-              <Step title="Pay" icon={this.state.step === 1 ? <Icon type="loading" /> : <Icon type="dollar" />} />
-              <Step title="Done" icon={<Icon type="smile-o" />} />
-            </Steps>
-          }>
+          {this.state.loading || this.props.payment.loading && <div className="loading">Loading&#8230;</div>}
 
-            {
-              this.props.onboarding.step === 1 &&
-              <StripeProvider stripe={this.state.stripe}>
-                <Elements>
-                  <Pricing/>
-                </Elements>
-              </StripeProvider>
-            }
+          <div className="background" style={{zIndex: '0'}}>
+            <div className="panel pricing-table">
+              {stripe.plans.map(plan => <Plans plan={plan} key={plan.id} selectPlan={this.selectPlan} user={this.props.payment.s_customer}/>)}
+            </div>
+          </div>
 
-            {
-              this.props.onboarding.step === 2 &&
-              <button onClick={this.onboarded}>DONE !</button>
-            }
+          <StripeProvider stripe={this.state.stripe}>
+            <Elements>
+              <Pay visible={this.state.visible} close={() => this.setState({...this.state, visible: false})} selectedPlan={this.state.selectedPlan}/>
+            </Elements>
+          </StripeProvider>
+
+          <Card>
+            <pre>
+              {JSON.stringify(this.props.payment, null, 2)}
+            </pre>
           </Card>
         </>
     );
@@ -97,16 +87,16 @@ class Onboarding extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  paymentAction: data => dispatch(paymentAction(data)),
+  fetchCustomer: () => dispatch(fetchCustomerAction()),
 });
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    onboarding: state.onboarding
+    payment: state.payment
   }
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(s)(Onboarding));
+)(withStyles(s)(Subscription));

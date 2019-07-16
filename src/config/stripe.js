@@ -17,6 +17,7 @@ module.exports = {
         'SLEEPS AFTER 30 MINS OF INACTIVITY'
       ],
       freeTrial: true,
+      trialDays: 15,
       featured: false
     },
 
@@ -30,6 +31,7 @@ module.exports = {
         'MULTIPLE WORKERS FOR MORE POWERFUL APPS'
       ],
       freeTrial: true,
+      trialDays: 15,
       featured: true
     },
 
@@ -43,8 +45,9 @@ module.exports = {
         'SIMPLE HORIZONTAL SCALABILITY'
       ],
       freeTrial: true,
+      trialDays: 15,
       featured: false
-    }
+    },
 
   ]
 };

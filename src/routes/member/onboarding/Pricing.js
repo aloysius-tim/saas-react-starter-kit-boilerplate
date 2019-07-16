@@ -94,7 +94,7 @@ class Pricing extends React.Component {
                 firstname,
                 lastname,
                 token: token.token.id,
-                plan: this.state.selectedPlan.id
+                planId: this.state.selectedPlan.id
               };
               console.log(token);
 
