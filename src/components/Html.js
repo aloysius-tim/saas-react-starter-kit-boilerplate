@@ -65,6 +65,7 @@ class Html extends React.Component {
         <link href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
         {/* Argon CSS */}
         <link type="text/css" href="/assets/css/argon.css" rel="stylesheet" />
+        <link type="text/css" href="/assets/css/global.css" rel="stylesheet" />
         <script id="stripe-js" src="https://js.stripe.com/v3/" async></script>
       </head>
       <body className={'bg-default'}>

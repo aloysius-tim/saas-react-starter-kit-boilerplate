@@ -10,7 +10,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Onboarding.css';
+import s from './Subscription.css';
 import { Steps, Icon } from 'antd';
 import Card from "../../../components/Layout/Card";
 import Pay from "./Pay";

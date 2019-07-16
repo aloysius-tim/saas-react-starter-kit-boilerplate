@@ -12,7 +12,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import stripe from '../../../config/stripe'
 import {injectStripe} from 'react-stripe-elements';
 import {CardElement} from 'react-stripe-elements';
-import s from './Onboarding.css';
+import s from './Onboarding.scss';
 import {Drawer, Button, Input, Form, Icon} from 'antd';
 import moment from "moment";
 import {toastr} from "react-redux-toastr";

@@ -62,7 +62,7 @@ const routes = {
           path: '/subscription',
           children: [
             {
-              path: '/',
+              path: '',
               load: () => import(/* webpackChunkName: 'member' */ './member/subscription'),
             },
           ]
