@@ -1,0 +1,4 @@
+Plan ID,Product ID,Product Name,Product Statement Descriptor,Nickname,Created (UTC),Amount,Currency,Interval,Interval Count,Usage Type,Aggregate Usage,Billing Scheme,Trial Period Days
+plan_FNYMoUBlDHOlB0,prod_FIGowODL8URvPV,RewardlyTest,RewardlyTest,ENTERPRISE,2019-07-05 08:58,10000,eur,month,1,licensed,,per_unit,15
+plan_FNYLzABRllwVoG,prod_FIGowODL8URvPV,RewardlyTest,RewardlyTest,SMALL TEAM,2019-07-05 08:58,3000,eur,month,1,licensed,,per_unit,15
+plan_FNYLbAbbWZd8Tv,prod_FIGowODL8URvPV,RewardlyTest,RewardlyTest,PERSONAL,2019-07-05 08:57,1500,eur,month,1,licensed,,per_unit,15

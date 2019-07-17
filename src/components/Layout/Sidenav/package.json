@@ -1,0 +1,6 @@
+{
+  "name": "Sidenav",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Sidenav.js"
+}
