@@ -7,4 +7,6 @@ module.exports = () => {
   Route.get('', 'ProfileController.me').middleware('jwtAuth')
   Route.post('update', 'ProfileController.update').middleware('jwtAuthVerified').validator('profile/UpdateProfile')
   Route.post('update/avatar', 'ProfileController.updateAvatar').middleware('jwtAuthVerified').validator('profile/UpdateAvatar')
-}
+
+  Route.get('test', 'ProfileController.test');
+};

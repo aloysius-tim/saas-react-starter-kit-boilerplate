@@ -1,23 +1,27 @@
-'use strict'
+'use strict';
 
-const uuid = use('uuid/v1')
-const Mail = use('Mail')
-const fs = use('fs')
-const Helpers = use('Helpers')
-const avatarDir = Helpers.publicPath('images/avatars/') + '/'
-const logger = use('App/Helpers/Logger')
-const Profile = use('App/Models/Profile')
-const cloudinary = use ('cloudinary')
+const uuid = use('uuid/v1');
+const Mail = use('Mail');
+const Env = use('Env');
+const fs = use('fs');
+const Helpers = use('Helpers');
+const avatarDir = Helpers.publicPath('images/avatars/') + '/';
+const logger = use('App/Helpers/Logger');
+const Profile = use('App/Models/Profile');
+const cloudinary = use ('cloudinary');
 
 class ProfileController {
-  
+  async test({request, response, auth, view}){
+    return view.render('emails.update-password', {});
+  }
+
   // upload cloudinary
   async updateAvatar({ request, response, auth }) {
     const user = await auth.getUser();
     const avatar = request.file('avatar', {
       types: ['image'],
       size: '3mb'
-    })
+    });
     
     if (!avatar || !avatar.tmpPath || !avatar.clientName) {
       return response.status(400).json({ message: "Please choose a file to upload." })
@@ -29,7 +33,7 @@ class ProfileController {
       folder: 'avatars',
       overwrite: true,
       width: 400, height: 400
-    }
+    };
     const { findFace } = request.all()
     if (findFace) {
       updConfig.crop = "thumb"
@@ -41,7 +45,7 @@ class ProfileController {
     }).catch((err) => {
       console.log(err)
       return Promise.reject(err)
-    })
+    });
   
     var profile = await user.profile().fetch()
     

@@ -73,7 +73,6 @@ class AuthController {
         console.log('User is already registered with sso');
         authUser.profile = await authUser.profile().fetch();
         jwt = await auth.withRefreshToken().generate(authUser, {user: authUser});
-        console.log(jwt);
         return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
       }
 
@@ -88,7 +87,6 @@ class AuthController {
         authUser.profile = await authUser.profile().fetch();
 
         jwt = await auth.withRefreshToken().generate(authUser, {user: authUser});
-        console.log(jwt);
         return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
       }
 
@@ -108,11 +106,20 @@ class AuthController {
       user.profile = await user.profile().fetch();
 
       jwt = await auth.withRefreshToken().generate(user, {user: user});
+      this.welcomeEmail(user);
       return response.redirect(`${Env.get('APP_URL')}/auth/login/${jwt.token}`);
     } catch (e) {
       console.log(e);
       return response.redirect(`${Env.get('APP_URL')}/auth/login`);
     }
+  }
+
+  welcomeEmail(user){
+      return Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : "verified", name: user.username }, (message) => {
+        message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
+        message.subject('Welcome to' + Env.get('APP_NAME'));
+        message.to(user.email)
+      });
   }
 
   async logout ({auth, response}) {
@@ -135,14 +142,9 @@ class AuthController {
 
     const res = await user.save();
     if (res) {
-      await Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : "verified" }, (message) => {
-        message.from('noreply@shop.khare.co.in');
-        message.subject('Welcome to Khare\'s Shop');
-        message.to(user.email)
-      });
-
       user = await User.query().where({'email': email}).first();
       user.profile = await user.profile().fetch();
+      await this.welcomeEmail(user);
 
       const result = await auth.withRefreshToken().generate(user, {user: user});
       await logger('info','User Signup', user.id, user.id, user.email);
@@ -155,8 +157,7 @@ class AuthController {
   }
   // POST
   async updatePassword({ request, response, auth }) {
-
-    const { password, newPassword } = request.all()
+    const { password, newPassword } = request.all();
     const user = auth.user
     const passwordValid = await Hash.verify(password, user.password);
     if(!passwordValid) {
@@ -168,12 +169,12 @@ class AuthController {
     const result = await user.save()
 
     if (result) {
-      await Mail.send('emails.update-password', { rawPassword: password }, (message) => {
-        message.from('noreply@shop.khare.co.in')
-        message.subject('Khare\'s Shop Password Update')
+      await Mail.send('emails.update-password', { name: user.username }, (message) => {
+        message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
+        message.subject('Password Update');
         message.to(user.email)
-      })
-      await logger('info','Password Updated', user.id, user.id, user.email)
+      });
+      await logger('info','Password Updated', user.id, user.id, user.email);
       return response.status(200).json({ message: "Passoword Updated."}, result)
     }
 
@@ -203,9 +204,9 @@ class AuthController {
     const res = await user.save()
 
     if (res) {
-      await Mail.send('emails.update-email', { token: user.confirmation_token }, (message) => {
-        message.from('noreply@shop.khare.co.in')
-        message.subject('Khare\'s Shop Email Update')
+      await Mail.send('emails.update-email', { token: user.confirmation_token, name: user.username, newEmail: email }, (message) => {
+        message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
+        message.subject('Email Update');
         message.to(user.email)
       })
       await logger('info','Email Updated', user.id, user.id, user.email)
@@ -232,11 +233,7 @@ class AuthController {
     }
 
     // resend verification
-    await Mail.send('emails.welcome', { token: user.confirmation_token }, (message) => {
-      message.from('noreply@shop.khare.co.in')
-      message.subject('Verification email')
-      message.to( user.email )
-    })
+    await this.welcomeEmail(user)
 
     // send response
     await logger('info','User Email Verify Link Sent', user.id, user.id, user.email)
@@ -345,8 +342,8 @@ class AuthController {
     await user.save()
 
     // resend verification
-    await Mail.send('emails.forgot', { token: user.reset_token }, (message) => {
-      message.from('noreply@shop.khare.co.in')
+    await Mail.send('emails.forgot', { token: user.reset_token, name: user.username }, (message) => {
+      message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
       message.subject('Reset password')
       message.to( user.email )
     })
@@ -373,7 +370,7 @@ class AuthController {
 
     await logger('info', 'User Passoword Reset', user.id, user.id, 'Password has been changed for ' + user.email + ', thank you.')
 
-    return response.status(200).json({ message: "Password has been changed, thank you."})
+    return response.status(200).json({ message: "Password has been changed, thank you, you can close this page."})
   }
   // POST
   async refreshToken({ request, response, auth }) {
@@ -457,7 +454,7 @@ class AuthController {
 
     if (result) {
       await Mail.send('emails.role-assign', { user }, (message) => {
-        message.from('noreply@shop.khare.co.in')
+        message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
         message.subject('Role assigned')
         message.to(user.email)
       })

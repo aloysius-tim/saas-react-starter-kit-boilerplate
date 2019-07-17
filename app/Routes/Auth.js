@@ -20,15 +20,14 @@ module.exports = () => {
 
   Route.post('refresh/token', 'AuthController.refreshToken').validator('auth/RefreshToken');
   Route.get('revoke/token', 'AuthController.revokeToken').middleware('jwtAuth');
-
-  Route.get('remove/user/:id', 'AuthController.removeUser').middleware('jwtAuthSuperAdmin');
-
-  Route.post('update/email', 'AuthController.updateEmail').middleware('jwtAuth').validator('auth/UpdateEmail').as('auth.update.email');
-  Route.post('update/password', 'AuthController.updatePassword').middleware('jwtAuth').validator('auth/UpdatePassword').as('auth.update.password');
   Route.get('my/tokens', 'AuthController.myTokens').middleware('jwtAuth');
+
+  //Route.post('update/email', 'AuthController.updateEmail').middleware('jwtAuth').validator('auth/UpdateEmail').as('auth.update.email');
+  //Route.post('update/password', 'AuthController.updatePassword').middleware('jwtAuth').validator('auth/UpdatePassword').as('auth.update.password');
 
   Route.post('assign/role', 'AuthController.assignRole').validator('auth/AssignRole').middleware('jwtAuthSuperAdmin');
   Route.get('toggle/user/ban/:id', 'AuthController.toggleUserBan').middleware('jwtAuthSuperAdmin');
+  Route.get('remove/user/:id', 'AuthController.removeUser').middleware('jwtAuthSuperAdmin');
   Route.get('users', 'AuthController.users').middleware('jwtAuthManager');
 
   /*  #######  Pages with view  ######### */;

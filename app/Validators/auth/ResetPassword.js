@@ -5,7 +5,7 @@ class ResetPassword {
   get rules () {
     return {
       token: 'required',
-      password: 'required|min:6'
+      password: 'required|min:6',
     }
   }
   
