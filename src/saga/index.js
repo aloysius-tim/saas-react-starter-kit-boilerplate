@@ -9,9 +9,9 @@ import {
   NEW_CARD_REQUEST,
   SET_DEFAULT_CARD,
   DELETE_CARD,
-  CANCEL_SUBSCRIPTION
+  CANCEL_SUBSCRIPTION, RESET_PASSWORD_REQUEST
 } from "../constants";
-import {socialLoginSaga, loginSaga, registerSaga} from "./authSaga";
+import {socialLoginSaga, loginSaga, registerSaga, resetPasswordSaga} from "./authSaga";
 import {paymentSaga, fetchCustomerSaga, newCardRequestSaga, setDefaultCardSaga, deleteCardSaga, cancelSubscriptionSaga} from "./paymentSaga";
 import {userMeSaga} from "./userSaga";
 
@@ -23,6 +23,7 @@ function* mySaga() {
   yield takeLatest(LOGIN_REQUEST.TRIGGER, loginSaga);
   yield takeLatest(REGISTER_REQUEST.TRIGGER, registerSaga);
   yield takeLatest(SOCIAL_LOGIN_REQUEST.TRIGGER, socialLoginSaga);
+  yield takeLatest(RESET_PASSWORD_REQUEST.TRIGGER, resetPasswordSaga);
 
   /**
    * PAYMENT

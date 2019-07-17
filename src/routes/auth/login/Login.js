@@ -12,8 +12,8 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.scss';
 import {connect} from "react-redux";
-import {loginAction, socialLoginAction} from "../../../actions/authActions";
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import {loginAction, resetPasswordAction, socialLoginAction} from "../../../actions/authActions";
+import { Form, Icon, Input, Button, Checkbox, Modal } from 'antd';
 import AuthService from "../../../services/AuthService";
 import {toastr} from 'react-redux-toastr'
 import Loader from 'react-loader-advanced';
@@ -23,6 +23,14 @@ import Link from "../../../components/Link";
 
 class Login extends React.Component {
   authService = new AuthService();
+
+  constructor(props){
+    super(props);
+    this.state = {
+      showResetForm: false,
+      email: null
+    }
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -45,7 +53,7 @@ class Login extends React.Component {
 
     return (
       <div>
-        {this.props.token && <div className="loading">Loading&#8230;</div>}
+        {(this.props.token || this.props.auth.loading) && <div className="loading">Loading&#8230;</div>}
         <div className="header bg-gradient-primary py-7 py-lg-8">
           <div className="container">
             <div className="header-body text-center mb-7">
@@ -182,7 +190,7 @@ class Login extends React.Component {
                 {
                   AuthService.getAuthProvider().password &&
                   <div className="col-6">
-                    <a href="#" className="text-light"><small>Forgot password?</small></a>
+                    <a onClick={() => this.setState({...this.state, showResetForm: true})} className="text-light"><small>Forgot password?</small></a>
                   </div>
                 }
                 <div className="col-6 text-right">
@@ -193,6 +201,18 @@ class Login extends React.Component {
           </div>
         </div>
 
+        <Modal
+          title="Reset password"
+          visible={this.state.showResetForm}
+          onOk={() => this.props.resetPassword(this.state.email) && this.setState({...this.state, showResetForm: false})}
+          onCancel={() => this.setState({...this.state, showResetForm: false})}
+        >
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Email"
+            onChange={(e) => this.setState({...this.state, email: e.target.value})}
+          />
+        </Modal>
       </div>
     );
   }
@@ -201,6 +221,7 @@ class Login extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: 'login' })(Login);
 
 const mapDispatchToProps = dispatch => ({
+  resetPassword: email => dispatch(resetPasswordAction(email)),
   loginAction: data => dispatch(loginAction(data)),
   socialLoginAction: data => dispatch(socialLoginAction(data)),
 });

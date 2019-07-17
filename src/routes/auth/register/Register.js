@@ -13,13 +13,21 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Register.scss';
 import AuthService from "../../../services/AuthService";
 import {CONST} from "../../../../env";
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import {Form, Icon, Input, Button, Checkbox, Modal} from 'antd';
 import Link from "../../../components/Link";
 import history from "../../../history";
-import {loginAction, registerAction, socialLoginAction} from "../../../actions/authActions";
+import {loginAction, registerAction, resetPasswordAction, socialLoginAction} from "../../../actions/authActions";
 import {connect} from "react-redux";
 
 class Register extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showResetForm: false,
+      email: null
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -180,9 +188,32 @@ class Register extends React.Component {
                   </div>
                 }
               </div>
+              <div className="row mt-3">
+                {
+                  AuthService.getAuthProvider().password &&
+                  <div className="col-6">
+                    <a onClick={() => this.setState({...this.state, showResetForm: true})} className="text-light"><small>Forgot password?</small></a>
+                  </div>
+                }
+                <div className="col-6 text-right">
+                  <Link to={'/auth/login'} className="text-light"><small>Login</small></Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <Modal
+          title="Reset password"
+          visible={this.state.showResetForm}
+          onOk={() => this.props.resetPassword(this.state.email) && this.setState({...this.state, showResetForm: false})}
+          onCancel={() => this.setState({...this.state, showResetForm: false})}
+        >
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Email"
+            onChange={(e) => this.setState({...this.state, email: e.target.value})}
+          />
+        </Modal>
       </div>
     );
   }
@@ -190,6 +221,7 @@ class Register extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   registerAction: data => dispatch(registerAction(data)),
+  resetPassword: email => dispatch(resetPasswordAction(email)),
 });
 
 const mapStateToProps = (state /*, ownProps*/) => {

@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 import request from '../../tools/request';
 import {CONST} from "../../env";
-import {LOGIN_REQUEST, SOCIAL_LOGIN_REQUEST} from "../constants";
+import {LOGIN_REQUEST, RESET_PASSWORD_REQUEST, SOCIAL_LOGIN_REQUEST} from "../constants";
 var jwtDecode = require('jwt-decode');
 
 import AuthService from "../services/AuthService";
@@ -67,6 +67,26 @@ export function* socialLoginSaga(action) {
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
+  } finally {
+    yield put(REQUEST_ACTION.fulfill());
+  }
+}
+
+export function* resetPasswordSaga(action) {
+  let REQUEST_ACTION = RESET_PASSWORD_REQUEST;
+
+  try {
+    yield put(REQUEST_ACTION.request());
+
+    const data = yield AuthService.resetPassword(action.payload);
+
+    yield put(REQUEST_ACTION.success(data));
+    toastr.success('Success', 'Check your emails, you will receive special link to reset your password');
+    AuthService.redirectUser();
+  } catch (e) {
+    console.log(e);
+    yield put(REQUEST_ACTION.failure(e));
+    toastr.error('Failure', e.body.message);
   } finally {
     yield put(REQUEST_ACTION.fulfill());
   }

@@ -9,6 +9,7 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 export const LOGIN_REQUEST = createRoutine('LOGIN_REQUEST');
 export const REGISTER_REQUEST = createRoutine('REGISTER_REQUEST');
 export const SOCIAL_LOGIN_REQUEST = createRoutine('SOCIAL_LOGIN_REQUEST');
+export const RESET_PASSWORD_REQUEST = createRoutine('RESET_PASSWORD_REQUEST');
 
 /**
  * PAYMENT

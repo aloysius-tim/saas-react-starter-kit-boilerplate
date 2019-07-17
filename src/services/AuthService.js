@@ -129,4 +129,13 @@ export default class AuthService {
     localStorage.removeItem('token');
     history.push('/auth/login');
   }
+
+  static *resetPassword(payload) {
+    return yield fetchUrl(`${CONST.apiUrl}/auth/forgot/password`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: payload.email
+      })
+    });
+  }
 }
