@@ -1,0 +1,18 @@
+# Node modules
+node_modules
+
+# Environment variables, never commit this file
+.env
+.env.dev
+
+# The development sqlite file
+database/development.sqlite
+.c9/
+.c9
+public/static
+public/static/*
+public/images/avatars/*
+public/app/*
+!public/images/avatars/.gitkeep
+
+.idea
