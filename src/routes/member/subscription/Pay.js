@@ -59,12 +59,15 @@ class Pay extends React.Component {
   };
 
   subscribe = () => {
-    this.props.paymentAction({planId: this.props.selectedPlan.id, sourceToken: null});
+    let planId = this.props.monthly ? this.props.selectedPlan.id : this.props.selectedPlan.yearly;
+    this.props.paymentAction({planId: planId, sourceToken: null});
     this.setState({...this.state, loading: false});
     this.props.close();
   };
 
   addCardAndSubscribe = (ev) => {
+    let planId = this.props.monthly ? this.props.selectedPlan.id : this.props.selectedPlan.yearly;
+
     ev.preventDefault();
 
     if (this.hasErrors(this.props.form.getFieldsError()))
@@ -96,7 +99,7 @@ class Pay extends React.Component {
                 firstname,
                 lastname,
                 sourceToken: token.token.id,
-                planId: this.props.selectedPlan.id
+                planId: planId
               };
               this.props.paymentAction(paymentRequest);
               this.props.close();
@@ -128,7 +131,16 @@ class Pay extends React.Component {
               <div>
                 <div>
                   <h3 className={'alignleft'}>Price:</h3>
-                  <h3 className={'alignright'}>{this.props.selectedPlan.price} €</h3>
+                  <h3 className={'alignright'}>
+                    {
+                      this.props.monthly &&
+                      this.props.selectedPlan.price
+                    }
+                    {
+                      !this.props.monthly &&
+                      this.props.selectedPlan.yearlyPrice
+                    }
+                    €</h3>
                 </div>
                 <div style={{clear: 'both'}}></div>
 

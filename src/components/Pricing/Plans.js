@@ -23,17 +23,36 @@ class Plans extends React.Component {
             this.props.plan.features.map(feature => <li key={feature} className="pricing-features-item">{feature}</li>)
           }
         </ul>
-        <span className="pricing-price">{this.props.plan.price}</span>
+        <span className="pricing-price">
+          {
+            this.props.monthly &&
+            this.props.plan.price
+          }
+          {
+            !this.props.monthly &&
+            this.props.plan.yearlyPrice
+          }
+        </span>
+
         {
-          this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id === this.props.plan.id &&
+          this.props.monthly && this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id === this.props.plan.id &&
           <p>Current plan</p>
         }
+        {
+          !this.props.monthly && this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id === this.props.plan.yearly &&
+          <p>Current plan</p>
+        }
+
         {
           this.props.user.subscriptions.data.length === 0 &&
           <a href="#" className="pricing-button" onClick={() => this.props.selectPlan(this.props.plan)}>Sign up</a>
         }
         {
-          (this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id !== this.props.plan.id) &&
+          (this.props.monthly && this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id !== this.props.plan.id) &&
+          <a href="#" className="pricing-button" onClick={() => this.props.selectPlan(this.props.plan)}>Change plan</a>
+        }
+        {
+          (!this.props.monthly && this.props.user.subscriptions.data.length > 0 && this.props.user.subscriptions.data[0].plan.id !== this.props.plan.yearly) &&
           <a href="#" className="pricing-button" onClick={() => this.props.selectPlan(this.props.plan)}>Change plan</a>
         }
       </div>

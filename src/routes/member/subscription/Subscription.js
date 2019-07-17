@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Subscription.css';
-import { Steps, Icon } from 'antd';
+import {Steps, Icon, Button} from 'antd';
 import Card from "../../../components/Layout/Card";
 import Pay from "./Pay";
 import {toastr} from "react-redux-toastr";
@@ -33,6 +33,7 @@ class Subscription extends React.Component {
       stripe: null,
       loading: false,
       visible: false,
+      monthly: true
     };
   }
 
@@ -64,17 +65,32 @@ class Subscription extends React.Component {
         <>
           {this.state.loading || this.props.payment.loading && <div className="loading">Loading&#8230;</div>}
 
-          <div className="background" style={{zIndex: '0'}}>
-            <div className="panel pricing-table">
-              {stripe.plans.map(plan => <Plans plan={plan} key={plan.id} selectPlan={this.selectPlan} user={this.props.payment.s_customer}/>)}
-            </div>
-          </div>
+          <Card header={
+            <div>
+              <h2 className="text-center">Choose a plan</h2>
+              <p className="text-center">Don't worry, you can change plans at any time</p>
 
-          <StripeProvider stripe={this.state.stripe}>
-            <Elements>
-              <Pay visible={this.state.visible} close={() => this.setState({...this.state, visible: false})} selectedPlan={this.state.selectedPlan}/>
-            </Elements>
-          </StripeProvider>
+              {
+                stripe.yearly &&
+                <div className={'text-center'}>
+                  <Button type={`${this.state.monthly ? 'primary': 'dashed'}`} onClick={() => this.setState({...this.state, monthly: true})}>Monthy</Button>
+                  <Button type={`${!this.state.monthly ? 'primary': 'dashed'}`} onClick={() => this.setState({...this.state, monthly: false})}>Yearly</Button>
+                </div>
+              }
+            </div>
+          }>
+            <div className="background" style={{zIndex: '0'}}>
+              <div className="panel pricing-table">
+                {stripe.plans.map(plan => <Plans plan={plan} key={plan.id} selectPlan={this.selectPlan} user={this.props.payment.s_customer} monthly={this.state.monthly}/>)}
+              </div>
+            </div>
+
+            <StripeProvider stripe={this.state.stripe}>
+              <Elements>
+                <Pay visible={this.state.visible} close={() => this.setState({...this.state, visible: false})} selectedPlan={this.state.selectedPlan} monthly={this.state.monthly}/>
+              </Elements>
+            </StripeProvider>
+          </Card>
 
           <Card>
             <pre>
