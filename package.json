@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ENV_PATH=.env.dev nodemon --watch app server.js",
+    "startWebhookTunnel": "ultrahook stripe 3333",
     "test": "node ace test"
   },
   "keywords": [

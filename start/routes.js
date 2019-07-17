@@ -11,6 +11,7 @@ Route.group(use('App/Routes/Profile')).prefix('api/profile');
 Route.group(use('App/Routes/Logs')).prefix('api/logs').middleware('jwtAuth');
 Route.group(use('App/Routes/Payment')).prefix('api/payment').middleware('jwtAuth');
 Route.group(use('App/Routes/User')).prefix('api/user').middleware('jwtAuth');
+Route.group(use('App/Routes/StripeWebHook')).prefix('api/stripe/webhook');
 
 // 404 page not found
 Route.any('*', ({ response, view }) => {
