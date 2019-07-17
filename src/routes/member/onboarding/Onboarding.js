@@ -8,28 +8,19 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Onboarding.scss';
 import { Steps, Icon } from 'antd';
 import Card from "../../../components/Layout/Card";
-import Pricing from "./Pricing";
-import {toastr} from "react-redux-toastr";
 const { Step } = Steps;
-import {Elements, StripeProvider} from 'react-stripe-elements';
-import stripe from '../../../config/stripe'
-import {paymentAction} from "../../../actions/paymentActions";
 import {connect} from "react-redux";
-import history from "../../../history";
 import AuthService from "../../../services/AuthService";
-import UserService from "../../../services/UserService";
 
 class Onboarding extends React.Component {
   constructor(props){
     super(props);
     this.user = {};
     this.state = {
-      stripe: null,
       loading: false
     };
   }
@@ -39,29 +30,6 @@ class Onboarding extends React.Component {
     this.user = jwt.data.user;
 
     /*if (this.user.onboarded === true)
-      history.push('/member');*/
-
-    if (window.Stripe) {
-      this.setState({stripe: window.Stripe(stripe.pk)});
-    } else {
-      document.querySelector('#stripe-js').addEventListener('load', () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({stripe: window.Stripe(stripe.pk)});
-      });
-    }
-  }
-
-  onboarded = () => {
-    this.setState({...this.state, loading: true});
-    UserService.onboarded().then(() => {
-      AuthService.updateToken().then(() => {
-        history.push('/member');
-      })
-    });
-  };
-
-  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-    /*if (AuthService.loggedIn().data.user.onboarded === true)
       history.push('/member');*/
   }
 
@@ -79,11 +47,7 @@ class Onboarding extends React.Component {
 
             {
               this.props.onboarding.step === 1 &&
-              <StripeProvider stripe={this.state.stripe}>
-                <Elements>
-                  <Pricing/>
-                </Elements>
-              </StripeProvider>
+              <div>...</div>
             }
 
             {
@@ -97,7 +61,6 @@ class Onboarding extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  paymentAction: data => dispatch(paymentAction(data)),
 });
 
 const mapStateToProps = (state /*, ownProps*/) => {

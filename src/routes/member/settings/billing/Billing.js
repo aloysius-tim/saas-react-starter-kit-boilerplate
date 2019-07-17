@@ -22,8 +22,6 @@ import {Table, Divider, Tag, Button, Form, Input, Icon, Drawer} from 'antd';
 import moment from 'moment';
 import stripe from "../../../../config/stripe";
 import {CardElement, Elements, injectStripe, StripeProvider} from "react-stripe-elements";
-import Pricing from "../../onboarding/Pricing";
-import Card from "../../../../components/Layout/Card";
 import {toastr} from "react-redux-toastr";
 import NewCard from "./NewCard";
 import Link from "../../../../components/Link";

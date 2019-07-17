@@ -17,7 +17,6 @@ import {Drawer, Button, Input, Form, Icon} from 'antd';
 import moment from "moment";
 import {toastr} from "react-redux-toastr";
 import Card from "../../../components/Layout/Card";
-import PricingPlan from "../../../components/Pricing/PricingPlan";
 import {paymentAction} from "../../../actions/paymentActions";
 import {connect} from "react-redux";
 import AuthService from "../../../services/AuthService";
