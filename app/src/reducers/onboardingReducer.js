@@ -1,4 +1,5 @@
-import {PAYMENT_REQUEST} from "../constants";
+/* eslint-disable no-param-reassign */
+import { PAYMENT_REQUEST } from '../constants';
 
 const initialState = {
   data: null,
@@ -10,7 +11,7 @@ const initialState = {
   errorMessage: null,
 };
 
-export function onboarding(state = initialState, action) {
+export default function onboarding(state = initialState, action) {
   switch (action.type) {
     case PAYMENT_REQUEST.SUCCESS:
       state = {
@@ -20,7 +21,7 @@ export function onboarding(state = initialState, action) {
         subscribed: true,
         step: state.step + 1,
         error: false,
-        errorMessage: null
+        errorMessage: null,
       };
       return state;
     case PAYMENT_REQUEST.FAILURE:
@@ -28,14 +29,14 @@ export function onboarding(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
+    case (PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 

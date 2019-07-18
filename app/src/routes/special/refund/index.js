@@ -8,13 +8,17 @@
  */
 
 import React from 'react';
-import Refund from "./Refund";
-import Layout from "../../../components/Layout/Layout";
+import Refund from './Refund';
+import Layout from '../../../components/Layout/Layout';
 
 function action() {
   return {
     title: 'Refund policy',
-    component: <Layout><Refund /></Layout>,
+    component: (
+      <Layout>
+        <Refund />
+      </Layout>
+    ),
   };
 }
 

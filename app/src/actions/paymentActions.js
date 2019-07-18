@@ -6,8 +6,8 @@ import {
   NEW_CARD_REQUEST,
   SET_DEFAULT_CARD,
   DELETE_CARD,
-  CANCEL_SUBSCRIPTION
-} from "../constants";
+  CANCEL_SUBSCRIPTION,
+} from '../constants';
 
 export function paymentAction(paymentRequest) {
   return {
@@ -26,27 +26,27 @@ export function fetchCustomerAction() {
 export function addNewCardAction(tokenId) {
   return {
     type: NEW_CARD_REQUEST.TRIGGER,
-    payload: {token: tokenId},
+    payload: { token: tokenId },
   };
 }
 
 export function setDefaultCardAction(cardId) {
   return {
     type: SET_DEFAULT_CARD.TRIGGER,
-    payload: {cardId},
+    payload: { cardId },
   };
 }
 
 export function deleteCardAction(cardId) {
   return {
     type: DELETE_CARD.TRIGGER,
-    payload: {cardId},
+    payload: { cardId },
   };
 }
 
 export function cancelSubscriptionAction(subId) {
   return {
     type: CANCEL_SUBSCRIPTION.TRIGGER,
-    payload: {subId},
+    payload: { subId },
   };
 }

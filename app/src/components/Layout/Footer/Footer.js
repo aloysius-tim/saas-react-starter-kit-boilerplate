@@ -18,16 +18,24 @@ class Footer extends React.Component {
       <div className="col-xl-6">
         <ul className="nav nav-footer justify-content-center justify-content-xl-end">
           <li className="nav-item">
-            <Link to={'/privacy-policy'} className="nav-link">Privacy</Link>
+            <Link to="/privacy-policy" className="nav-link">
+              Privacy
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/legal-notice'} className="nav-link">Legal</Link>
+            <Link to="/legal-notice" className="nav-link">
+              Legal
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/refund-policy'} className="nav-link">Refund</Link>
+            <Link to="/refund-policy" className="nav-link">
+              Refund
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to={'/terms-and-conditions'} className="nav-link">Terms</Link>
+            <Link to="/terms-and-conditions" className="nav-link">
+              Terms
+            </Link>
           </li>
         </ul>
       </div>

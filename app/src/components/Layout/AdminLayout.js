@@ -9,21 +9,24 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReduxToastr from 'react-redux-toastr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from './Header';
-import Sidenav from "./Sidenav";
-import Navigation from "./Navigation";
-import ReduxToastr from 'react-redux-toastr'
-import AuthService from "../../services/AuthService";
-import history from "../../history";
-import Link from "../Link";
-import Footer from "./Footer";
+import Sidenav from './Sidenav';
+import Navigation from './Navigation';
+import AuthService from '../../services/AuthService';
+import history from '../../history';
+import Link from '../Link';
+import Footer from './Footer';
 
 class MemberLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    context: PropTypes.any.isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -36,19 +39,23 @@ class MemberLayout extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line no-underscore-dangle
     this._updateUserContext();
   }
 
   componentDidUpdate() {
+    // eslint-disable-next-line no-underscore-dangle
     this._checkAndRedirect();
   }
 
-  _updateUserContext(){
+  _updateUserContext() {
     let jwt;
+    // eslint-disable-next-line no-cond-assign
     if ((jwt = AuthService.loggedIn(this.props.context))) {
       this.user = jwt.data.user;
       this.props.context.user.loggedIn = true;
 
+      // eslint-disable-next-line no-underscore-dangle
       this._checkAndRedirect();
     } else {
       history.push('/auth/login');
@@ -56,23 +63,21 @@ class MemberLayout extends React.Component {
   }
 
   _checkAndRedirect() {
-    let jwt = AuthService.loggedIn(this.props.context);
+    const jwt = AuthService.loggedIn(this.props.context);
     this.user = jwt.data.user;
 
     if (!jwt) {
-      if (!this.state.isLoading) this.setState({isLoading: true});
+      if (!this.state.isLoading) this.setState({ isLoading: true });
       this.props.context.user.loggedIn = false;
       history.push('/auth/login');
     } else {
-      let role = this.user.role;
+      // eslint-disable-next-line prefer-destructuring
+      const role = this.user.role;
 
-      if (role !== 'admin' && role !== 'superadmin')
-      {
-        if (!this.state.isLoading) this.setState({isLoading: true});
+      if (role !== 'admin' && role !== 'superadmin') {
+        if (!this.state.isLoading) this.setState({ isLoading: true });
         history.push('/unauthorized');
-      } else {
-        if (this.state.isLoading) this.setState({isLoading: false});
-      }
+      } else if (this.state.isLoading) this.setState({ isLoading: false });
     }
   }
 
@@ -83,20 +88,27 @@ class MemberLayout extends React.Component {
           <div className="loading">Loading&#8230;</div>
         ) : (
           <div>
-            <Sidenav user={this.user}/>
+            <Sidenav user={this.user} />
             <div className="main-content">
-              <Navigation user={this.user} title={this.props.title}/>
-              <Header/>
+              <Navigation user={this.user} title={this.props.title} />
+              <Header />
               <div className="container-fluid mt--7">
                 {this.props.children}
                 <footer className="footer">
                   <div className="row align-items-center justify-content-xl-between">
                     <div className="col-xl-6">
                       <div className="copyright text-center text-xl-left text-muted">
-                        © 2019 <Link to={'/'} className="font-weight-bold ml-1" target="_blank">SaaStr</Link>
+                        © 2019{' '}
+                        <Link
+                          to="/"
+                          className="font-weight-bold ml-1"
+                          target="_blank"
+                        >
+                          SaaStr
+                        </Link>
                       </div>
                     </div>
-                    <Footer/>
+                    <Footer />
                   </div>
                 </footer>
               </div>
@@ -109,7 +121,8 @@ class MemberLayout extends React.Component {
               transitionIn="fadeIn"
               transitionOut="fadeOut"
               progressBar
-              closeOnToastrClick/>
+              closeOnToastrClick
+            />
           </div>
         )}
       </div>

@@ -9,21 +9,25 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReduxToastr from 'react-redux-toastr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from './Header';
-import Sidenav from "./Sidenav";
-import Navigation from "./Navigation";
-import ReduxToastr from 'react-redux-toastr'
-import AuthService from "../../services/AuthService";
-import history from "../../history";
-import Footer from "./Footer";
-import Link from "../Link";
+import Sidenav from './Sidenav';
+import Navigation from './Navigation';
+import AuthService from '../../services/AuthService';
+import history from '../../history';
+import Footer from './Footer';
+import Link from '../Link';
 
 class MemberLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    context: PropTypes.any.isRequired,
+    sidenav: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -36,48 +40,52 @@ class MemberLayout extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line no-underscore-dangle
     this._updateUserContext();
   }
 
   componentDidUpdate() {
+    // eslint-disable-next-line no-underscore-dangle
     this._checkAndRedirect();
   }
 
-  _updateUserContext(){
+  _updateUserContext() {
     let jwt;
+    // eslint-disable-next-line no-cond-assign
     if ((jwt = AuthService.loggedIn(this.props.context))) {
       this.user = jwt.data.user;
       this.props.context.user.loggedIn = true;
 
+      // eslint-disable-next-line no-underscore-dangle
       this._checkAndRedirect();
-      if (this.state.isLoading) this.setState({isLoading: false});
+      if (this.state.isLoading) this.setState({ isLoading: false });
     } else {
       history.push('/auth/login');
     }
   }
 
   _checkAndRedirect() {
-    let jwt = AuthService.loggedIn(this.props.context);
+    const jwt = AuthService.loggedIn(this.props.context);
 
     if (!jwt) {
-      if (!this.state.isLoading) this.setState({isLoading: true});
+      if (!this.state.isLoading) this.setState({ isLoading: true });
       this.props.context.user.loggedIn = false;
       history.push('/auth/login');
     } else {
       this.user = jwt.data.user;
-      console.log(this.user);
-      let role = this.user.role;
+      // eslint-disable-next-line prefer-destructuring
+      const role = this.user.role;
 
       if (role !== 'member') {
-        if (!this.state.isLoading) this.setState({isLoading: true});
+        if (!this.state.isLoading) this.setState({ isLoading: true });
         history.push('/unauthorized');
       }
-      /*else {
+      /* else {
         if (this.user.onboarded === false && window.location.pathname !== '/member/onboarding') {
           if (!this.state.isLoading) this.setState({isLoading: true});
           history.push('/member/onboarding');
         } else if (this.state.isLoading) this.setState({isLoading: false});
-      }*/
+      } */
     }
   }
 
@@ -88,20 +96,32 @@ class MemberLayout extends React.Component {
           <div className="loading">Loading&#8230;</div>
         ) : (
           <div>
-            {this.props.sidenav && <Sidenav user={this.user}/>}
+            {this.props.sidenav && <Sidenav user={this.user} />}
             <div className="main-content">
-              <Navigation showLogo={!this.props.sidenav} context={this.props.context} user={this.user} title={this.props.title}/>
-              <Header/>
+              <Navigation
+                showLogo={!this.props.sidenav}
+                context={this.props.context}
+                user={this.user}
+                title={this.props.title}
+              />
+              <Header />
               <div className="container-fluid mt--7">
                 {this.props.children}
                 <footer className="footer">
                   <div className="row align-items-center justify-content-xl-between">
                     <div className="col-xl-6">
                       <div className="copyright text-center text-xl-left text-muted">
-                        © 2019 <Link to={'/'} className="font-weight-bold ml-1" target="_blank">SaaStr</Link>
+                        © 2019{' '}
+                        <Link
+                          to="/"
+                          className="font-weight-bold ml-1"
+                          target="_blank"
+                        >
+                          SaaStr
+                        </Link>
                       </div>
                     </div>
-                    <Footer/>
+                    <Footer />
                   </div>
                 </footer>
               </div>
@@ -114,7 +134,8 @@ class MemberLayout extends React.Component {
               transitionIn="fadeIn"
               transitionOut="fadeOut"
               progressBar
-              closeOnToastrClick/>
+              closeOnToastrClick
+            />
           </div>
         )}
       </div>

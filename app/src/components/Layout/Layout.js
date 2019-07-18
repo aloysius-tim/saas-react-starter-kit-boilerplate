@@ -9,20 +9,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReduxToastr from 'react-redux-toastr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
-import NavigationAuth from "./Navigation/NavigationAuth";
-import ReduxToastr from 'react-redux-toastr'
-import Link from "../Link";
-import Footer from "./Footer";
+import NavigationAuth from './Navigation/NavigationAuth';
+import Link from '../Link';
+import Footer from './Footer';
 
 class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    title: PropTypes.string.isRequired
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.user = {};
   }
@@ -31,7 +32,7 @@ class Layout extends React.Component {
     return (
       <div>
         <div className="main-content">
-          <NavigationAuth title={this.props.title}/>
+          <NavigationAuth title={this.props.title} />
           {this.props.children}
         </div>
         <footer className="py-5">
@@ -39,10 +40,17 @@ class Layout extends React.Component {
             <div className="row align-items-center justify-content-xl-between">
               <div className="col-xl-6">
                 <div className="copyright text-center text-xl-left text-muted">
-                  © 2019 <Link to={'/'} className="font-weight-bold ml-1" target="_blank">SaaStr</Link>
+                  © 2019{' '}
+                  <Link
+                    to="/"
+                    className="font-weight-bold ml-1"
+                    target="_blank"
+                  >
+                    SaaStr
+                  </Link>
                 </div>
               </div>
-              <Footer/>
+              <Footer />
             </div>
           </div>
         </footer>
@@ -54,7 +62,8 @@ class Layout extends React.Component {
           transitionIn="fadeIn"
           transitionOut="fadeOut"
           progressBar
-          closeOnToastrClick/>
+          closeOnToastrClick
+        />
       </div>
     );
   }

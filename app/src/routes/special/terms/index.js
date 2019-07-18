@@ -8,13 +8,17 @@
  */
 
 import React from 'react';
-import Terms from "./Terms";
-import Layout from "../../../components/Layout/Layout";
+import Terms from './Terms';
+import Layout from '../../../components/Layout/Layout';
 
 function action() {
   return {
     title: 'Terms & Conditions',
-    component: <Layout><Terms /></Layout>,
+    component: (
+      <Layout>
+        <Terms />
+      </Layout>
+    ),
   };
 }
 

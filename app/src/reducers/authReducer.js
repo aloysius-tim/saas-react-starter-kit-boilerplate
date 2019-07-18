@@ -1,4 +1,9 @@
-import {LOGIN_REQUEST, REGISTER_REQUEST, RESET_PASSWORD_REQUEST} from "../constants";
+/* eslint-disable no-param-reassign */
+import {
+  LOGIN_REQUEST,
+  REGISTER_REQUEST,
+  RESET_PASSWORD_REQUEST,
+} from '../constants';
 
 const initialState = {
   data: null,
@@ -11,7 +16,7 @@ const initialState = {
   token: null,
 };
 
-export function auth(state = initialState, action) {
+export default function auth(state = initialState, action) {
   switch (action.type) {
     /**
      * LOGIN_REQUEST
@@ -22,7 +27,7 @@ export function auth(state = initialState, action) {
         ...action.payload,
         loading: false,
         error: false,
-        errorMessage: null
+        errorMessage: null,
       };
       return state;
     case LOGIN_REQUEST.FAILURE:
@@ -30,14 +35,14 @@ export function auth(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case LOGIN_REQUEST.REQUEST, LOGIN_REQUEST.TRIGGER:
+    case (LOGIN_REQUEST.REQUEST, LOGIN_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
@@ -48,7 +53,7 @@ export function auth(state = initialState, action) {
       state = {
         ...state,
         ...action.payload,
-        loading: false
+        loading: false,
       };
       return state;
     case REGISTER_REQUEST.FAILURE:
@@ -56,14 +61,14 @@ export function auth(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case REGISTER_REQUEST.REQUEST, REGISTER_REQUEST.TRIGGER:
+    case (REGISTER_REQUEST.REQUEST, REGISTER_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
@@ -73,21 +78,21 @@ export function auth(state = initialState, action) {
     case RESET_PASSWORD_REQUEST.SUCCESS:
       state = {
         ...state,
-        loading: false
+        loading: false,
       };
       return state;
     case RESET_PASSWORD_REQUEST.FAILURE:
       state = {
         ...state,
         error: true,
-        loading: false
+        loading: false,
       };
       return state;
-    case RESET_PASSWORD_REQUEST.REQUEST, RESET_PASSWORD_REQUEST.TRIGGER:
+    case (RESET_PASSWORD_REQUEST.REQUEST, RESET_PASSWORD_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 

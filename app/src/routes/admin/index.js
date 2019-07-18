@@ -8,14 +8,18 @@
  */
 
 import React from 'react';
-import Admin from "./Admin";
-import AdminLayout from "../../components/Layout/AdminLayout";
+import Admin from './Admin';
+import AdminLayout from '../../components/Layout/AdminLayout';
 
 function action(context) {
   return {
     title: 'Admin',
     chunks: ['admin'],
-    component: <AdminLayout context={context} title={'Admin'}><Admin/></AdminLayout>,
+    component: (
+      <AdminLayout context={context} title="Admin">
+        <Admin />
+      </AdminLayout>
+    ),
   };
 }
 

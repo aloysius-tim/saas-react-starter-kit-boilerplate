@@ -27,19 +27,15 @@ function checkStatus(response) {
   }
 
   // parse response
-  console.log('checkStatus',response)
-  return response.json().then((json) => {
-    return {
-      json,
-      throwError: true,
-    };
-  });
+  return response.json().then(json => ({
+    json,
+    throwError: true,
+  }));
 }
 
 // this checks if response had an error and in this case it throws it
 function checkException(response) {
   if (response.throwError === true) {
-    console.log('checkException',response);
     const error = response.json;
     throw error;
   }
@@ -55,25 +51,24 @@ function checkException(response) {
  *
  * @return {object}           The response data
  */
-/*export default function request(url, options) {
+/* export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);
-}*/
+} */
 
 export default function request(url, method = 'GET', body = {}) {
-  var params = {
-    method: method,
+  const params = {
+    method,
     headers: {
       'Content-Type': 'application/json',
-      //'authorization': 'Bearer ' + CONST.token()
+      // 'authorization': 'Bearer ' + CONST.token()
     },
   };
-  if (method === 'POST')
-    params.body = JSON.stringify(body);
+  if (method === 'POST') params.body = JSON.stringify(body);
 
   return fetch(url, params)
     .then(checkStatus)
     .then(checkException)
-    .then(parseJSON)
+    .then(parseJSON);
 }

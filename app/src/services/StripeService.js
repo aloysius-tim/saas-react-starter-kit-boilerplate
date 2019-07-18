@@ -1,5 +1,5 @@
-import {CONST} from "../../env";
-import fetch from "../../tools/fetch"
+import { CONST } from '../../env';
+import fetch from '../../tools/fetch';
 
 export default class StripeService {
   constructor() {
@@ -9,7 +9,7 @@ export default class StripeService {
   *subscribe(paymentRequest) {
     return yield fetch(`${this.domain}/payment/subscription`, {
       method: 'POST',
-      body: JSON.stringify(paymentRequest)
+      body: JSON.stringify(paymentRequest),
     });
   }
 

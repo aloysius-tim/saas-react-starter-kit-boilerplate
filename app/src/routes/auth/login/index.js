@@ -9,7 +9,7 @@
 
 import React from 'react';
 import Login from './Login';
-import AuthPageLayout from "../../../components/Layout/AuthPageLayout";
+import AuthPageLayout from '../../../components/Layout/AuthPageLayout';
 
 const title = 'Log In';
 
@@ -19,7 +19,7 @@ function action(context) {
     title,
     component: (
       <AuthPageLayout context={context} title={title}>
-        <Login token={context.params.token} context={context}/>
+        <Login token={context.params.token} context={context} />
       </AuthPageLayout>
     ),
   };

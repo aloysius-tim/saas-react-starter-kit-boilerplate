@@ -26,8 +26,8 @@ export const CANCEL_SUBSCRIPTION = createRoutine('CANCEL_SUBSCRIPTION');
  */
 export const FETCH_USER_ME = createRoutine('FETCH_USER_ME');
 
-//routine.trigger(payload) === { type: 'ACTION_TYPE_PREFIX/TRIGGER', payload };
-//routine.request(payload) === { type: 'ACTION_TYPE_PREFIX/REQUEST', payload };
-//routine.success(payload) === { type: 'ACTION_TYPE_PREFIX/SUCCESS', payload };
-//routine.failure(payload) === { type: 'ACTION_TYPE_PREFIX/FAILURE', payload };
-//routine.fulfill(payload) === { type: 'ACTION_TYPE_PREFIX/FULFILL', payload };
+// routine.trigger(payload) === { type: 'ACTION_TYPE_PREFIX/TRIGGER', payload };
+// routine.request(payload) === { type: 'ACTION_TYPE_PREFIX/REQUEST', payload };
+// routine.success(payload) === { type: 'ACTION_TYPE_PREFIX/SUCCESS', payload };
+// routine.failure(payload) === { type: 'ACTION_TYPE_PREFIX/FAILURE', payload };
+// routine.fulfill(payload) === { type: 'ACTION_TYPE_PREFIX/FULFILL', payload };

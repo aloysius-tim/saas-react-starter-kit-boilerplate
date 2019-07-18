@@ -1,5 +1,6 @@
-import {CONST} from "../../env";
-import fetch from "../../tools/fetch"
+/* eslint-disable no-unused-vars */
+import { CONST } from '../../env';
+import fetch from '../../tools/fetch';
 
 export default class AuthService {
   constructor() {
@@ -9,9 +10,9 @@ export default class AuthService {
   *login(email, password) {
     const data = yield fetch(`${this.domain}/auth/authorise`, {
       method: 'POST',
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     });
 
-    return {}
+    return {};
   }
 }

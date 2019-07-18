@@ -1,11 +1,12 @@
+/* eslint-disable no-param-reassign */
 import {
   FETCH_CUSTOMER,
   NEW_CARD_REQUEST,
   SET_DEFAULT_CARD,
   DELETE_CARD,
   CANCEL_SUBSCRIPTION,
-  PAYMENT_REQUEST
-} from "../constants";
+  PAYMENT_REQUEST,
+} from '../constants';
 
 const initialState = {
   data: null,
@@ -21,16 +22,16 @@ const initialState = {
 
   s_customer: {
     subscriptions: {
-      data: []
+      data: [],
     },
     sources: {
-      data: []
+      data: [],
     },
-    default_source: ''
+    default_source: '',
   },
 };
 
-export function payment(state = initialState, action) {
+export default function payment(state = initialState, action) {
   switch (action.type) {
     /**
      * PAYMENT_REQUEST
@@ -43,7 +44,7 @@ export function payment(state = initialState, action) {
         subscribed: true,
         step: state.step + 1,
         error: false,
-        errorMessage: null
+        errorMessage: null,
       };
       return state;
     case PAYMENT_REQUEST.FAILURE:
@@ -52,19 +53,19 @@ export function payment(state = initialState, action) {
         error: true,
         errorMessage: action.payload,
         subscribed: false,
-        loading: false
+        loading: false,
       };
       return state;
-    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
+    case (PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
         subscribed: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-    /************************************************************
+    /** **********************************************************
      * FETCH_CUSTOMER
      */
     case FETCH_CUSTOMER.SUCCESS:
@@ -85,19 +86,18 @@ export function payment(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case FETCH_CUSTOMER.REQUEST, FETCH_CUSTOMER.TRIGGER:
+    case (FETCH_CUSTOMER.REQUEST, FETCH_CUSTOMER.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-
-    /************************************************************
+    /** **********************************************************
      * NEW_CARD_REQUEST
      */
     case NEW_CARD_REQUEST.SUCCESS:
@@ -114,18 +114,18 @@ export function payment(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case NEW_CARD_REQUEST.REQUEST, NEW_CARD_REQUEST.TRIGGER:
+    case (NEW_CARD_REQUEST.REQUEST, NEW_CARD_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-    /************************************************************
+    /** **********************************************************
      * SET_DEFAULT_CARD
      */
     case SET_DEFAULT_CARD.SUCCESS:
@@ -142,18 +142,18 @@ export function payment(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case SET_DEFAULT_CARD.REQUEST, SET_DEFAULT_CARD.TRIGGER:
+    case (SET_DEFAULT_CARD.REQUEST, SET_DEFAULT_CARD.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-    /************************************************************
+    /** **********************************************************
      * DELETE_CARD
      */
     case DELETE_CARD.SUCCESS:
@@ -170,18 +170,18 @@ export function payment(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case DELETE_CARD.REQUEST, DELETE_CARD.TRIGGER:
+    case (DELETE_CARD.REQUEST, DELETE_CARD.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-    /************************************************************
+    /** **********************************************************
      * CANCEL_SUBSCRIPTION
      */
     case CANCEL_SUBSCRIPTION.SUCCESS:
@@ -198,18 +198,18 @@ export function payment(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case CANCEL_SUBSCRIPTION.REQUEST, CANCEL_SUBSCRIPTION.TRIGGER:
+    case (CANCEL_SUBSCRIPTION.REQUEST, CANCEL_SUBSCRIPTION.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 
-    /************************************************************
+    /** **********************************************************
      * DEFAULT
      */
     default:

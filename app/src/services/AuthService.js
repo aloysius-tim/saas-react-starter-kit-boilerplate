@@ -1,9 +1,9 @@
-import {CONST} from "../../env";
-import fetchUrl from "../../tools/fetch";
-import history from '../history.js'
-import auth from '../config/auth'
+import { CONST } from '../../env';
+import fetchUrl from '../../tools/fetch';
+import history from '../history';
+import auth from '../config/auth';
 
-var jwtDecode = require('jwt-decode');
+const jwtDecode = require('jwt-decode');
 
 export default class AuthService {
   constructor() {
@@ -16,8 +16,8 @@ export default class AuthService {
       method: 'POST',
       body: JSON.stringify({
         email,
-        password
-      })
+        password,
+      }),
     });
     AuthService.setToken(data.token);
     return data;
@@ -29,25 +29,24 @@ export default class AuthService {
       body: JSON.stringify({
         email,
         password,
-        name
-      })
+        name,
+      }),
     });
     AuthService.setToken(data.token);
     return data;
   }
 
-  static getAuthProvider(){
+  static getAuthProvider() {
     return auth.providers;
   }
 
-  async fetchUser(){
-    return fetchUrl(`${CONST.apiUrl}/auth/me`, {
-      method: 'GET'
+  async fetchUser() {
+    return fetchUrl(`${this.domain}/auth/me`, {
+      method: 'GET',
     });
   }
 
-  static async updateToken(){
-    console.log("Update token");
+  static async updateToken() {
     const data = await fetchUrl(`${CONST.apiUrl}/auth/me/refresh`, {
       method: 'GET',
     });
@@ -60,8 +59,10 @@ export default class AuthService {
    */
   static redirectUser(context = null) {
     let jwt;
+    // eslint-disable-next-line no-cond-assign
     if ((jwt = AuthService.loggedIn(context))) {
-      let user = jwt.data.user;
+      // eslint-disable-next-line prefer-destructuring
+      const user = jwt.data.user;
 
       switch (user.role) {
         case 'admin':
@@ -79,13 +80,14 @@ export default class AuthService {
     }
   }
 
-  static loggedIn(context = null){
+  static loggedIn(context = null) {
     try {
       // Checks if there is a saved token and it's still valid
       const token = AuthService.getToken();
 
       if (!token) {
         if (context) {
+          // eslint-disable-next-line no-param-reassign
           context.user = {
             loggedIn: false,
             populated: false,
@@ -95,18 +97,18 @@ export default class AuthService {
       }
 
       const decodedToken = jwtDecode(token);
-      let dateNow = new Date();
+      const dateNow = new Date();
 
       if (context) {
+        // eslint-disable-next-line no-param-reassign
         context.user = {
           loggedIn: true,
           populated: true,
-          ...decodedToken.data.user
+          ...decodedToken.data.user,
         };
       }
 
-      if ((decodedToken.exp <= dateNow.getTime()) === false)
-        return false;
+      if (decodedToken.exp <= dateNow.getTime() === false) return false;
       return decodedToken;
     } catch (e) {
       localStorage.removeItem('token');
@@ -114,17 +116,17 @@ export default class AuthService {
     }
   }
 
-  static setToken(idToken){
+  static setToken(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('token', idToken);
   }
 
-  static getToken(){
+  static getToken() {
     // Retrieves the user token from localStorage
     return localStorage.getItem('token');
   }
 
-  static logout(){
+  static logout() {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('token');
     history.push('/auth/login');
@@ -134,8 +136,8 @@ export default class AuthService {
     return yield fetchUrl(`${CONST.apiUrl}/auth/forgot/password`, {
       method: 'POST',
       body: JSON.stringify({
-        email: payload.email
-      })
+        email: payload.email,
+      }),
     });
   }
 }

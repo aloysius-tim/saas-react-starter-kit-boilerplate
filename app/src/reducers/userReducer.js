@@ -1,14 +1,15 @@
-import {FETCH_USER_ME} from "../constants";
+/* eslint-disable no-param-reassign */
+import { FETCH_USER_ME } from '../constants';
 
 const initialState = {
   data: null,
 
   loading: false,
   error: false,
-  errorMessage: null
+  errorMessage: null,
 };
 
-export function user(state = initialState, action) {
+export default function user(state = initialState, action) {
   switch (action.type) {
     case FETCH_USER_ME.SUCCESS:
       state = {
@@ -24,14 +25,14 @@ export function user(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
-    case FETCH_USER_ME.REQUEST, FETCH_USER_ME.TRIGGER:
+    case (FETCH_USER_ME.REQUEST, FETCH_USER_ME.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 

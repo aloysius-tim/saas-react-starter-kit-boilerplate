@@ -11,9 +11,8 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 class SuperAdmin extends React.Component {
-
   render() {
-    return <div>Super Admin</div>
+    return <div>Super Admin</div>;
   }
 }
 

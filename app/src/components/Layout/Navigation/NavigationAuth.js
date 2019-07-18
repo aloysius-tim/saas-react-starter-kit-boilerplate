@@ -8,7 +8,6 @@
  */
 
 import React from 'react';
-import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../../Link';
@@ -18,12 +17,19 @@ class NavigationAuth extends React.Component {
     return (
       <nav className="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div className="container px-4">
-          <Link className="navbar-brand" to={'/'}>
-            <img src="/assets/img/brand/white.png"/>
+          <Link className="navbar-brand" to="/">
+            <img src="/assets/img/brand/white.png" alt="Logo white" />
           </Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"/>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar-collapse-main"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbar-collapse-main">
             {/* Collapse header */}
@@ -31,15 +37,21 @@ class NavigationAuth extends React.Component {
               <div className="row">
                 <div className="col-6 collapse-brand">
                   <a href="../index.html">
-                    <img src="/assets/img/brand/blue.png"/>
+                    <img src="/assets/img/brand/blue.png" alt="Logo blue" />
                   </a>
                 </div>
                 <div className="col-6 collapse-close">
-                  <button type="button" className="navbar-toggler" data-toggle="collapse"
-                          data-target="#navbar-collapse-main" aria-controls="sidenav-main" aria-expanded="false"
-                          aria-label="Toggle sidenav">
-                    <span/>
-                    <span/>
+                  <button
+                    type="button"
+                    className="navbar-toggler"
+                    data-toggle="collapse"
+                    data-target="#navbar-collapse-main"
+                    aria-controls="sidenav-main"
+                    aria-expanded="false"
+                    aria-label="Toggle sidenav"
+                  >
+                    <span />
+                    <span />
                   </button>
                 </div>
               </div>
@@ -47,14 +59,14 @@ class NavigationAuth extends React.Component {
             {/* Navbar items */}
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/auth/register'}>
-                  <i className="ni ni-circle-08"/>
+                <Link className="nav-link nav-link-icon" to="/auth/register">
+                  <i className="ni ni-circle-08" />
                   <span className="nav-link-inner--text">Register</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link nav-link-icon" to={'/auth/login'} >
-                  <i className="ni ni-key-25"/>
+                <Link className="nav-link nav-link-icon" to="/auth/login">
+                  <i className="ni ni-key-25" />
                   <span className="nav-link-inner--text">Login</span>
                 </Link>
               </li>

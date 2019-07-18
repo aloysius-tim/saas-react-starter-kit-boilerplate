@@ -1,11 +1,9 @@
-/* eslint-disable import/prefer-default-export */
+import { FETCH_USER_ME } from '../constants';
 
-import {LOGIN_REQUEST} from "../constants";
-import {FETCH_USER_ME} from "../constants";
-
+// eslint-disable-next-line import/prefer-default-export
 export function fetchUserAction() {
   return {
     type: FETCH_USER_ME.TRIGGER,
-    payload: {}
+    payload: {},
   };
 }

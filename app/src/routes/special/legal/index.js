@@ -8,13 +8,17 @@
  */
 
 import React from 'react';
-import Legal from "./Legal";
-import Layout from "../../../components/Layout/Layout";
+import Legal from './Legal';
+import Layout from '../../../components/Layout/Layout';
 
 function action() {
   return {
     title: 'Legal Notice',
-    component: <Layout><Legal /></Layout>,
+    component: (
+      <Layout>
+        <Legal />
+      </Layout>
+    ),
   };
 }
 

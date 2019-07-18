@@ -19,7 +19,6 @@ import configureStore from './store/configureStore';
 import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
-import ReduxToastr from 'react-redux-toastr'
 
 // Global (context) variables that can be easily accessed from any React component
 // https://facebook.github.io/react/docs/context.html
@@ -36,7 +35,7 @@ const context = {
   user: {
     loggedIn: false,
     populated: false,
-    email: "member@keynes.fr",
+    email: 'member@keynes.fr',
     facebook_id: null,
     foursquare_id: null,
     github_id: null,
@@ -44,18 +43,20 @@ const context = {
     id: 2,
     instagram_id: null,
     linkedin_id: null,
-    //onboarded: false,
+    // onboarded: false,
     profile: {
-      avatar: "https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x",
-      created_at: "2019-07-08 19:44:23",
-      first_name: "null",
+      avatar:
+        'https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x',
+      created_at: '2019-07-08 19:44:23',
+      first_name: 'null',
       id: 2,
-      last_name: "null",
-      name: "loading...",
-      remote_avatar: "https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x",
-      updated_at: "2019-07-08 23:38:29",
+      last_name: 'null',
+      name: 'loading...',
+      remote_avatar:
+        'https://s.gravatar.com/avatar/2a01161f01ccbf3ddbaadb7ddbf216a7?s=100&r=x',
+      updated_at: '2019-07-08 23:38:29',
       user_id: 2,
-    }
+    },
   },
   // Universal HTTP client
   fetch: createFetch(fetch, {

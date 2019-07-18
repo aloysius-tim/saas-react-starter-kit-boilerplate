@@ -8,16 +8,16 @@
  */
 
 import React from 'react';
-import Onboarding from "./Onboarding";
-import MemberLayout from "../../../components/Layout/MemberLayout";
+import Onboarding from './Onboarding';
+import MemberLayout from '../../../components/Layout/MemberLayout';
 
 async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <MemberLayout context={context} sidenav={false} title={'Onboarding'}>
-        <Onboarding context={context}/>
+      <MemberLayout context={context} sidenav={false} title="Onboarding">
+        <Onboarding context={context} />
       </MemberLayout>
     ),
   };

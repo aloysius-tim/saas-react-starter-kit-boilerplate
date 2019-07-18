@@ -9,7 +9,7 @@
 
 import React from 'react';
 import Register from './Register';
-import AuthPageLayout from "../../../components/Layout/AuthPageLayout";
+import AuthPageLayout from '../../../components/Layout/AuthPageLayout';
 
 const title = 'New User Registration';
 
@@ -19,9 +19,9 @@ function action(context) {
     title,
     component: (
       <AuthPageLayout context={context} title={title}>
-        <Register/>
+        <Register />
       </AuthPageLayout>
-      ),
+    ),
   };
 }
 

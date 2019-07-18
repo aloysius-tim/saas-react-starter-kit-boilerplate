@@ -8,13 +8,13 @@
  */
 
 import React from 'react';
-import SuperAdmin from "./SuperAdmin";
+import SuperAdmin from './SuperAdmin';
 
 function action(context) {
   return {
     title: 'SuperAdmin',
     chunks: ['admin'],
-    component: <SuperAdmin context={context} title={'SuperAdmin'}/>,
+    component: <SuperAdmin context={context} title="SuperAdmin" />,
   };
 }
 

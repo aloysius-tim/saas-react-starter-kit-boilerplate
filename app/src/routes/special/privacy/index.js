@@ -8,13 +8,17 @@
  */
 
 import React from 'react';
-import Privacy from "./Privacy";
-import Layout from "../../../components/Layout/Layout";
+import Privacy from './Privacy';
+import Layout from '../../../components/Layout/Layout';
 
 function action() {
   return {
     title: 'Privacy policy',
-    component: <Layout><Privacy /></Layout>,
+    component: (
+      <Layout>
+        <Privacy />
+      </Layout>
+    ),
   };
 }
 

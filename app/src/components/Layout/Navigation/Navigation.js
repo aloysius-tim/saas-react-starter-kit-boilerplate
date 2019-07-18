@@ -8,31 +8,44 @@
  */
 
 import React from 'react';
-import cx from 'classnames';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../../Link';
-import AuthService from "../../../services/AuthService";
-import UserAction from "./UserAction";
+import UserAction from './UserAction';
 
 class Navigation extends React.Component {
+  static propTypes = {
+    showLogo: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
+    user: PropTypes.object.isRequired,
+  };
 
   render() {
     return (
-      <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <nav
+        className="navbar navbar-top navbar-expand-md navbar-dark"
+        id="navbar-main"
+      >
         <div className="container-fluid">
           {/* Brand */}
-          <Link className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" to={'/'}>
-            {
-              !this.props.showLogo && <span>{this.props.title}</span>
-            }
-            {
-              this.props.showLogo &&
-              <img src="/assets/img/brand/white.png" className="navbar-brand-img" height={'50px'} />
-            }
+          <Link
+            className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+            to="/"
+          >
+            {!this.props.showLogo && <span>{this.props.title}</span>}
+            {this.props.showLogo && (
+              <img
+                src="/assets/img/brand/white.png"
+                className="navbar-brand-img"
+                height="50px"
+                alt="Logo white"
+              />
+            )}
           </Link>
 
-          <UserAction user={this.props.user} collapsed={false}/>
+          <UserAction user={this.props.user} collapsed={false} />
         </div>
       </nav>
     );

@@ -8,14 +8,12 @@
  */
 
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 class Admin extends React.Component {
-
   render() {
-    return <div>Admin</div>
+    return <div>Admin</div>;
   }
 }
 
 export { Admin as ErrorPageWithoutStyle };
-export default (Admin);
+export default Admin;

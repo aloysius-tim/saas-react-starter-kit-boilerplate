@@ -1,11 +1,12 @@
-import {PAYMENT_REQUEST} from "../constants";
+/* eslint-disable no-param-reassign */
+import { PAYMENT_REQUEST } from '../constants';
 
 const initialState = {
   data: null,
 
   loading: false,
   error: false,
-  errorMessage: null
+  errorMessage: null,
 };
 
 export default function auth(state = initialState, action) {
@@ -25,15 +26,15 @@ export default function auth(state = initialState, action) {
         ...state,
         error: true,
         errorMessage: action.payload,
-        loading: false
+        loading: false,
       };
       return state;
 
-    case PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER:
+    case (PAYMENT_REQUEST.REQUEST, PAYMENT_REQUEST.TRIGGER):
       state = {
         ...state,
         error: false,
-        loading: true
+        loading: true,
       };
       return state;
 

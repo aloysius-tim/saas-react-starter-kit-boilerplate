@@ -7,6 +7,6 @@ module.exports = {
     instagram: false,
     foursquare: false,
     twitter: false,
-    linkedin: true
-  }
+    linkedin: true,
+  },
 };

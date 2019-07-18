@@ -8,8 +8,8 @@
  */
 
 import React from 'react';
-import MemberLayout from "../../../../components/Layout/MemberLayout";
-import Billing from "./Billing";
+import MemberLayout from '../../../../components/Layout/MemberLayout';
+import Billing from './Billing';
 
 const title = 'User billing';
 
@@ -18,8 +18,8 @@ function action(context) {
     chunks: ['member'],
     title,
     component: (
-      <MemberLayout context={context} sidenav={true} title={'Billing'}>
-        <Billing/>
+      <MemberLayout context={context} sidenav title="Billing">
+        <Billing />
       </MemberLayout>
     ),
   };

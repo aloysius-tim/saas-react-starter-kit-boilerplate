@@ -8,16 +8,16 @@
  */
 
 import React from 'react';
-import Subscription from "./Subscription";
-import MemberLayout from "../../../components/Layout/MemberLayout";
+import Subscription from './Subscription';
+import MemberLayout from '../../../components/Layout/MemberLayout';
 
 async function action(context) {
   return {
     title: 'React Starter Kit',
     chunks: ['member'],
     component: (
-      <MemberLayout context={context} sidenav={false} title={'Onboarding'}>
-        <Subscription context={context}/>
+      <MemberLayout context={context} sidenav={false} title="Onboarding">
+        <Subscription context={context} />
       </MemberLayout>
     ),
   };

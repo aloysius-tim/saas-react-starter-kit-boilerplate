@@ -1,14 +1,17 @@
-import { put } from 'redux-saga/effects'
-import request from '../../tools/request';
-import {CONST} from "../../env";
-import {CANCEL_SUBSCRIPTION, FETCH_CUSTOMER, NEW_CARD_REQUEST, PAYMENT_REQUEST, SET_DEFAULT_CARD} from "../constants";
-
-import {toastr} from "react-redux-toastr";
-import StripeService from "../services/StripeService";
-import history from '../history'
+import { put } from 'redux-saga/effects';
+import { toastr } from 'react-redux-toastr';
+import {
+  CANCEL_SUBSCRIPTION,
+  FETCH_CUSTOMER,
+  NEW_CARD_REQUEST,
+  PAYMENT_REQUEST,
+  SET_DEFAULT_CARD,
+} from '../constants';
+import StripeService from '../services/StripeService';
+import history from '../history';
 
 export function* paymentSaga(action) {
-  let REQUEST_ACTION = PAYMENT_REQUEST;
+  const REQUEST_ACTION = PAYMENT_REQUEST;
   const stripeService = new StripeService();
 
   try {
@@ -17,9 +20,10 @@ export function* paymentSaga(action) {
     const data = yield stripeService.subscribe(action.payload);
 
     yield put(REQUEST_ACTION.success(data));
-    toastr.success('Success', 'You\'ve been subscibed successfully');
+    toastr.success('Success', "You've been subscibed successfully");
     history.push('/member');
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
@@ -29,7 +33,7 @@ export function* paymentSaga(action) {
 }
 
 export function* fetchCustomerSaga() {
-  let REQUEST_ACTION = FETCH_CUSTOMER;
+  const REQUEST_ACTION = FETCH_CUSTOMER;
   const stripeService = new StripeService();
 
   try {
@@ -39,6 +43,7 @@ export function* fetchCustomerSaga() {
 
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
@@ -48,7 +53,7 @@ export function* fetchCustomerSaga() {
 }
 
 export function* newCardRequestSaga(action) {
-  let REQUEST_ACTION = NEW_CARD_REQUEST;
+  const REQUEST_ACTION = NEW_CARD_REQUEST;
   const stripeService = new StripeService();
 
   try {
@@ -59,6 +64,7 @@ export function* newCardRequestSaga(action) {
     toastr.success('Success', 'You can now use this new credit card');
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
@@ -68,7 +74,7 @@ export function* newCardRequestSaga(action) {
 }
 
 export function* setDefaultCardSaga(action) {
-  let REQUEST_ACTION = SET_DEFAULT_CARD;
+  const REQUEST_ACTION = SET_DEFAULT_CARD;
   const stripeService = new StripeService();
 
   try {
@@ -79,6 +85,7 @@ export function* setDefaultCardSaga(action) {
     toastr.success('Success', 'Your default credit card have been updated');
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
@@ -88,7 +95,7 @@ export function* setDefaultCardSaga(action) {
 }
 
 export function* deleteCardSaga(action) {
-  let REQUEST_ACTION = SET_DEFAULT_CARD;
+  const REQUEST_ACTION = SET_DEFAULT_CARD;
   const stripeService = new StripeService();
 
   try {
@@ -99,6 +106,7 @@ export function* deleteCardSaga(action) {
     toastr.success('Success', 'Your card have been deleted');
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);
@@ -108,7 +116,7 @@ export function* deleteCardSaga(action) {
 }
 
 export function* cancelSubscriptionSaga(action) {
-  let REQUEST_ACTION = CANCEL_SUBSCRIPTION;
+  const REQUEST_ACTION = CANCEL_SUBSCRIPTION;
   const stripeService = new StripeService();
 
   try {
@@ -119,6 +127,7 @@ export function* cancelSubscriptionSaga(action) {
     toastr.success('Success', 'We canceled your subscription');
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     yield put(REQUEST_ACTION.failure(e));
     toastr.error('Failure', e.message);

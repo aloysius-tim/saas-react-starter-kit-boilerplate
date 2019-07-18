@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga/effects';
 import {
   LOGIN_REQUEST,
   PAYMENT_REQUEST,
@@ -9,14 +9,26 @@ import {
   NEW_CARD_REQUEST,
   SET_DEFAULT_CARD,
   DELETE_CARD,
-  CANCEL_SUBSCRIPTION, RESET_PASSWORD_REQUEST
-} from "../constants";
-import {socialLoginSaga, loginSaga, registerSaga, resetPasswordSaga} from "./authSaga";
-import {paymentSaga, fetchCustomerSaga, newCardRequestSaga, setDefaultCardSaga, deleteCardSaga, cancelSubscriptionSaga} from "./paymentSaga";
-import {userMeSaga} from "./userSaga";
+  CANCEL_SUBSCRIPTION,
+  RESET_PASSWORD_REQUEST,
+} from '../constants';
+import {
+  socialLoginSaga,
+  loginSaga,
+  registerSaga,
+  resetPasswordSaga,
+} from './authSaga';
+import {
+  paymentSaga,
+  fetchCustomerSaga,
+  newCardRequestSaga,
+  setDefaultCardSaga,
+  deleteCardSaga,
+  cancelSubscriptionSaga,
+} from './paymentSaga';
+import userMeSaga from './userSaga';
 
 function* mySaga() {
-
   /**
    * AUTH
    */
