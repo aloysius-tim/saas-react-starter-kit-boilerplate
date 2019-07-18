@@ -41,7 +41,11 @@
     "sqlite3": "^4.0.0",
     "stripe": "^7.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  },
   "autoload": {
     "App": "./app"
   }

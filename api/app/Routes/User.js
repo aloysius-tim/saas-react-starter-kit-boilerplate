@@ -7,4 +7,3 @@ module.exports = () => {
   Route.get('/me', 'AuthController.me').middleware('jwtAuth');
 };
 
-

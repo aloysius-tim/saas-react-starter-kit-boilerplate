@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
   /*
@@ -72,7 +72,7 @@ module.exports = {
     password: 'password',
     options: {
       secret: Env.get('APP_KEY'),
-      expiresIn: Env.get('JWT_EXPIRE', 604800 ) // 7 days
+      expiresIn: Env.get('JWT_EXPIRE', 604800) // 7 days
     }
   }
-}
+};

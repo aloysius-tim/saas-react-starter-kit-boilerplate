@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
-const Model = use('Model')
+const Model = use('Model');
 
 class Token extends Model {
 }
 
-module.exports = Token
+module.exports = Token;

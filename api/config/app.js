@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
   /*
@@ -172,7 +172,7 @@ module.exports = {
     */
     console: {
       driver: 'console',
-      name: 'adonis-app',
+      name: 'adonis-app'
     },
 
     /*
@@ -188,7 +188,7 @@ module.exports = {
     */
     file: {
       driver: 'file',
-      filename: 'saastr.log',
+      filename: 'saastr.log'
     }
   }
 };

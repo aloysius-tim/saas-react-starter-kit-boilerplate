@@ -3,8 +3,7 @@
 const Route = use('Route');
 
 module.exports = () => {
-
-  /**********************************************************
+  /** ********************************************************
    * CARD
    */
   Route.get('/card/new/:tokenId', 'PaymentController.newCreditCard')
@@ -14,7 +13,7 @@ module.exports = () => {
   Route.get('/card/delete/:cardId', 'PaymentController.deleteCard')
     .middleware('jwtAuth');
 
-  /**********************************************************
+  /** ********************************************************
    * SUBSCRIPTION
    */
   Route.post('/subscription/subscribe', 'PaymentController.subscribeCustomer')
@@ -29,12 +28,10 @@ module.exports = () => {
     .middleware('jwtAuth');
 
 
-
-  /**********************************************************
+  /** ********************************************************
    * CUSTOMER
    */
   Route.get('/customer/me', 'PaymentController.getCustomer')
     .middleware('jwtAuth');
 };
-
 

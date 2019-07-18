@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = {
   /*
@@ -16,8 +16,9 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
+  // eslint-disable-next-line no-unused-vars
   origin (currentOrigin) {
-    return true //currentOrigin === 'mywebsite.com'
+    return true; // currentOrigin === 'mywebsite.com'
   },
 
   /*
@@ -86,4 +87,4 @@ module.exports = {
   |
   */
   maxAge: 90
-}
+};
