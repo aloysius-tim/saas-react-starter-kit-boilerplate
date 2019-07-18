@@ -29,19 +29,11 @@ class Plans extends React.Component {
             </li>
           ))}
         </ul>
-        <span className="pricing-price">
-          {this.props.monthly && this.props.plan.price}
-          {!this.props.monthly && this.props.plan.yearlyPrice}
-        </span>
+        <span className="pricing-price">{this.props.plan.price}</span>
 
-        {this.props.monthly &&
-          this.props.user.subscriptions.data.length > 0 &&
+        {this.props.user.subscriptions.data.length > 0 &&
           this.props.user.subscriptions.data[0].plan.id ===
             this.props.plan.id && <p>Current plan</p>}
-        {!this.props.monthly &&
-          this.props.user.subscriptions.data.length > 0 &&
-          this.props.user.subscriptions.data[0].plan.id ===
-            this.props.plan.yearly && <p>Current plan</p>}
 
         {this.props.user.subscriptions.data.length === 0 && (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
@@ -53,25 +45,12 @@ class Plans extends React.Component {
             Sign up
           </a>
         )}
-        {this.props.monthly &&
-          this.props.user.subscriptions.data.length > 0 &&
+        {this.props.user.subscriptions.data.length > 0 &&
           this.props.user.subscriptions.data[0].plan.id !==
             this.props.plan.id && (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <a
               href="#"
-              className="pricing-button"
-              onClick={() => this.props.selectPlan(this.props.plan)}
-            >
-              Change plan
-            </a>
-          )}
-        {!this.props.monthly &&
-          this.props.user.subscriptions.data.length > 0 &&
-          this.props.user.subscriptions.data[0].plan.id !==
-            this.props.plan.yearly && (
-            // eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-            <a
               className="pricing-button"
               onClick={() => this.props.selectPlan(this.props.plan)}
             >
@@ -86,7 +65,6 @@ class Plans extends React.Component {
 export default withStyles(s)(Plans);
 
 Plans.propTypes = {
-  monthly: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   plan: PropTypes.object.isRequired,
   selectPlan: PropTypes.func.isRequired,

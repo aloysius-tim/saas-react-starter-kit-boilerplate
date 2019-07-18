@@ -210,5 +210,6 @@ NewCard.propTypes = {
   form: PropTypes.any.isRequired,
   payment: PropTypes.any.isRequired,
   showNewCardForm: PropTypes.any.isRequired,
-  stripe: PropTypes.any.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  stripe: PropTypes.any,
 };

@@ -352,5 +352,6 @@ Login.propTypes = {
   loginAction: PropTypes.any.isRequired,
   resetPassword: PropTypes.any.isRequired,
   socialLoginAction: PropTypes.any.isRequired,
-  token: PropTypes.any.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  token: PropTypes.any,
 };

@@ -20,7 +20,8 @@ import Footer from './Footer';
 class Layout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    title: PropTypes.string.isRequired
+    // eslint-disable-next-line react/require-default-props
+    title: PropTypes.string,
   };
 
   constructor(props) {

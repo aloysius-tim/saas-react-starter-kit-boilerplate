@@ -15,7 +15,7 @@ import s from './Card.css';
 class Card extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    header: PropTypes.node.isRequired,
+    header: PropTypes.node,
   };
 
   render() {

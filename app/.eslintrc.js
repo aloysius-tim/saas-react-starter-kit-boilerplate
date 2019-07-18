@@ -87,6 +87,9 @@ module.exports = {
     // ESLint plugin for prettier formatting
     // https://github.com/prettier/eslint-plugin-prettier
     'prettier/prettier': 'error',
+
+    'consistent-return': 'off',
+    'array-callback-return': 'off'
   },
 
   settings: {

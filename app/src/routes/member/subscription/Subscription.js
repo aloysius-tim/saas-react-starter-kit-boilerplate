@@ -99,15 +99,26 @@ class Subscription extends React.Component {
         >
           <div className="background" style={{ zIndex: '0' }}>
             <div className="panel pricing-table">
-              {stripe.plans.map(plan => (
-                <Plans
-                  plan={plan}
-                  key={plan.id}
-                  selectPlan={this.selectPlan}
-                  user={this.props.payment.s_customer}
-                  monthly={this.state.monthly}
-                />
-              ))}
+              {stripe.plans.map(plan => {
+                if (this.state.monthly && plan.monthly === true)
+                  return (
+                    <Plans
+                      plan={plan}
+                      key={plan.id}
+                      selectPlan={this.selectPlan}
+                      user={this.props.payment.s_customer}
+                    />
+                  );
+                else if (!this.state.monthly && plan.monthly === false)
+                  return (
+                    <Plans
+                      plan={plan}
+                      key={plan.id}
+                      selectPlan={this.selectPlan}
+                      user={this.props.payment.s_customer}
+                    />
+                  );
+              })}
             </div>
           </div>
 
@@ -117,7 +128,6 @@ class Subscription extends React.Component {
                 visible={this.state.visible}
                 close={() => this.setState({ ...this.state, visible: false })}
                 selectedPlan={this.state.selectedPlan}
-                monthly={this.state.monthly}
               />
             </Elements>
           </StripeProvider>

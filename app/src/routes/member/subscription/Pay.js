@@ -57,18 +57,14 @@ class Pay extends React.Component {
   };
 
   subscribe = () => {
-    const planId = this.props.monthly
-      ? this.props.selectedPlan.id
-      : this.props.selectedPlan.yearly;
+    const planId = this.props.selectedPlan.id;
     this.props.paymentAction({ planId, sourceToken: null });
     this.setState({ ...this.state, loading: false });
     this.props.close();
   };
 
   addCardAndSubscribe = ev => {
-    const planId = this.props.monthly
-      ? this.props.selectedPlan.id
-      : this.props.selectedPlan.yearly;
+    const planId = this.props.selectedPlan.id;
 
     ev.preventDefault();
 
@@ -138,8 +134,7 @@ class Pay extends React.Component {
                 <div>
                   <h3 className="alignleft">Price:</h3>
                   <h3 className="alignright">
-                    {this.props.monthly && this.props.selectedPlan.price}
-                    {!this.props.monthly && this.props.selectedPlan.yearlyPrice}
+                    {this.props.selectedPlan.price}
                     €
                   </h3>
                 </div>
@@ -323,10 +318,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 Pay.propTypes = {
   close: PropTypes.any.isRequired,
   form: PropTypes.any.isRequired,
-  monthly: PropTypes.any.isRequired,
   payment: PropTypes.any.isRequired,
   paymentAction: PropTypes.any.isRequired,
-  selectedPlan: PropTypes.any.isRequired,
-  stripe: PropTypes.any.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  selectedPlan: PropTypes.object,
+  // eslint-disable-next-line react/require-default-props
+  stripe: PropTypes.any,
   visible: PropTypes.any.isRequired,
 };
