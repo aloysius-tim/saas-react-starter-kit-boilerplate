@@ -25,7 +25,7 @@ import {
   fetchCustomerAction,
   setDefaultCardAction,
 } from '../../../../actions/paymentActions';
-import stripe from '../../../../config/stripe';
+import config from '../../../../config';
 
 class Billing extends React.Component {
   constructor(props) {
@@ -60,11 +60,11 @@ class Billing extends React.Component {
   componentDidMount() {
     if (window.Stripe) {
       // eslint-disable-next-line react/no-did-mount-set-state
-      this.setState({ stripe: window.Stripe(stripe.pk) });
+      this.setState({ stripe: window.Stripe(config.stripe.pk) });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        this.setState({ stripe: window.Stripe(stripe.pk) });
+        this.setState({ stripe: window.Stripe(config.stripe.pk) });
       });
     }
 

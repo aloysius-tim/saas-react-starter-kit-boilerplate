@@ -17,7 +17,7 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 import s from './Subscription.css';
 import Card from '../../../components/Layout/Card';
 import Pay from './Pay';
-import stripe from '../../../config/stripe';
+import config from '../../../config';
 import { fetchCustomerAction } from '../../../actions/paymentActions';
 import AuthService from '../../../services/AuthService';
 import Plans from '../../../components/Pricing/Plans';
@@ -42,11 +42,11 @@ class Subscription extends React.Component {
 
     if (window.Stripe) {
       // eslint-disable-next-line react/no-did-mount-set-state
-      this.setState({ stripe: window.Stripe(stripe.pk) });
+      this.setState({ stripe: window.Stripe(config.stripe.pk) });
     } else {
       document.querySelector('#stripe-js').addEventListener('load', () => {
         // Create Stripe instance once Stripe.js loads
-        this.setState({ stripe: window.Stripe(stripe.pk) });
+        this.setState({ stripe: window.Stripe(config.stripe.pk) });
       });
     }
   }
@@ -74,7 +74,7 @@ class Subscription extends React.Component {
                 Don't worry, you can change plans at any time
               </p>
 
-              {stripe.yearly && (
+              {config.stripe.yearly && (
                 <div className="text-center">
                   <Button
                     type={`${this.state.monthly ? 'primary' : 'dashed'}`}
@@ -99,7 +99,7 @@ class Subscription extends React.Component {
         >
           <div className="background" style={{ zIndex: '0' }}>
             <div className="panel pricing-table">
-              {stripe.plans.map(plan => {
+              {config.stripe.plans.map(plan => {
                 if (this.state.monthly && plan.monthly === true)
                   return (
                     <Plans

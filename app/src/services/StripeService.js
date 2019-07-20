@@ -1,9 +1,10 @@
-import { CONST } from '../../env';
 import fetch from '../../tools/fetch';
+import config from '../config';
 
 export default class StripeService {
   constructor() {
-    this.domain = CONST.apiUrl;
+    this.domain = config.api.serverUrl;
+    console.log(this.domain)
   }
 
   *subscribe(paymentRequest) {

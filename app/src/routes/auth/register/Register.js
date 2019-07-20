@@ -15,12 +15,12 @@ import { Form, Icon, Input, Button, Modal } from 'antd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Register.scss';
 import AuthService from '../../../services/AuthService';
-import { CONST } from '../../../../env';
 import Link from '../../../components/Link';
 import {
   registerAction,
   resetPasswordAction,
 } from '../../../actions/authActions';
+import config from '../../../config';
 
 class Register extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class Register extends React.Component {
                   <div className="text-center">
                     {AuthService.getAuthProvider().facebook && (
                       <a
-                        href={`${CONST.apiUrl}/auth/facebook`}
+                        href={`${config.api.serverUrl}/auth/facebook`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -105,7 +105,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().github && (
                       <a
-                        href={`${CONST.apiUrl}/auth/github`}
+                        href={`${config.api.serverUrl}/auth/github`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -119,7 +119,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().google && (
                       <a
-                        href={`${CONST.apiUrl}/auth/google`}
+                        href={`${config.api.serverUrl}/auth/google`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -133,7 +133,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().foursquare && (
                       <a
-                        href={`${CONST.apiUrl}/auth/foursquare`}
+                        href={`${config.api.serverUrl}/auth/foursquare`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -147,7 +147,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().instagram && (
                       <a
-                        href={`${CONST.apiUrl}/auth/instagram`}
+                        href={`${config.api.serverUrl}/auth/instagram`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -161,7 +161,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().linkedin && (
                       <a
-                        href={`${CONST.apiUrl}/auth/linkedin`}
+                        href={`${config.api.serverUrl}/auth/linkedin`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">
@@ -175,7 +175,7 @@ class Register extends React.Component {
                     )}
                     {AuthService.getAuthProvider().twitter && (
                       <a
-                        href={`${CONST.apiUrl}/auth/twitter`}
+                        href={`${config.api.serverUrl}/auth/twitter`}
                         className="btn btn-neutral btn-icon"
                       >
                         <span className="btn-inner--icon">

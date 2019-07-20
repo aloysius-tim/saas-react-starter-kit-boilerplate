@@ -1,13 +1,12 @@
-import { CONST } from '../../env';
 import fetchUrl from '../../tools/fetch';
 import history from '../history';
-import auth from '../config/auth';
+import config from '../config';
 
 const jwtDecode = require('jwt-decode');
 
 export default class AuthService {
   constructor() {
-    this.domain = CONST.apiUrl;
+    this.domain = config.api.serverUrl;
     this.login = this.login.bind(this);
   }
 
@@ -37,7 +36,7 @@ export default class AuthService {
   }
 
   static getAuthProvider() {
-    return auth.providers;
+    return config.auth.providers;
   }
 
   async fetchUser() {
@@ -47,7 +46,7 @@ export default class AuthService {
   }
 
   static async updateToken() {
-    const data = await fetchUrl(`${CONST.apiUrl}/auth/me/refresh`, {
+    const data = await fetchUrl(`${config.api.serverUrl}/auth/me/refresh`, {
       method: 'GET',
     });
     AuthService.setToken(data.token);
@@ -133,7 +132,7 @@ export default class AuthService {
   }
 
   static *resetPassword(payload) {
-    return yield fetchUrl(`${CONST.apiUrl}/auth/forgot/password`, {
+    return yield fetchUrl(`${config.api.serverUrl}/auth/forgot/password`, {
       method: 'POST',
       body: JSON.stringify({
         email: payload.email,

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { CONST } from '../../env';
 import fetch from '../../tools/fetch';
+import config from '../config';
 
 export default class AuthService {
   constructor() {
-    this.domain = CONST.apiUrl;
+    this.domain = config.api.serverUrl;
   }
 
   *login(email, password) {
