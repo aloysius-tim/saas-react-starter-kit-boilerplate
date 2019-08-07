@@ -107,7 +107,7 @@ export default class AuthService {
         };
       }
 
-      if (decodedToken.exp <= dateNow.getTime() === false) return false;
+      if (decodedToken.exp * 1000 <= dateNow.getTime()) return false;
       return decodedToken;
     } catch (e) {
       localStorage.removeItem('token');
