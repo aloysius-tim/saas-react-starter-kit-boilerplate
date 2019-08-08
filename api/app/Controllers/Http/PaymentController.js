@@ -62,23 +62,35 @@ class PaymentController {
             }]
           }
         );
+        // eslint-disable-next-line brace-style
       }
 
       /**
        * Case the customer subscribe his first plan
-       * /!\ In this particular case, user can fraud and subscribe a new trial every 15 days...
+       * /!\ the data field subscribed is set to true on first subscription to disallow trial
+       * if user cancel his plan and subscribe to a new one. No trial if subscribed === true
+       * meaning the user had in the past a subscription
        */
-      if (!haveSubscription) {
+      else if (!haveSubscription) {
         console.log('Subscribe customer to a plan');
         const sPlan = await Stripe.plans.retrieve(planId);
-        sSubscription = await Stripe.subscriptions.create({
-          customer: sCustomer.id,
-          items: [{ plan: planId }],
-          trial_end: moment().add(sPlan.trial_period_days ? sPlan.trial_period_days : 0, 'days').unix()
-        });
+        if (user.subscribed === false)
+          sSubscription = await Stripe.subscriptions.create({
+            customer: sCustomer.id,
+            items: [{ plan: planId }],
+            trial_end: moment().add(sPlan.trial_period_days ? sPlan.trial_period_days : 0, 'days').unix()
+          });
+        else
+          sSubscription = await Stripe.subscriptions.create({
+            customer: sCustomer.id,
+            items: [{ plan: planId }]
+          });
+        user.subscribed = true;
       }
 
       sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
+      user.current_plan = planId;
+      await user.save();
       return response.status(200).json({ s_customer: sCustomer, s_subscription: sSubscription });
     } catch (e) {
       console.log(e.message);
@@ -149,9 +161,10 @@ class PaymentController {
     try {
       if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
 
-      // await Stripe.subscriptions.del(subId);
       await Stripe.subscriptions.update(subId, { cancel_at_period_end: true });
 
+      user.current_plan = null;
+      await user.save();
       const sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
       return response.status(200).json(sCustomer);
     } catch (e) {

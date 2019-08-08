@@ -18,6 +18,8 @@ class UserSchema extends Schema {
 
       table.boolean('onboarded').defaultTo(false);
       table.string('stripe_cus_id');
+      table.string('current_plan').nullable();
+      table.boolean('subscribed').defaultTo(false);
 
       table.string('provider').nullable();
       table.string('facebook_id').nullable();
