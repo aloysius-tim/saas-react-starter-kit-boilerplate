@@ -6,6 +6,7 @@ import {
   DELETE_CARD,
   CANCEL_SUBSCRIPTION,
   PAYMENT_REQUEST,
+  GET_INVOICES,
 } from '../constants';
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   subscribed: false,
   step: 1,
 
+  invoices: [],
   s_customer: {
     subscriptions: {
       data: [],
@@ -202,6 +204,35 @@ export default function payment(state = initialState, action) {
       };
       return state;
     case (CANCEL_SUBSCRIPTION.REQUEST, CANCEL_SUBSCRIPTION.TRIGGER):
+      state = {
+        ...state,
+        error: false,
+        loading: true,
+      };
+      return state;
+
+    /** **********************************************************
+     * GET_INVOICES
+     */
+    case GET_INVOICES.SUCCESS:
+      state = {
+        ...state,
+        invoices: action.payload.data,
+        loading: false,
+        error: false,
+        errorMessage: null,
+      };
+      return state;
+    case GET_INVOICES.FAILURE:
+      state = {
+        ...state,
+        invoices: [],
+        error: true,
+        errorMessage: action.payload,
+        loading: false,
+      };
+      return state;
+    case (GET_INVOICES.REQUEST, GET_INVOICES.TRIGGER):
       state = {
         ...state,
         error: false,

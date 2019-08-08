@@ -23,6 +23,7 @@ import {
   cancelSubscriptionAction,
   deleteCardAction,
   fetchCustomerAction,
+  getInvoicesAction,
   setDefaultCardAction,
 } from '../../../../actions/paymentActions';
 import config from '../../../../config';
@@ -69,6 +70,8 @@ class Billing extends React.Component {
     }
 
     this.props.fetchCustomer();
+    // eslint-disable-next-line react/prop-types
+    this.props.getInvoices();
   }
 
   close = () => {
@@ -304,9 +307,74 @@ class Billing extends React.Component {
                     </Button>
                   </div>
 
-                  <div>
-                    <pre>{JSON.stringify(this.props.payment, null, 2)}</pre>
+                  <hr className="my-4" />
+                  {/* Description */}
+                  <h6 className="heading-small text-muted mb-4">
+                    Your invoices
+                  </h6>
+                  <div className="pl-lg-4">
+                    <Table
+                      pagination={false}
+                      columns={[
+                        {
+                          title: 'Receipt number',
+                          key: 'receipt_number',
+                          render: (text, record) => (
+                            <span>{record.number}</span>
+                          ),
+                        },
+                        {
+                          title: 'Status',
+                          key: 'status',
+                          render: (text, record) => (
+                            <span>{record.status}</span>
+                          ),
+                        },
+                        {
+                          title: 'Date',
+                          key: 'period_end',
+                          render: (text, record) => (
+                            <span>
+                              {moment
+                                .unix(record.period_end)
+                                .format('DD/MM/YY')}
+                            </span>
+                          ),
+                        },
+                        {
+                          title: 'Ammount',
+                          key: 'amount_due',
+                          render: (text, record) => (
+                            <span>
+                              {record.amount_due} {record.currency}
+                            </span>
+                          ),
+                        },
+                        {
+                          title: 'Invoice',
+                          key: 'hosted_invoice_url',
+                          render: (text, record) =>
+                            record.hosted_invoice_url ? (
+                              <a
+                                href={record.hosted_invoice_url}
+                                target="_blank"
+                              >
+                                link
+                              </a>
+                            ) : (
+                              <span />
+                            ),
+                        },
+                      ]}
+                      dataSource={this.props.payment.invoices}
+                    />
                   </div>
+
+                  {/**
+                   <div>
+                   <pre>{JSON.stringify(this.props.payment, null, 2)}</pre>
+                   </div>
+                   * */}
                 </form>
               </div>
             </div>
@@ -331,6 +399,7 @@ const mapDispatchToProps = dispatch => ({
   setDefaultCard: cardId => dispatch(setDefaultCardAction(cardId)),
   deleteCard: cardId => dispatch(deleteCardAction(cardId)),
   cancelSubscription: subId => dispatch(cancelSubscriptionAction(subId)),
+  getInvoices: () => dispatch(getInvoicesAction()),
 });
 
 const mapStateToProps = (state /* , ownProps */) => ({

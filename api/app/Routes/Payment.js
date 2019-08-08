@@ -33,5 +33,11 @@ module.exports = () => {
    */
   Route.get('/customer/me', 'PaymentController.getCustomer')
     .middleware('jwtAuth');
+
+  /** ********************************************************
+   * INVOICES
+   */
+  Route.get('/customer/invoices', 'PaymentController.getInvoices')
+    .middleware('jwtAuth');
 };
 

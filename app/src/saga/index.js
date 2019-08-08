@@ -11,6 +11,7 @@ import {
   DELETE_CARD,
   CANCEL_SUBSCRIPTION,
   RESET_PASSWORD_REQUEST,
+  GET_INVOICES,
 } from '../constants';
 import {
   socialLoginSaga,
@@ -25,6 +26,7 @@ import {
   setDefaultCardSaga,
   deleteCardSaga,
   cancelSubscriptionSaga,
+  getInvoicesSaga,
 } from './paymentSaga';
 import userMeSaga from './userSaga';
 
@@ -46,6 +48,7 @@ function* mySaga() {
   yield takeLatest(SET_DEFAULT_CARD.TRIGGER, setDefaultCardSaga);
   yield takeLatest(DELETE_CARD.TRIGGER, deleteCardSaga);
   yield takeLatest(CANCEL_SUBSCRIPTION.TRIGGER, cancelSubscriptionSaga);
+  yield takeLatest(GET_INVOICES.TRIGGER, getInvoicesSaga);
 
   /**
    * USER

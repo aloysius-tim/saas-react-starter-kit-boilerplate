@@ -3,6 +3,7 @@
 import {
   PAYMENT_REQUEST,
   FETCH_CUSTOMER,
+  GET_INVOICES,
   NEW_CARD_REQUEST,
   SET_DEFAULT_CARD,
   DELETE_CARD,
@@ -48,5 +49,12 @@ export function cancelSubscriptionAction(subId) {
   return {
     type: CANCEL_SUBSCRIPTION.TRIGGER,
     payload: { subId },
+  };
+}
+
+export function getInvoicesAction() {
+  return {
+    type: GET_INVOICES.TRIGGER,
+    payload: {},
   };
 }

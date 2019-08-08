@@ -2,7 +2,7 @@ import { put } from 'redux-saga/effects';
 import { toastr } from 'react-redux-toastr';
 import {
   CANCEL_SUBSCRIPTION,
-  FETCH_CUSTOMER,
+  FETCH_CUSTOMER, GET_INVOICES,
   NEW_CARD_REQUEST,
   PAYMENT_REQUEST,
   SET_DEFAULT_CARD,
@@ -125,6 +125,26 @@ export function* cancelSubscriptionSaga(action) {
     const data = yield stripeService.cancelSub(action.payload.subId);
 
     toastr.success('Success', 'We canceled your subscription');
+    yield put(REQUEST_ACTION.success(data));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+    yield put(REQUEST_ACTION.failure(e));
+    toastr.error('Failure', e.message);
+  } finally {
+    yield put(REQUEST_ACTION.fulfill());
+  }
+}
+
+export function* getInvoicesSaga() {
+  const REQUEST_ACTION = GET_INVOICES;
+  const stripeService = new StripeService();
+
+  try {
+    yield put(REQUEST_ACTION.request());
+
+    const data = yield stripeService.getInvoices();
+
     yield put(REQUEST_ACTION.success(data));
   } catch (e) {
     // eslint-disable-next-line no-console

@@ -43,4 +43,10 @@ export default class StripeService {
       method: 'GET',
     });
   }
+
+  *getInvoices() {
+    return yield fetch(`${this.domain}/payment/customer/invoices`, {
+      method: 'GET',
+    });
+  }
 }

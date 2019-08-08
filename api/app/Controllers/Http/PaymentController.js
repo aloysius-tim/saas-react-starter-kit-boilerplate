@@ -197,6 +197,22 @@ class PaymentController {
       return response.status(500).json(e);
     }
   }
+
+  async getInvoices ({ response, auth }) {
+    const user = await auth.getUser();
+
+    try {
+      if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
+
+      const invoices = await Stripe.invoices.list({customer: user.stripe_cus_id});
+
+      return response.status(200).json(invoices);
+    } catch (e) {
+      console.log(e);
+      return response.status(500).json(e);
+    }
+  }
+
 }
 
 module.exports = PaymentController;
