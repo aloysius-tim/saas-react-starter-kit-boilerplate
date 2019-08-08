@@ -70,17 +70,18 @@ class Pay extends React.Component {
 
     if (this.hasErrors(this.props.form.getFieldsError())) return;
 
-    let firstname;
-    let lastname;
+    let cardHolderName;
+    let address;
     this.setState({ ...this.state, loading: true });
 
     this.props.form.validateFields((err, values) => {
-      firstname = values.firstname;
-      lastname = values.lastname;
+      cardHolderName = values.cardHolderName;
+      address = values.address;
 
       const ownerInfo = {
         owner: {
-          name: `${firstname} ${lastname}`,
+          name: cardHolderName,
+          address_line1: address,
           email: AuthService.loggedIn().data.user.email,
         },
       };
@@ -95,8 +96,8 @@ class Pay extends React.Component {
               this.setState({ ...this.state, loading: false });
             } else {
               const paymentRequest = {
-                firstname,
-                lastname,
+                cardHolderName,
+                address,
                 sourceToken: token.token.id,
                 planId,
               };
@@ -115,8 +116,8 @@ class Pay extends React.Component {
       getFieldsError,
       getFieldError,
     } = this.props.form;
-    const firstnameError = getFieldError('firstname');
-    const lastnameError = getFieldError('lastname');
+    const cardHolderName = getFieldError('cardHolderName');
+    const address = getFieldError('address');
 
     return (
       <div className="background" style={{ zIndex: '0' }}>
@@ -173,49 +174,43 @@ class Pay extends React.Component {
               <Card>
                 <Form style={{ width: '100%' }}>
                   <Form.Item
-                    validateStatus={firstnameError ? 'error' : ''}
-                    help={firstnameError || ''}
+                    validateStatus={cardHolderName ? 'error' : ''}
+                    help={cardHolderName || ''}
                   >
-                    {getFieldDecorator('firstname', {
+                    {getFieldDecorator('cardHolderName', {
                       rules: [
                         {
                           required: true,
-                          message: 'Please input your first name!',
+                          message: 'Please input the cardholder name!',
                         },
                       ],
                     })(
                       <Input
                         prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
+                          <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                         }
-                        placeholder="FirstName"
+                        placeholder="Card Holder name"
                       />,
                     )}
                   </Form.Item>
 
                   <Form.Item
-                    validateStatus={lastnameError ? 'error' : ''}
-                    help={lastnameError || ''}
+                    validateStatus={address ? 'error' : ''}
+                    help={address || ''}
                   >
-                    {getFieldDecorator('lastname', {
+                    {getFieldDecorator('address', {
                       rules: [
                         {
                           required: true,
-                          message: 'Please input your Last Name!',
+                          message: 'Please input your billing address (line 1)!',
                         },
                       ],
                     })(
                       <Input
                         prefix={
-                          <Icon
-                            type="user"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
+                          <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                         }
-                        placeholder="Last Name"
+                        placeholder="Billing address (line 1)"
                       />,
                     )}
                   </Form.Item>

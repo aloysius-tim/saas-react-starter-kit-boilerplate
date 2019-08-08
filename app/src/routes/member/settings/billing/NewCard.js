@@ -57,17 +57,17 @@ class NewCard extends React.Component {
 
     if (this.hasErrors(this.props.form.getFieldsError())) return;
 
-    let firstname;
-    let lastname;
+    let address;
+    let cardHolderName;
     this.setState({ ...this.state, loading: true });
 
     this.props.form.validateFields((err, values) => {
-      firstname = values.firstname;
-      lastname = values.lastname;
+      cardHolderName = values.cardHolderName;
 
       const ownerInfo = {
         owner: {
-          name: `${firstname} ${lastname}`,
+          name: cardHolderName,
+          address_line1: address,
           email: AuthService.loggedIn().data.user.email,
         },
       };
@@ -96,8 +96,8 @@ class NewCard extends React.Component {
       getFieldsError,
       getFieldError,
     } = this.props.form;
-    const firstnameError = getFieldError('firstname');
-    const lastnameError = getFieldError('lastname');
+    const cardHolderName = getFieldError('cardHolderName');
+    const address = getFieldError('address');
 
     return (
       <div>
@@ -112,14 +112,14 @@ class NewCard extends React.Component {
           <Card>
             <Form style={{ width: '100%' }}>
               <Form.Item
-                validateStatus={firstnameError ? 'error' : ''}
-                help={firstnameError || ''}
+                validateStatus={cardHolderName ? 'error' : ''}
+                help={cardHolderName || ''}
               >
-                {getFieldDecorator('firstname', {
+                {getFieldDecorator('cardHolderName', {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your first name!',
+                      message: 'Please input the cardholder name!',
                     },
                   ],
                 })(
@@ -127,25 +127,28 @@ class NewCard extends React.Component {
                     prefix={
                       <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                     }
-                    placeholder="FirstName"
+                    placeholder="Card Holder name"
                   />,
                 )}
               </Form.Item>
 
               <Form.Item
-                validateStatus={lastnameError ? 'error' : ''}
-                help={lastnameError || ''}
+                validateStatus={address ? 'error' : ''}
+                help={address || ''}
               >
-                {getFieldDecorator('lastname', {
+                {getFieldDecorator('address', {
                   rules: [
-                    { required: true, message: 'Please input your Last Name!' },
+                    {
+                      required: true,
+                      message: 'Please input your billing address (line 1)!',
+                    },
                   ],
                 })(
                   <Input
                     prefix={
                       <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                     }
-                    placeholder="Last Name"
+                    placeholder="Billing address (line 1)"
                   />,
                 )}
               </Form.Item>

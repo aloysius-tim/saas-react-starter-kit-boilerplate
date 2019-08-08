@@ -32,18 +32,12 @@ class PaymentController {
             .json({ message: 'Request should contain a Credit Card source' });
         }
 
-        if (!request.post().lastname && !request.post().firstname) {
-          return response
-            .status(500)
-            .json({ message: 'Request should contain Credit card owner\'s name' });
-        }
         console.log('Adding new card');
         // eslint-disable-next-line max-len
         const source = await Stripe.customers.createSource(user.stripe_cus_id, { source: sourceToken });
         sCustomer = await Stripe.customers
           .update(user.stripe_cus_id, {
-            default_source: source.id,
-            name: `${request.post().firstname} ${request.post().lastname}`
+            default_source: source.id
           });
       }
 
@@ -90,38 +84,6 @@ class PaymentController {
       console.log(e.message);
       return response.status(500).json(e);
     }
-  }
-
-  async subscribeCustomer ({ request, response, auth }) {
-    const user = await auth.getUser();
-    let sCustomer;
-    let sSubscription;
-
-    try {
-      sCustomer = await Stripe.customers.update(
-        user.stripe_cus_id,
-        {
-          name: `${request.post().firstname} ${request.post().lastname}`,
-          source: request.post().token
-        }
-      );
-
-      await user.profile().update({
-        first_name: request.post().firstname,
-        last_name: request.post().lastname
-      });
-
-      sSubscription = await Stripe.subscriptions.create({
-        customer: sCustomer.id,
-        items: [{ plan: request.post().planId }],
-        trial_end: moment().add(15, 'days').unix()
-      });
-    } catch (e) {
-      console.log(e.message);
-      return response.status(500).json(e);
-    }
-
-    return response.status(200).json({ s_customer: sCustomer, s_subscription: sSubscription });
   }
 
   async setDefaultCard ({ request, response, auth }) {
@@ -204,7 +166,7 @@ class PaymentController {
     try {
       if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
 
-      const invoices = await Stripe.invoices.list({customer: user.stripe_cus_id});
+      const invoices = await Stripe.invoices.list({ customer: user.stripe_cus_id });
 
       return response.status(200).json(invoices);
     } catch (e) {
@@ -212,7 +174,6 @@ class PaymentController {
       return response.status(500).json(e);
     }
   }
-
 }
 
 module.exports = PaymentController;

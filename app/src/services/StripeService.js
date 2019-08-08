@@ -4,7 +4,6 @@ import config from '../config';
 export default class StripeService {
   constructor() {
     this.domain = config.api.serverUrl;
-    console.log(this.domain)
   }
 
   *subscribe(paymentRequest) {
