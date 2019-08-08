@@ -1,20 +1,20 @@
-'use strict'
+'use strict';
 
-const Schema = use('Schema')
+const Schema = use('Schema');
 
 class UserSchema extends Schema {
   up () {
     this.create('users', table => {
-      table.increments()
-      table.string('uid').notNullable()
-      table.string('username', 40)
-      table.string('email', 254).notNullable().unique()
-      table.string('password', 60).nullable()
-      table.string('role')
-      table.boolean('verified').defaultTo(false)
-      table.string('confirmation_token')
-      table.string('reset_token')
-      table.boolean('banned')
+      table.increments();
+      table.string('uid').notNullable();
+      table.string('username', 40);
+      table.string('email', 254).notNullable().unique();
+      table.string('password', 60).nullable();
+      table.string('role');
+      table.boolean('verified').defaultTo(false);
+      table.string('confirmation_token');
+      table.string('reset_token');
+      table.boolean('banned');
 
       table.boolean('onboarded').defaultTo(false);
       table.string('stripe_cus_id');
@@ -28,13 +28,13 @@ class UserSchema extends Schema {
       table.string('twitter_id').nullable();
       table.string('linkedin_id').nullable();
 
-      table.timestamps()
-    })
+      table.timestamps();
+    });
   }
 
   down () {
-    this.drop('users')
+    this.drop('users');
   }
 }
 
-module.exports = UserSchema
+module.exports = UserSchema;
