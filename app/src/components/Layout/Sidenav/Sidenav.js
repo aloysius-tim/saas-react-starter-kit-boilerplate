@@ -80,11 +80,6 @@ class Sidenav extends React.Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/member/settings/profile">
-                  <i className="ni ni-single-02 text-yellow" /> User profile
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link" to="/member/settings/billing">
                   <i className="ni ni-bullet-list-67 text-red" /> User billing
                 </Link>

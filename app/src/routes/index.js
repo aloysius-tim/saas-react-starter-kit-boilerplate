@@ -50,11 +50,6 @@ const routes = {
           path: '/settings',
           children: [
             {
-              path: '/profile',
-              load: () =>
-                import(/* webpackChunkName: 'member' */ './member/settings/profile'),
-            },
-            {
               path: '/billing',
               load: () =>
                 import(/* webpackChunkName: 'member' */ './member/settings/billing'),

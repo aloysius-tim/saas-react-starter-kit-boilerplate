@@ -55,18 +55,10 @@ class UserAction extends React.Component {
             <div className=" dropdown-header noti-title">
               <h6 className="text-overflow m-0">Welcome!</h6>
             </div>
-            <Link to="/member/settings/profile" className="dropdown-item">
-              <i className="ni ni-single-02" />
-              <span>Update profile</span>
-            </Link>
             <Link to="/member/settings/billing" className="dropdown-item">
               <i className="ni ni-single-02" />
               <span>Billing</span>
             </Link>
-            <a href="./examples/profile.html" className="dropdown-item">
-              <i className="ni ni-settings-gear-65" />
-              <span>Settings</span>
-            </a>
             <Link to="/member" className="dropdown-item">
               <i className="ni ni-calendar-grid-58" />
               <span>Dashboard</span>
