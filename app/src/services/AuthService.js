@@ -56,10 +56,10 @@ export default class AuthService {
   /**
    * Redirect to his domain (member / admin / superadmin...) the user if connected
    */
-  static redirectUser(context = null) {
+  static redirectUser() {
     let jwt;
     // eslint-disable-next-line no-cond-assign
-    if ((jwt = AuthService.loggedIn(context))) {
+    if ((jwt = AuthService.loggedIn())) {
       // eslint-disable-next-line prefer-destructuring
       const user = jwt.data.user;
 
@@ -79,33 +79,17 @@ export default class AuthService {
     }
   }
 
-  static loggedIn(context = null) {
+  static loggedIn() {
     try {
       // Checks if there is a saved token and it's still valid
       const token = AuthService.getToken();
 
       if (!token) {
-        if (context) {
-          // eslint-disable-next-line no-param-reassign
-          context.user = {
-            loggedIn: false,
-            populated: false,
-          };
-        }
         return false;
       }
 
       const decodedToken = jwtDecode(token);
       const dateNow = new Date();
-
-      if (context) {
-        // eslint-disable-next-line no-param-reassign
-        context.user = {
-          loggedIn: true,
-          populated: true,
-          ...decodedToken.data.user,
-        };
-      }
 
       if (decodedToken.exp * 1000 <= dateNow.getTime()) return false;
       return decodedToken;

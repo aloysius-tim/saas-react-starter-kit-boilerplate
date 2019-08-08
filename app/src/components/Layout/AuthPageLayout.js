@@ -37,9 +37,9 @@ class AuthPageLayout extends React.Component {
   }
 
   _checkAndRedirect() {
-    const jwt = AuthService.loggedIn(this.props.context);
+    const jwt = AuthService.loggedIn();
 
-    if (jwt) AuthService.redirectUser(this.props.context);
+    if (jwt) AuthService.redirectUser();
   }
 
   render() {

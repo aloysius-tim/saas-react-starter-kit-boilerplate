@@ -25,7 +25,6 @@ class MemberLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     // eslint-disable-next-line react/forbid-prop-types
-    context: PropTypes.any.isRequired,
     title: PropTypes.string.isRequired,
   };
 
@@ -51,9 +50,8 @@ class MemberLayout extends React.Component {
   _updateUserContext() {
     let jwt;
     // eslint-disable-next-line no-cond-assign
-    if ((jwt = AuthService.loggedIn(this.props.context))) {
+    if ((jwt = AuthService.loggedIn())) {
       this.user = jwt.data.user;
-      this.props.context.user.loggedIn = true;
 
       // eslint-disable-next-line no-underscore-dangle
       this._checkAndRedirect();
@@ -63,12 +61,11 @@ class MemberLayout extends React.Component {
   }
 
   _checkAndRedirect() {
-    const jwt = AuthService.loggedIn(this.props.context);
+    const jwt = AuthService.loggedIn();
     this.user = jwt.data.user;
 
     if (!jwt) {
       if (!this.state.isLoading) this.setState({ isLoading: true });
-      this.props.context.user.loggedIn = false;
       history.push('/auth/login');
     } else {
       // eslint-disable-next-line prefer-destructuring
