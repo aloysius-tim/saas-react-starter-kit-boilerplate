@@ -36,6 +36,11 @@ class StripeWebHookController {
     }
   }
 
+  /**
+   * Mailing only on new subscription
+   * @param data
+   * @returns {Promise<void>}
+   */
   async newSubscription (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
@@ -61,6 +66,9 @@ class StripeWebHookController {
 
   /**
    * Catch end of trial and save it in user
+   * If trial is finish -> user.trial = false;
+   * @param data
+   * @returns {Promise<void>}
    */
   async updateTrialMode (data) {
     const stripe_cus_id = data.data.object.customer;
@@ -81,6 +89,12 @@ class StripeWebHookController {
     }
   }
 
+  /**
+   * Email user when his subscription is updated
+   * Maybe useless and need to be removed
+   * @param data
+   * @returns {Promise<void>}
+   */
   async subscriptionUpdated (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
@@ -104,6 +118,13 @@ class StripeWebHookController {
     });
   }
 
+  /**
+   * If payment fail, user is informed by email and we save his situation in his profile
+   * -> user.payment_failed = true;
+   * Used to block acess to SAAS feature while the invoice is unpaid
+   * @param data
+   * @returns {Promise<void>}
+   */
   async paymentFailed (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
@@ -130,6 +151,13 @@ class StripeWebHookController {
     });
   }
 
+  /**
+   * If a payment (invoice) is successfull, user last payment is now considered as paid
+   * -> user.payment_failed = false;
+   * Used to block acess to SAAS feature while the invoice is unpaid
+   * @param data
+   * @returns {Promise<void>}
+   */
   async paymentSuccessful (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
@@ -144,6 +172,11 @@ class StripeWebHookController {
     await user.save();
   }
 
+  /**
+   * Send a mail to a customer if his trial is ending soon
+   * @param data
+   * @returns {Promise<void>}
+   */
   async trialWillEnd (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
@@ -167,6 +200,12 @@ class StripeWebHookController {
     });
   }
 
+  /**
+   * Every new source created (as a credit card / or while paying an invoice via stripe etc...)
+   * will be considered as default for the associated customer
+   * @param webhook data
+   * @returns {Promise<void>}
+   */
   async setSourceAsDefault (data) {
     const stripe_cus_id = data.data.object.customer;
     let user;
