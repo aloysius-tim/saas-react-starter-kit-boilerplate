@@ -370,12 +370,6 @@ class AuthController {
     return response.status(200).json(tokens);
   }
   // GET
-  async me ({ response, auth }) {
-    const user = await auth.getUser();
-    user.profile = await user.profile().fetch();
-    return response.status(200).json(user);
-  }
-  // GET
   async users ({ request, response }) {
     // eslint-disable-next-line no-restricted-globals,max-len,radix
     const page = (request.all().page && !isNaN(parseInt(request.all().page))) ? parseInt(request.all().page) : 1;

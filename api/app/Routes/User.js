@@ -3,6 +3,6 @@
 const Route = use('Route');
 
 module.exports = () => {
-  Route.get('/', 'AuthController.me').middleware('jwtAuth');
+  Route.get('', 'UserController.me').middleware('jwtAuth');
 };
 

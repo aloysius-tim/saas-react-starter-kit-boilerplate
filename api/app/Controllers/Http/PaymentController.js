@@ -155,6 +155,16 @@ class PaymentController {
     return response.status(200).json(sCustomer);
   }
 
+  async getCustomerSubscriptions ({ response, auth }) {
+    const user = await auth.getUser();
+
+    if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
+
+    const sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
+
+    return response.status(200).json(sCustomer.subscriptions.data);
+  }
+
   async cancelSubscription ({ request, response, auth }) {
     const user = await auth.getUser();
     const subId = request.params.subId;
@@ -162,7 +172,15 @@ class PaymentController {
     try {
       if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
 
-      await Stripe.subscriptions.update(subId, { cancel_at_period_end: true });
+      /**
+       * When a subscription is canceled, it is straightly saved in the BDD:
+       * current_plan_id & current_plan_name = null
+       * Meaning user do not have any active subscription anymore
+       * Better way to do would be to set them to null only at period_end.
+       * If cancel_at_period_end set to true, Stripe consider it as still in trial until period end,
+       * but not the FrontEnd
+       */
+      await Stripe.subscriptions.update(subId, { cancel_at_period_end: false });
 
       user.current_plan_id = null;
       user.current_plan_name = null;
