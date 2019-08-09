@@ -24,11 +24,6 @@ class Layout extends React.Component {
     title: PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
-    this.user = {};
-  }
-
   render() {
     return (
       <div>

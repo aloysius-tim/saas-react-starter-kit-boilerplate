@@ -40,14 +40,13 @@ class MemberLayout extends React.Component {
     this.authService = new AuthService();
     this.user = {};
     this.state = {
-      isLoading: true,
+      isLoading: false,
     };
   }
 
   componentDidMount() {
     // eslint-disable-next-line no-underscore-dangle
     this._updateUserContext();
-    // eslint-disable-next-line react/prop-types
   }
 
   componentDidUpdate() {
@@ -68,10 +67,6 @@ class MemberLayout extends React.Component {
       this.user = jwt.data.user;
       // eslint-disable-next-line react/prop-types
       this.props.fetchUser();
-
-      // eslint-disable-next-line no-underscore-dangle
-      this._checkAndRedirect();
-      if (this.state.isLoading) this.setState({ isLoading: false });
     } else {
       history.push('/auth/login');
     }
@@ -81,7 +76,6 @@ class MemberLayout extends React.Component {
     const jwt = AuthService.loggedIn();
 
     if (!jwt) {
-      if (!this.state.isLoading) this.setState({ isLoading: true });
       history.push('/auth/login');
     } else {
       this.user = jwt.data.user;
@@ -89,15 +83,8 @@ class MemberLayout extends React.Component {
       const role = this.user.role;
 
       if (role !== 'member') {
-        if (!this.state.isLoading) this.setState({ isLoading: true });
         history.push('/unauthorized');
       }
-      /* else {
-        if (this.user.onboarded === false && window.location.pathname !== '/member/onboarding') {
-          if (!this.state.isLoading) this.setState({isLoading: true});
-          history.push('/member/onboarding');
-        } else if (this.state.isLoading) this.setState({isLoading: false});
-      } */
     }
   }
 
@@ -137,7 +124,7 @@ class MemberLayout extends React.Component {
             <div className="main-content">
               <Navigation
                 showLogo={!this.props.sidenav}
-                user={this.user}
+                user={this.props.member}
                 title={this.props.title}
               />
               <Header />
