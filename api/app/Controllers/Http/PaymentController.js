@@ -67,14 +67,14 @@ class PaymentController {
 
       /**
        * Case the customer subscribe his first plan
-       * /!\ the data field subscribed is set to true on first subscription to disallow trial
-       * if user cancel his plan and subscribe to a new one. No trial if subscribed === true
+       * /!\ the data field firstSubscription is set to true on first subscription to disallow trial
+       * if user cancel his plan and subscribe to a new one. No trial if firstSubscription === false
        * meaning the user had in the past a subscription
        */
       else if (!haveSubscription) {
         console.log('Subscribe customer to a plan');
         const sPlan = await Stripe.plans.retrieve(planId);
-        if (user.subscribed === false)
+        if (user.firstSubscription === true)
           sSubscription = await Stripe.subscriptions.create({
             customer: sCustomer.id,
             items: [{ plan: planId }],
@@ -85,7 +85,8 @@ class PaymentController {
             customer: sCustomer.id,
             items: [{ plan: planId }]
           });
-        user.subscribed = true;
+        user.firstSubscription = false;
+        await user.save();
       }
 
       sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);

@@ -18,6 +18,7 @@ class UserSchema extends Schema {
 
       table.boolean('onboarded').defaultTo(false);
       table.string('stripe_cus_id');
+      table.boolean('firstSubscription').defaultTo(true);
       table.boolean('payment_failed').defaultTo(false);
 
       table.string('provider').nullable();
