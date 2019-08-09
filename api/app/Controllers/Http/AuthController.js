@@ -112,7 +112,7 @@ class AuthController {
   }
 
   welcomeEmail (user) {
-    return Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : 'verified', name: user.username }, message => {
+    return Mail.send('emails.welcome', { token: (user.confirmation_token) ? user.confirmation_token : null, name: user.username }, message => {
       message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
       message.subject(`Welcome to${Env.get('APP_NAME')}`);
       message.to(user.email);
