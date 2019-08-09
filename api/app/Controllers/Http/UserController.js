@@ -1,11 +1,10 @@
 'use strict';
 
 class UserController {
-  async userOnboarded ({ response, auth }) {
+  // GET
+  async me ({ response, auth }) {
     const user = await auth.getUser();
-    user.onboarded = true;
-    await user.save();
-
+    user.profile = await user.profile().fetch();
     return response.status(200).json(user);
   }
 }
