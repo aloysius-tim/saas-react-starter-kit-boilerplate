@@ -52,12 +52,6 @@ class MemberLayout extends React.Component {
   componentDidUpdate() {
     // eslint-disable-next-line no-underscore-dangle
     this._checkAndRedirect();
-    if (
-      window.location.pathname !== '/member/settings/billing' &&
-      // eslint-disable-next-line react/prop-types
-      this.props.member.payment_failed
-    )
-      history.push('/member/settings/billing');
   }
 
   _updateUserContext() {
@@ -85,6 +79,26 @@ class MemberLayout extends React.Component {
       if (role !== 'member') {
         history.push('/unauthorized');
       }
+
+      /**
+       * Redirect user to billing page if his last payment have failed
+       */
+      if (
+        window.location.pathname !== '/member/settings/billing' &&
+        // eslint-disable-next-line react/prop-types
+        this.props.member.payment_failed
+      )
+        history.push('/member/settings/billing');
+
+      /**
+       * Redirect user if he do not have any active subscription
+       */
+      if (
+        window.location.pathname !== '/member/subscription' &&
+        // eslint-disable-next-line react/prop-types
+        !this.props.member.current_plan_name
+      )
+        history.push('/member/subscription');
     }
   }
 
@@ -99,20 +113,21 @@ class MemberLayout extends React.Component {
             {this.props.sidenav && (
               <div>
                 {// eslint-disable-next-line react/prop-types
-                this.props.member.trial && (
+                this.props.member.payment_failed && (
                   <Alert
-                    message="You are on trial mode"
-                    type="warning"
+                    message="Your account is suspended"
+                    description="We could not process the payment of your subscription. Please check your billing page and update your payment information"
+                    type="error"
                     showIcon
                     style={{ display: 'block' }}
                   />
                 )}
 
                 {// eslint-disable-next-line react/prop-types
-                this.props.member.payment_failed && (
+                !this.props.member.current_plan_name && (
                   <Alert
-                    message="Your account is suspended"
-                    description="We could not process the payment of your subscription. Please check your billing page and update your payment information"
+                    message="You do not have any active subscription"
+                    description="Please subscribe to a plan"
                     type="error"
                     showIcon
                     style={{ display: 'block' }}
