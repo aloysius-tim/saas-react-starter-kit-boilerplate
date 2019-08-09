@@ -6,16 +6,9 @@ export default class UserService {
     this.domain = config.api.serverUrl;
   }
 
-  static async onboarded() {
-    // eslint-disable-next-line no-return-await
-    return await fetch(`${config.api.serverUrl}/user/onboarded`, {
-      method: 'GET',
-    });
-  }
-
   static async me() {
     // eslint-disable-next-line no-return-await
-    return await fetch(`${config.api.serverUrl}/user/me`, {
+    return await fetch(`${config.api.serverUrl}/user`, {
       method: 'GET',
     });
   }

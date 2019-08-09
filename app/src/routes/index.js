@@ -66,11 +66,6 @@ const routes = {
             },
           ],
         },
-        {
-          path: '/onboarding',
-          load: () =>
-            import(/* webpackChunkName: 'member' */ './member/onboarding'),
-        },
       ],
     },
 
