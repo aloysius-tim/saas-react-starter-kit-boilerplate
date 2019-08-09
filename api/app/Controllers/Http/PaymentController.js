@@ -89,9 +89,6 @@ class PaymentController {
       }
 
       sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
-      user.current_plan_id = planId;
-      user.current_plan_name = sSubscription.plan.nickname;
-      await user.save();
       return response.status(200).json({ s_customer: sCustomer, s_subscription: sSubscription });
     } catch (e) {
       console.log(e.message);
@@ -172,19 +169,8 @@ class PaymentController {
     try {
       if (!user.stripe_cus_id) { return response.status(500).json({ message: 'User is not a Stripe USER' }); }
 
-      /**
-       * When a subscription is canceled, it is straightly saved in the BDD:
-       * current_plan_id & current_plan_name = null
-       * Meaning user do not have any active subscription anymore
-       * Better way to do would be to set them to null only at period_end.
-       * If cancel_at_period_end set to true, Stripe consider it as still in trial until period end,
-       * but not the FrontEnd
-       */
-      await Stripe.subscriptions.update(subId, { cancel_at_period_end: false });
+      await Stripe.subscriptions.update(subId, { cancel_at_period_end: true });
 
-      user.current_plan_id = null;
-      user.current_plan_name = null;
-      await user.save();
       const sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
       return response.status(200).json(sCustomer);
     } catch (e) {

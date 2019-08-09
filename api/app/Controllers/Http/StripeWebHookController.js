@@ -14,7 +14,6 @@ class StripeWebHookController {
     switch (request.post().type) {
       case 'customer.subscription.updated':
         await this.subscriptionUpdated(request.post());
-        await this.updateTrialMode(request.post());
         break;
       case 'customer.subscription.created':
         await this.newSubscription(request.post());
@@ -62,31 +61,6 @@ class StripeWebHookController {
       message.subject(`New subscription - ${Env.get('APP_NAME')}`);
       message.to(user.email);
     });
-  }
-
-  /**
-   * Catch end of trial and save it in user
-   * If trial is finish -> user.trial = false;
-   * @param data
-   * @returns {Promise<void>}
-   */
-  async updateTrialMode (data) {
-    const stripe_cus_id = data.data.object.customer;
-    let user;
-
-    if (stripe_cus_id === 'cus_00000000000000')
-      user = await User.findBy('email', Env.get('APP_SUPERADMIN_EMAIL'));
-    else user = await User.findBy('stripe_cus_id', stripe_cus_id);
-
-    Logger.info(`Webhook: ${user.email} ${data.type}`, data);
-
-    if (!user)
-      return;
-
-    if (moment().isAfter(moment().unix(data.data.object.trial_end), 'day') && user.trial === true) {
-      user.trial = false;
-      await user.save();
-    }
   }
 
   /**
@@ -220,29 +194,6 @@ class StripeWebHookController {
       });
 
     Logger.info(`Webhook: ${user.email} ${data.type}`, data);
-  }
-
-  async default (data) {
-    const stripe_cus_id = data.data.object.customer;
-    let user;
-
-    if (stripe_cus_id === 'cus_00000000000000')
-      user = { email: Env.get('APP_SUPERADMIN_EMAIL') };
-    else user = await User.findBy('stripe_cus_id', stripe_cus_id);
-
-    Logger.info(`Webhook: ${user.email} ${data.type}`, data);
-
-    if (!user)
-      return;
-
-    await Mail.send('emails.notification', {
-      subject: 'Subscription updated',
-      message: 'Congrats, your subscription have been updated successfully'
-    }, message => {
-      message.from(`${Env.get('EMAIL_SENDER_NAME')}<${Env.get('MAILGUN_EMAIL_SENDER')}>`);
-      message.subject(`Welcome to${Env.get('APP_NAME')}`);
-      message.to(user.email);
-    });
   }
 }
 

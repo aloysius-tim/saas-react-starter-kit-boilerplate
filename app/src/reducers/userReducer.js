@@ -11,11 +11,11 @@ const initialState = {
   banned: false,
   onboarded: false,
   stripe_cus_id: '',
-  current_plan_name: '',
-  current_plan_id: '',
+  current_plan_name: '_',
+  current_plan_id: '_',
   trial: false,
   payment_failed: false,
-  subscribed: '',
+  subscribed: true,
   profile: {
     remote_avatar:
       'https://s.gravatar.com/avatar/331a00272b6e2d183fc7efd210c5563e?s=100&r=x&d=retro',
@@ -24,6 +24,7 @@ const initialState = {
   loading: false,
   error: false,
   errorMessage: null,
+  subscriptions: [],
 };
 
 export default function user(state = initialState, action) {

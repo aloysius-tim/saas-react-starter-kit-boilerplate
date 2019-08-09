@@ -113,6 +113,16 @@ class MemberLayout extends React.Component {
             {this.props.sidenav && (
               <div>
                 {// eslint-disable-next-line react/prop-types
+                this.props.member.trial && (
+                  <Alert
+                    message="You are on trial mode"
+                    type="warning"
+                    showIcon
+                    style={{ display: 'block' }}
+                  />
+                )}
+
+                {// eslint-disable-next-line react/prop-types
                 this.props.member.payment_failed && (
                   <Alert
                     message="Your account is suspended"
@@ -122,15 +132,18 @@ class MemberLayout extends React.Component {
                     style={{ display: 'block' }}
                   />
                 )}
-
+              </div>
+            )}
+            {!this.props.sidenav && (
+              <div>
                 {// eslint-disable-next-line react/prop-types
                 !this.props.member.current_plan_name && (
                   <Alert
                     message="You do not have any active subscription"
-                    description="Please subscribe to a plan"
+                    description="Please subscribe to a plan to continue"
                     type="error"
                     showIcon
-                    style={{ display: 'block' }}
+                    style={{ display: 'block', margin: '0px' }}
                   />
                 )}
               </div>

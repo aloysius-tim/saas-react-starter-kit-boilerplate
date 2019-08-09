@@ -2,6 +2,7 @@ import { put } from 'redux-saga/effects';
 import { toastr } from 'react-redux-toastr';
 import { FETCH_USER_ME } from '../constants';
 import userService from '../services/UserService';
+import history from '../history';
 
 export default function* userMeSaga() {
   const REQUEST_ACTION = FETCH_USER_ME;
@@ -12,6 +13,7 @@ export default function* userMeSaga() {
     const data = yield userService.me();
 
     yield put(REQUEST_ACTION.success(data));
+    history.push('/member');
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
