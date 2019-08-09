@@ -89,7 +89,8 @@ class PaymentController {
       }
 
       sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
-      user.current_plan = planId;
+      user.current_plan_id = planId;
+      user.current_plan_name = sSubscription.plan.nickname;
       await user.save();
       return response.status(200).json({ s_customer: sCustomer, s_subscription: sSubscription });
     } catch (e) {
@@ -163,7 +164,8 @@ class PaymentController {
 
       await Stripe.subscriptions.update(subId, { cancel_at_period_end: true });
 
-      user.current_plan = null;
+      user.current_plan_id = null;
+      user.current_plan_name = null;
       await user.save();
       const sCustomer = await Stripe.customers.retrieve(user.stripe_cus_id);
       return response.status(200).json(sCustomer);

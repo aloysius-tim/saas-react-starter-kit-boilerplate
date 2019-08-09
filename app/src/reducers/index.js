@@ -7,7 +7,7 @@ import onboarding from './onboardingReducer';
 import payment from './paymentReducer';
 
 export default combineReducers({
-  userReducer: user,
+  member: user,
   auth,
   runtime,
   onboarding,

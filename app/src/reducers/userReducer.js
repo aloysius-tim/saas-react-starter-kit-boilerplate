@@ -4,6 +4,23 @@ import { FETCH_USER_ME } from '../constants';
 const initialState = {
   data: null,
 
+  username: 'loading',
+  email: 'loading@loading.com',
+  role: '',
+  verified: false,
+  banned: false,
+  onboarded: false,
+  stripe_cus_id: '',
+  current_plan_name: '',
+  current_plan_id: '',
+  trial: false,
+  payment_failed: false,
+  subscribed: '',
+  profile: {
+    remote_avatar:
+      'https://s.gravatar.com/avatar/331a00272b6e2d183fc7efd210c5563e?s=100&r=x&d=retro',
+  },
+
   loading: false,
   error: false,
   errorMessage: null,

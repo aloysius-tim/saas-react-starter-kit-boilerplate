@@ -9,6 +9,15 @@
 
 @import '../variables.css';
 
+:global {
+@media (min-width: 768px)
+{
+  .ant-alert{
+    margin-left: 250px;
+  }
+}
+}
+
 /*
  * normalize.css is imported in JS file.
  * If you import external CSS file from your internal CSS

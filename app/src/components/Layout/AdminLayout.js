@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import ReduxToastr from 'react-redux-toastr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
-import s from './Layout.css';
+import s from './Layout.scss';
 import Header from './Header';
 import Sidenav from './Sidenav';
 import Navigation from './Navigation';

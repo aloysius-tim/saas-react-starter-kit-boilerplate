@@ -5,6 +5,7 @@ import {
   FETCH_CUSTOMER, GET_INVOICES,
   NEW_CARD_REQUEST,
   PAYMENT_REQUEST,
+  FETCH_USER_ME,
   SET_DEFAULT_CARD,
 } from '../constants';
 import StripeService from '../services/StripeService';
@@ -20,6 +21,7 @@ export function* paymentSaga(action) {
     const data = yield stripeService.subscribe(action.payload);
 
     yield put(REQUEST_ACTION.success(data));
+    yield put(FETCH_USER_ME.trigger());
     toastr.success('Success', "You've been subscibed successfully");
     history.push('/member');
   } catch (e) {
@@ -126,6 +128,7 @@ export function* cancelSubscriptionSaga(action) {
 
     toastr.success('Success', 'We canceled your subscription');
     yield put(REQUEST_ACTION.success(data));
+    yield put(FETCH_USER_ME.trigger());
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

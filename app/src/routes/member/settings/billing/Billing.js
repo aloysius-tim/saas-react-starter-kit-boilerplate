@@ -359,7 +359,14 @@ class Billing extends React.Component {
                                 href={record.hosted_invoice_url}
                                 target="_blank"
                               >
-                                link
+                                {(record.status === 'paid' ||
+                                  record.status === 'draft') && (
+                                  <span>link</span>
+                                )}
+                                {record.status !== 'paid' &&
+                                  record.status !== 'draft' && (
+                                    <Button type="danger">PAY NOW</Button>
+                                  )}
                               </a>
                             ) : (
                               <span />
@@ -370,11 +377,11 @@ class Billing extends React.Component {
                     />
                   </div>
 
-                  {/**
-                   <div>
-                   <pre>{JSON.stringify(this.props.payment, null, 2)}</pre>
-                   </div>
-                   * */}
+                  {
+                    <div>
+                      <pre>{JSON.stringify(this.props.payment, null, 2)}</pre>
+                    </div>
+                  }
                 </form>
               </div>
             </div>

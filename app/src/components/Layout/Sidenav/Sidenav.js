@@ -41,6 +41,7 @@ class Sidenav extends React.Component {
               className="navbar-brand-img"
               alt="..."
             />
+            <h5 style={{textAlign: 'center', margin: 'auto'}}>{this.props.user.current_plan_name ? this.props.user.current_plan_name : "NO PLAN"}</h5>
           </Link>
           {/* User */}
           <UserAction user={this.props.user} collapsed />

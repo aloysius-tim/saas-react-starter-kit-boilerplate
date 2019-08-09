@@ -38,6 +38,7 @@ class UserAction extends React.Component {
                 </span>
               </div>
               <span className="avatar avatar-sm rounded-circle">
+                {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
                 <img
                   alt="Image placeholder"
                   src={
