@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import ReduxToastr from 'react-redux-toastr';
 import { connect } from 'react-redux';
 import { Alert } from 'antd';
+import moment from 'moment';
 import { fetchUserAction } from '../../actions/userActions';
 import s from './Layout.scss';
 import Header from './Header';
@@ -115,7 +116,9 @@ class MemberLayout extends React.Component {
                 {// eslint-disable-next-line react/prop-types
                 this.props.member.trial && (
                   <Alert
-                    message="You are on trial mode"
+                    message={`Your trial mode will end soon, in ${moment(Date.now()).diff(moment.unix(this.props.member.subscriptions[0].trial_end), 'days') * -1 + 1} days`}
+
+
                     type="warning"
                     showIcon
                     style={{ display: 'block' }}
