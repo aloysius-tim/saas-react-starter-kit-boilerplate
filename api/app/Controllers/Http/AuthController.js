@@ -90,6 +90,8 @@ class AuthController {
       user.email = userData.getEmail();
       user.provider = 'social';
       user[`${provider}_id`] = userData.getId();
+      const sCustomer = await Stripe.customers.create({ email: user.email });
+      user.stripe_cus_id = sCustomer.id;
       await user.save();
 
       user = await User.query().where({ email }).first();
