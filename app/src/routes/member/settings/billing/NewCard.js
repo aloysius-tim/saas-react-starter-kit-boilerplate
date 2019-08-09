@@ -75,13 +75,13 @@ class NewCard extends React.Component {
       if (!err && !this.state.cardError) {
         // https://stripe.com/docs/stripe-js/reference#stripe-create-token
         this.props.stripe
-          .createToken({ type: 'card' }, ownerInfo)
-          .then(token => {
-            if (token.error) {
-              this.showCardError(token.error);
+          .createSource({ type: 'card' }, ownerInfo)
+          .then(source => {
+            if (source.error) {
+              this.showCardError(source.error);
               this.setState({ ...this.state, loading: false });
             } else {
-              this.props.addNewCardAction(token.token.id);
+              this.props.addNewCardAction(source.source.id);
               this.props.close();
               this.setState({ ...this.state, loading: false });
             }
