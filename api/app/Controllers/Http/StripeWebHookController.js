@@ -5,6 +5,7 @@ const Mail = use('Mail');
 const User = use('App/Models/User');
 const Logger = use('Logger');
 const Env = use('Env');
+const Stripe = use('Stripe');
 
 class StripeWebHookController {
   async webhook ({ request }) {
@@ -26,6 +27,9 @@ class StripeWebHookController {
         break;
       case 'customer.subscription.trial_will_end':
         await this.trialWillEnd(request.post());
+        break;
+      case 'customer.source.created':
+        await this.setSourceAsDefault(request.post());
         break;
       default:
         console.log(`Webhook: ${request.post().type}: No handler`);
@@ -161,6 +165,22 @@ class StripeWebHookController {
       message.subject(`Trial will end shortly - ${Env.get('APP_NAME')}`);
       message.to(user.email);
     });
+  }
+
+  async setSourceAsDefault (data) {
+    const stripe_cus_id = data.data.object.customer;
+    let user;
+
+    if (stripe_cus_id === 'cus_00000000000000')
+      user = await User.findBy('email', Env.get('APP_SUPERADMIN_EMAIL'));
+    else user = await User.findBy('stripe_cus_id', stripe_cus_id);
+
+    await Stripe.customers
+      .update(stripe_cus_id, {
+        default_source: data.data.object.id
+      });
+
+    Logger.info(`Webhook: ${user.email} ${data.type}`, data);
   }
 
   async default (data) {

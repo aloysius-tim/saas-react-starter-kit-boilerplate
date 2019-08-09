@@ -346,11 +346,11 @@ class Billing extends React.Component {
                           ),
                         },
                         {
-                          title: 'Ammount',
+                          title: 'Ammunt',
                           key: 'amount_due',
                           render: (text, record) => (
                             <span>
-                              {record.amount_due} {record.currency}
+                              {record.amount_due / 100} {record.currency}
                             </span>
                           ),
                         },
