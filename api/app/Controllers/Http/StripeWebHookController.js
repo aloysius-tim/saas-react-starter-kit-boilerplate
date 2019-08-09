@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 
-const moment = use('Moment');
 const Mail = use('Mail');
 const User = use('App/Models/User');
 const Logger = use('Logger');
