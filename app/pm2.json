@@ -3,5 +3,8 @@
   "script": "/app/build/server.js",
   "port": 3000,
   "instances" : "max",
-  "exec_mode" : "cluster"
+  "exec_mode" : "cluster",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
