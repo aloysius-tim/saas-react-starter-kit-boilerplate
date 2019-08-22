@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:8-jessie
+FROM keymetrics/pm2:10-jessie
 
 RUN apt-get update
 RUN apt-get install -y curl --fix-missing
@@ -13,9 +13,8 @@ RUN npm install -g yarn --fix-missing
 WORKDIR /app
 COPY . /app
 
-RUN yarn install
-RUN yarn run build --release
+RUN yarn install --production
 
-EXPOSE 3000
+EXPOSE 3333
 
 CMD [ "pm2-runtime", "start", "pm2.json" ]

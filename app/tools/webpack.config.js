@@ -21,7 +21,7 @@ const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const SRC_DIR = resolvePath('src');
 const BUILD_DIR = resolvePath('build');
 
-const isDebug = !process.argv.includes('--release');
+const isDebug = process.env.NODE_ENV !== 'production';
 const isVerbose = process.argv.includes('--verbose');
 const isAnalyze =
   process.argv.includes('--analyze') || process.argv.includes('--analyse');

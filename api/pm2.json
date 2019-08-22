@@ -1,0 +1,7 @@
+{
+  "name": "api.saastr",
+  "script": "server.js",
+  "port": 3333,
+  "instances" : "max",
+  "exec_mode" : "cluster"
+}

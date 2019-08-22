@@ -1,0 +1,7 @@
+{
+  "name": "app.saastr",
+  "script": "/app/build/server.js",
+  "port": 3000,
+  "instances" : "max",
+  "exec_mode" : "cluster"
+}
