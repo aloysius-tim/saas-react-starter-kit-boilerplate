@@ -16,3 +16,4 @@ public/app/*
 !public/images/avatars/.gitkeep
 
 .idea
+*/.idea

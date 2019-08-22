@@ -1,0 +1,6 @@
+{
+  "name": "api.saastr",
+  "script": "server.js",
+  "instances": "2",
+  "port": 3333
+}
