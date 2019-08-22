@@ -8,14 +8,10 @@ RUN apt-get install -y build-essential --fix-missing
 
 RUN apt-get install -y python --fix-missing
 
-RUN npm install -g yarn --fix-missing
-RUN npm install -g @adonisjs --fix-missing
-
 VOLUME ["/app"]
 WORKDIR /app
 
 COPY package.json /app
-COPY package-lock.json /app
 COPY yarn.lock /app
 
 RUN yarn install --production
