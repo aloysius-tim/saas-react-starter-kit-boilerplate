@@ -9,6 +9,7 @@ RUN apt-get install -y build-essential --fix-missing
 RUN apt-get install -y python --fix-missing
 
 RUN npm install -g yarn --fix-missing
+RUN npm install -g @adonisjs/cli --fix-missing
 
 VOLUME ["/app"]
 WORKDIR /app
