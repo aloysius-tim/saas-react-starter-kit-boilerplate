@@ -24,7 +24,7 @@ let CONST = {
 
   api: {
     // API URL to be used in the client-side code
-    clientUrl: process.env.API_CLIENT_URL || 'http://localhost:3000',
+    clientUrl: process.env.API_CLIENT_URL || 'http://localhost:3333/api',
     // API URL to be used in the server-side code
     serverUrl: process.env.API_SERVER_URL || 'http://localhost:3333/api',
   },
@@ -53,9 +53,9 @@ if (process.env.NODE_ENV === 'production') {
 
     api: {
       // API URL to be used in the client-side code
-      clientUrl: process.env.API_CLIENT_URL || 'https://0x0.run',
+      clientUrl: process.env.API_CLIENT_URL || 'http://46.105.96.82:3333/api',
       // API URL to be used in the server-side code
-      serverUrl: process.env.API_SERVER_URL || 'https://0x0.run/api',
+      serverUrl: process.env.API_SERVER_URL || 'http://46.105.96.82:3333/api',
     },
 
     // Database
@@ -68,7 +68,7 @@ if (process.env.NODE_ENV === 'production') {
     },
 
     production: true,
-    apiUrl: 'https://0x0.run/api',
+    apiUrl: 'http://46.105.96.82:3333/api',
   };
 }
 
