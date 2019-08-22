@@ -1,0 +1,61 @@
+version: '3'
+services:
+  api:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    build:
+      context: ./api
+    image: api.saastr
+    restart: always
+    ports:
+      - 3333:3333
+    expose:
+      - "3333"
+    environment:
+      - ENV_PATH=/app/.env.dev
+
+  app:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    build:
+      context: ./app
+    image: app.saastr
+    restart: always
+    ports:
+      - 3000:3000
+    expose:
+      - "3000"
+    environment:
+      - NODE_ENV=development
+
+  postgres:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: always
+    image: postgres
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    environment:
+      - DEBUG=false
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=azertyuiop
+      - POSTGRES_DB=saastr
+    volumes:
+      - ./database:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
