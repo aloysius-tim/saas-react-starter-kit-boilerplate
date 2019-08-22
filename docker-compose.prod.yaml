@@ -15,7 +15,8 @@ services:
     expose:
       - "3333"
     environment:
-      - ENV_PATH=/app/.env.dev
+      - ENV_PATH=/app/.env
+      - NODE_ENV=production
     volumes:
       - ./api:/app
 
@@ -34,7 +35,7 @@ services:
     expose:
       - "3000"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
 
   postgres:
     logging:
@@ -45,9 +46,9 @@ services:
     restart: always
     image: postgres
     ports:
-      - 5432:5432
+      - 5433:5433
     expose:
-      - "5432"
+      - "5433"
     environment:
       - DEBUG=false
       - POSTGRES_USER=root
