@@ -21,7 +21,7 @@ const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const SRC_DIR = resolvePath('src');
 const BUILD_DIR = resolvePath('build');
 
-const isDebug = process.env.NODE_ENV !== 'production';
+const isDebug = !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose');
 const isAnalyze =
   process.argv.includes('--analyze') || process.argv.includes('--analyse');
@@ -253,13 +253,13 @@ const config = {
       ...(isDebug
         ? []
         : [
-            {
-              test: resolvePath(
-                'node_modules/react-deep-force-update/lib/index.js',
-              ),
-              loader: 'null-loader',
-            },
-          ]),
+          {
+            test: resolvePath(
+              'node_modules/react-deep-force-update/lib/index.js',
+            ),
+            loader: 'null-loader',
+          },
+        ]),
     ],
   },
 
@@ -351,10 +351,10 @@ const clientConfig = {
     ...(isDebug
       ? []
       : [
-          // Webpack Bundle Analyzer
-          // https://github.com/th0r/webpack-bundle-analyzer
-          ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
-        ]),
+        // Webpack Bundle Analyzer
+        // https://github.com/th0r/webpack-bundle-analyzer
+        ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
+      ]),
   ],
 
   // Move modules that occur in multiple entry chunks to a new entry chunk (the commons chunk).
@@ -424,16 +424,16 @@ const serverConfig = {
                 preset[0] !== '@babel/preset-env'
                   ? preset
                   : [
-                      '@babel/preset-env',
-                      {
-                        targets: {
-                          node: pkg.engines.node.match(/(\d+\.?)+/)[0],
-                        },
-                        modules: false,
-                        useBuiltIns: false,
-                        debug: false,
+                    '@babel/preset-env',
+                    {
+                      targets: {
+                        node: pkg.engines.node.match(/(\d+\.?)+/)[0],
                       },
-                    ],
+                      modules: false,
+                      useBuiltIns: false,
+                      debug: false,
+                    },
+                  ],
             ),
           },
         };
