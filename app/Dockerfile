@@ -1,18 +1,21 @@
-FROM node:8.10.0-alpine
+FROM keymetrics/pm2:8-jessie
 
-# Set a working directory
-WORKDIR /usr/src/app
+RUN apt-get update
+RUN apt-get install -y curl --fix-missing
+RUN apt-get install -y git --fix-missing
+RUN apt-get install -y vim --fix-missing
+RUN apt-get install -y build-essential --fix-missing
 
-COPY ./build/package.json .
-COPY ./build/yarn.lock .
+RUN apt-get install -y python --fix-missing
 
-# Install Node.js dependencies
-RUN yarn install --production --no-progress
+RUN npm install -g yarn --fix-missing
 
-# Copy application files
-COPY ./build .
+WORKDIR /app
+COPY . /app
 
-# Run the container under "node" user by default
-USER node
+RUN yarn install
+RUN yarn run build --release
 
-CMD [ "node", "server.js" ]
+EXPOSE 3000
+
+CMD [ "pm2-runtime", "start", "pm2.json" ]

@@ -112,8 +112,6 @@ class Html extends React.Component {
 
           <script src="/assets/vendor/jquery/dist/jquery.min.js" />
           <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js" />
-          <script src="/assets/vendor/chart.js/dist/Chart.min.js" />
-          <script src="/assets/vendor/chart.js/dist/Chart.extension.js" />
           <script src="/assets/js/argon.js?v=1.0.0" />
         </body>
       </html>
