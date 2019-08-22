@@ -10,8 +10,12 @@ RUN apt-get install -y python --fix-missing
 
 RUN npm install -g yarn --fix-missing
 
+VOLUME ["/app"]
 WORKDIR /app
-COPY . /app
+
+COPY package.json /app
+COPY package-lock.json /app
+COPY yarn.lock /app
 
 RUN yarn install --production
 

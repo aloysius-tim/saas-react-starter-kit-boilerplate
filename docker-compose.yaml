@@ -16,6 +16,8 @@ services:
       - "3333"
     environment:
       - ENV_PATH=/app/.env.dev
+    volumes:
+      - ./api:/app
 
   app:
     logging:
