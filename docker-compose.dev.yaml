@@ -15,10 +15,10 @@ services:
     expose:
       - "3333"
     environment:
-      - ENV_PATH=/app/.env.dev
+      - ENV_PATH=/api/.env.dev
       - NODE_ENV=development
     volumes:
-      - ./api:/app
+      - ./api:/api
 
   app:
     logging:
