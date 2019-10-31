@@ -8,3 +8,4 @@ docker run  --name app.saastr \
             -p 3000:3000 \
             -e NODE_ENV=production \
             -d app.saastr
+docker logs -f app.saastr

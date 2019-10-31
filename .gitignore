@@ -19,3 +19,5 @@ public/app/*
 */.idea
 
 database
+
+api/tmp/saastr.log

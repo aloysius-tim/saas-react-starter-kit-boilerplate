@@ -11,11 +11,12 @@ RUN apt-get install -y python --fix-missing
 RUN npm install -g yarn --fix-missing
 
 WORKDIR /app
-COPY . /app
 
+COPY package.json /app
 RUN yarn install
-RUN yarn run build --release
+
+COPY . /app
+RUN chmod 755 /app/entrypoint_docker.sh
 
 EXPOSE 3000
-
-CMD [ "pm2-runtime", "start", "pm2.json" ]
+CMD [ "/app/entrypoint_docker.sh" ]

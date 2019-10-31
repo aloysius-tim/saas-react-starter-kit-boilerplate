@@ -253,13 +253,13 @@ const config = {
       ...(isDebug
         ? []
         : [
-          {
-            test: resolvePath(
-              'node_modules/react-deep-force-update/lib/index.js',
-            ),
-            loader: 'null-loader',
-          },
-        ]),
+            {
+              test: resolvePath(
+                'node_modules/react-deep-force-update/lib/index.js',
+              ),
+              loader: 'null-loader',
+            },
+          ]),
     ],
   },
 
@@ -306,8 +306,9 @@ const clientConfig = {
     // Define free variables
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
+      'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
       'process.env.BROWSER': true,
-      __DEV__: isDebug,
+      __DEV__: process.env.NODE_ENV !== 'production',
     }),
 
     // Emit a file with assets paths
@@ -351,10 +352,10 @@ const clientConfig = {
     ...(isDebug
       ? []
       : [
-        // Webpack Bundle Analyzer
-        // https://github.com/th0r/webpack-bundle-analyzer
-        ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
-      ]),
+          // Webpack Bundle Analyzer
+          // https://github.com/th0r/webpack-bundle-analyzer
+          ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
+        ]),
   ],
 
   // Move modules that occur in multiple entry chunks to a new entry chunk (the commons chunk).
@@ -424,16 +425,16 @@ const serverConfig = {
                 preset[0] !== '@babel/preset-env'
                   ? preset
                   : [
-                    '@babel/preset-env',
-                    {
-                      targets: {
-                        node: pkg.engines.node.match(/(\d+\.?)+/)[0],
+                      '@babel/preset-env',
+                      {
+                        targets: {
+                          node: pkg.engines.node.match(/(\d+\.?)+/)[0],
+                        },
+                        modules: false,
+                        useBuiltIns: false,
+                        debug: false,
                       },
-                      modules: false,
-                      useBuiltIns: false,
-                      debug: false,
-                    },
-                  ],
+                    ],
             ),
           },
         };
@@ -470,8 +471,9 @@ const serverConfig = {
     // Define free variables
     // https://webpack.js.org/plugins/define-plugin/
     new webpack.DefinePlugin({
+      'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
       'process.env.BROWSER': false,
-      __DEV__: isDebug,
+      __DEV__: process.env.NODE_ENV !== 'production',
     }),
 
     // Adds a banner to the top of each generated chunk
