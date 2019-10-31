@@ -21,6 +21,7 @@ services:
       - LETSENCRYPT_HOST=api.saastr.0x0.run
       - LETSENCRYPT_EMAIL=tim@0x0.run
       - VIRTUAL_PORT=3333
+    network_mode: bridge
     volumes:
       - ./api:/api
 
@@ -44,6 +45,7 @@ services:
       - LETSENCRYPT_HOST=saastr.0x0.run
       - LETSENCRYPT_EMAIL=tim@0x0.run
       - VIRTUAL_PORT=3000
+    network_mode: bridge
     depends_on:
       - api
 
@@ -67,6 +69,7 @@ services:
       - VIRTUAL_HOST=db.saastr.0x0.run
       - LETSENCRYPT_HOST=db.saastr.0x0.run
       - LETSENCRYPT_EMAIL=tim@0x0.run
-      - VIRTUAL_PORT=5432
+      - VIRTUAL_PORT=5433
+    network_mode: bridge
     volumes:
       - ./database:/var/lib/postgresql/data
