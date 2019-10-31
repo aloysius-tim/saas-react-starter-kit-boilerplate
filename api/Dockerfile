@@ -8,13 +8,13 @@ RUN apt-get install -y build-essential --fix-missing
 
 RUN apt-get install -y python --fix-missing
 
-VOLUME ["/app"]
-WORKDIR /app
+WORKDIR /api
 
-COPY package.json /app
-COPY yarn.lock /app
-
+COPY package.json /api
+COPY yarn.lock /api
 RUN yarn install --production
+
+VOLUME ["/api"]
 
 EXPOSE 3333
 
