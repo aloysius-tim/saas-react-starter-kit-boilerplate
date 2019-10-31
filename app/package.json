@@ -6,12 +6,6 @@
     "node": ">=6.13.1",
     "npm": ">=3.10.10"
   },
-  "browserslist": [
-    ">1%",
-    "last 4 versions",
-    "Firefox ESR",
-    "not ie < 9"
-  ],
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "antd": "^3.19.5",
