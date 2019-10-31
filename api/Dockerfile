@@ -14,7 +14,7 @@ WORKDIR /api
 
 COPY package.json /api
 COPY yarn.lock /api
-RUN yarn install --production
+RUN yarn install
 
 VOLUME ["/api"]
 
