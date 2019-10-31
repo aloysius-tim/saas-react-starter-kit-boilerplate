@@ -17,6 +17,10 @@ services:
     environment:
       - ENV_PATH=/api/.env
       - NODE_ENV=production
+      - VIRTUAL_HOST=api.saastr.0x0.run
+      - LETSENCRYPT_HOST=api.saastr.0x0.run
+      - LETSENCRYPT_EMAIL=tim@0x0.run
+      - VIRTUAL_PORT=3333
     volumes:
       - ./api:/api
 
@@ -36,6 +40,10 @@ services:
       - "3000"
     environment:
       - NODE_ENV=production
+      - VIRTUAL_HOST=saastr.0x0.run
+      - LETSENCRYPT_HOST=saastr.0x0.run
+      - LETSENCRYPT_EMAIL=tim@0x0.run
+      - VIRTUAL_PORT=3000
 
   postgres:
     logging:
@@ -46,13 +54,17 @@ services:
     restart: always
     image: postgres
     ports:
-      - 5433:5433
+      - 5432:5432
     expose:
-      - "5433"
+      - "5432"
     environment:
       - DEBUG=false
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=azertyuiop
       - POSTGRES_DB=saastr
+      - VIRTUAL_HOST=db.saastr.0x0.run
+      - LETSENCRYPT_HOST=db.saastr.0x0.run
+      - LETSENCRYPT_EMAIL=tim@0x0.run
+      - VIRTUAL_PORT=5432
     volumes:
       - ./database:/var/lib/postgresql/data

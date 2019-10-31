@@ -53,9 +53,9 @@ if (process.env.NODE_ENV === 'production') {
 
     api: {
       // API URL to be used in the client-side code
-      clientUrl: process.env.API_CLIENT_URL || 'http://46.105.96.82:3333/api',
+      clientUrl: process.env.API_CLIENT_URL || 'https://api.saastr.0x0.run/api',
       // API URL to be used in the server-side code
-      serverUrl: process.env.API_SERVER_URL || 'http://46.105.96.82:3333/api',
+      serverUrl: process.env.API_SERVER_URL || 'https://api.saastr.0x0.run/api',
     },
 
     // Database
@@ -68,7 +68,7 @@ if (process.env.NODE_ENV === 'production') {
     },
 
     production: true,
-    apiUrl: 'http://46.105.96.82:3333/api',
+    apiUrl: 'https://api.saastr.0x0.run/api',
   };
 }
 
