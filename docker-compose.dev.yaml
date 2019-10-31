@@ -36,6 +36,8 @@ services:
       - "3000"
     environment:
       - NODE_ENV=development
+    depends_on:
+      - api
 
   postgres:
     logging:
@@ -46,9 +48,9 @@ services:
     restart: always
     image: postgres
     ports:
-      - 5433:5433
+      - 5432:5432
     expose:
-      - "5433"
+      - "5432"
     environment:
       - DEBUG=false
       - POSTGRES_USER=root

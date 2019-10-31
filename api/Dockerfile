@@ -8,6 +8,8 @@ RUN apt-get install -y build-essential --fix-missing
 
 RUN apt-get install -y python --fix-missing
 
+RUN yarn global add @adonisjs/cli
+
 WORKDIR /api
 
 COPY package.json /api
