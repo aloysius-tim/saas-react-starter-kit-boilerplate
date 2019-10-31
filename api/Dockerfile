@@ -11,12 +11,11 @@ RUN apt-get install -y python --fix-missing
 RUN yarn global add @adonisjs/cli
 
 WORKDIR /api
+VOLUME ["/api"]
 
 COPY package.json /api
 COPY yarn.lock /api
 RUN yarn install
-
-VOLUME ["/api"]
 
 EXPOSE 3333
 
