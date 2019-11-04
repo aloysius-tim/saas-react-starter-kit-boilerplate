@@ -56,3 +56,19 @@ services:
       - POSTGRES_DB=saastr
     volumes:
       - ./database:/var/lib/postgresql/data
+
+  documentation:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: always
+    image: nginx
+    ports:
+      - 8080:80
+    expose:
+      - "8080"
+    volumes:
+      - ./docs:/usr/share/nginx/html:ro
+    command: [nginx-debug, '-g', 'daemon off;']
