@@ -3,7 +3,7 @@
 'use strict';
 
 const Stripe = use('Stripe');
-const moment = use('Moment');
+const moment = use('moment');
 
 class PaymentController {
   async subscribe ({ request, response, auth }) {

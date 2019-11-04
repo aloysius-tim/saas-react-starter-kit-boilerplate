@@ -1,7 +1,7 @@
 'use strict';
 
 const Stripe = use('Stripe');
-const moment = use('Moment');
+const moment = use('moment');
 
 class UserController {
   // GET
