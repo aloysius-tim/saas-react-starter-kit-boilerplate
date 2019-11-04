@@ -26,7 +26,7 @@
     "@adonisjs/cors": "^1.0.5",
     "@adonisjs/fold": "^4.0.7",
     "@adonisjs/framework": "^5.0.5",
-    "@adonisjs/ignitor": "^2.0.6",
+    "@adonisjs/ignitor": "^2.0.8",
     "@adonisjs/lucid": "^5.0.3",
     "@adonisjs/mail": "^3.0.5",
     "@adonisjs/validator": "^5.0.3",

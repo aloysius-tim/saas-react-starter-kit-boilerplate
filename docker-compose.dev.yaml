@@ -17,8 +17,6 @@ services:
     environment:
       - ENV_PATH=/api/.env.dev
       - NODE_ENV=development
-    volumes:
-      - ./api:/api
 
   app:
     logging:
