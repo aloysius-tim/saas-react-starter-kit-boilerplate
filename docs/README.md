@@ -10,7 +10,7 @@
 
 ## Live demo:
 
-- [https://saastr.co](https://saastr.co)
+- [https://saastr.0x0.run](https://saastr.0x0.run)
 
 ### Getting Started
 
