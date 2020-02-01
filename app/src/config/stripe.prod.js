@@ -1,6 +1,6 @@
 module.exports = {
   pk_live: 'pk_live_PAraCMQSMrrUURvk9vByp1QQ00V4nl50N2',
-  pk_test: 'pk_test_FemwJfZOd0gaq7IwlVXgai8E00ebTszBaD',
+  pk_test: 'pk_test_4g6BQJmRrB4ye9FkPe71PzNE00BDAMxnwD',
   get pk() {
     return this.pk_test;
   },
