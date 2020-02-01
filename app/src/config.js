@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand,import/no-mutable-exports */
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
@@ -13,9 +14,14 @@ import auth from './config/auth';
 
 /* eslint-disable max-len */
 // eslint-disable-next-line import/no-mutable-exports
+/**
+ * Env variables for DEV environnement
+ * @type {{analytics: {googleTrackingId: string}, trustProxy: (string|string), auth: ({providers}|*), port: (string|number), production: boolean, stripe: ({plans, pk_test, pk: *, pk_live, yearly}|*), api: {clientUrl: (string|string), serverUrl: (string|string)}, databaseUrl: (string|string)}}
+ */
 let CONST = {
+  // More config files in ./config
   stripe: stripeDev,
-  auth,
+  auth: auth,
   // Node.js app
   port: process.env.PORT || 3000,
 
@@ -29,7 +35,7 @@ let CONST = {
     serverUrl: process.env.API_SERVER_URL || 'http://localhost:3333/api',
   },
 
-  // Database
+  // Database (NOT IN USE in the template)
   databaseUrl: process.env.DATABASE_URL || 'sqlite:database.sqlite',
 
   // Web analytics
@@ -42,9 +48,13 @@ let CONST = {
 };
 
 if (process.env.NODE_ENV === 'production') {
+  /**
+   * Env variables for PROD environnement
+   * @type {{analytics: {googleTrackingId: string}, trustProxy: (string|string), apiUrl: string, auth: ({providers}|*), port: (string|number), production: boolean, stripe: ({plans, pk_test, pk: *, pk_live, yearly}|*), api: {clientUrl: (string|string), serverUrl: (string|string)}, databaseUrl: (string|string)}}
+   */
   CONST = {
     stripe: stripeProd,
-    auth,
+    auth: auth,
     // Node.js app
     port: process.env.PORT || 3000,
 
@@ -58,7 +68,7 @@ if (process.env.NODE_ENV === 'production') {
       serverUrl: process.env.API_SERVER_URL || 'https://api.saastr.0x0.run/api',
     },
 
-    // Database
+    // Database (NOT IN USE in the template)
     databaseUrl: process.env.DATABASE_URL || 'sqlite:database.sqlite',
 
     // Web analytics
