@@ -5,6 +5,9 @@ module.exports = {
     return this.pk_test;
   },
 
+  /**
+   * SEE COMMENTS ON THE Stripe.DEV.js file
+   */
   yearly: true,
   plans: [
     {
