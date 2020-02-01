@@ -62,7 +62,7 @@ services:
     environment:
       - DEBUG=false
       - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=azertyuiop
+      - POSTGRES_PASSWORD=XXXXXX
       - POSTGRES_DB=saastr
       - VIRTUAL_HOST=db.saastr.0x0.run
       - LETSENCRYPT_HOST=db.saastr.0x0.run

@@ -2,11 +2,11 @@ module.exports = {
   providers: {
     password: true,
     facebook: false,
-    google: true,
+    google: false,
     github: false,
     instagram: false,
     foursquare: false,
     twitter: false,
-    linkedin: true,
+    linkedin: false,
   },
 };
