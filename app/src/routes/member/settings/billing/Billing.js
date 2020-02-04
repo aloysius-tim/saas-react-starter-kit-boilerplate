@@ -221,7 +221,7 @@ class Billing extends React.Component {
                           key: 'creditcard',
                           render: (text, record) => (
                             <span>
-                              {record.card.brand} ending in {record.card.last4}
+                              {record.brand} ending in {record.last4}
                             </span>
                           ),
                         },
@@ -231,8 +231,8 @@ class Billing extends React.Component {
                           render: (text, record) => {
                             if (
                               moment(
-                                `01/${record.card.exp_month}/${
-                                  record.card.exp_year
+                                `01/${record.exp_month}/${
+                                  record.exp_year
                                 }`,
                                 'DD/MM/YYYY',
                               ).isBefore(moment())
@@ -242,7 +242,7 @@ class Billing extends React.Component {
                               );
                             return (
                               <span>
-                                {record.card.exp_month}/{record.card.exp_year}
+                                {record.exp_month}/{record.exp_year}
                               </span>
                             );
                           },
@@ -258,8 +258,8 @@ class Billing extends React.Component {
                               return <span>Default</span>;
                             else if (
                               moment(
-                                `01/${record.card.exp_month}/${
-                                  record.card.exp_year
+                                `01/${record.exp_month}/${
+                                  record.exp_year
                                 }`,
                                 'DD/MM/YYYY',
                               ).isBefore(moment())
