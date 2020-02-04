@@ -18,8 +18,18 @@ You can either fork or clone or follow this easy simple tutorial to fork a publi
 - 1.3. Rename `/ROOT/api/.env.exemple` in `/ROOT/api/.env.dev` and `/ROOT/api/.env` (for prod) and setup the VARs you need. See comments in the file
     - Setup your database credentials (check adonis online documentation if needed. Many drivers supported)
     - Setup your Stripe KEYS + see others comments in the file
-- 1.4. Run database migration `ENV_PATH=.env.dev adonis migration:run`
-- 1.5. Launch Backend ! `yarn start`
+- 1.4. Activate the webhooks on Stripe (https://dashboard.stripe.com/XXX/webhooks) !
+    - The endpoint to receive the webhooks is: (http://domain.com/api/stripe/webhook)
+    - You cannot use localhost on Stripe to receive the hooks. In dev mode, you can launch `yarn startWebhookTunnel` that will create a tunnel with ultrahook
+    - You need to activate the followings hooks:
+        - customer.subscription.updated
+        - customer.subscription.created
+        - invoice.payment_succeeded
+        - invoice.payment_failed
+        - customer.subscription.trial_will_end
+        - customer.source.created
+- 1.5. Run database migration `ENV_PATH=.env.dev adonis migration:run`
+- 1.6. Launch Backend ! `yarn start`
 
 ###2. FRONT-END
 
