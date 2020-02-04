@@ -89,7 +89,7 @@ class Pay extends React.Component {
       if (!err && !this.state.cardError) {
         // https://stripe.com/docs/stripe-js/reference#stripe-create-token
         this.props.stripe
-          .createSource({ type: 'card' }, ownerInfo)
+          .createToken({ type: 'card' }, ownerInfo)
           .then(source => {
             if (source.error) {
               this.showCardError(source.error);
@@ -98,7 +98,7 @@ class Pay extends React.Component {
               const paymentRequest = {
                 cardHolderName,
                 address,
-                sourceToken: source.source.id,
+                sourceToken: source.token.id,
                 planId,
               };
               this.props.paymentAction(paymentRequest);
