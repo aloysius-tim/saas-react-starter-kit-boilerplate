@@ -1,5 +1,21 @@
 # Build your own SaaS business with our SaaS boilerplate.
 
+### SaaStr is not maitained anymore - We recommend using this amazing boilerplate (our team now use Makerkit instead of SaaStr): https://makerkit.dev/
+
+**Makerkit** A SaaS Starter Kit so good it feels like cheating.
+Build unlimited SaaS products with any SaaS Starter Kit.
+Save months of work and focus on building a profitable business.
+
+Get lifetime access to all the kits for only $299.
+
+The fastest way to build and launch a SaaS with Next.js and Remix --> Build your Next.js/Remix SaaS fast with pre-built Authentication, Multi-Tenancy, Settings, Stripe Payments, Blogging, Documentation and Marketing pages.
+
+Hop in the Discord community and say hi!. You can ask questions, provide feedback, report bugs, get support, or just chat with the community.
+You can reach out to the founder anytime you need help with a project or just have a question about how to use a certain tool. Or maybe you just want some advice on how to get started with Makerkit in the first place!
+https://discord.gg/3hBn3nhbgD
+
+***********************
+
 > **SaaStr** is a SaaS boilerplate to kickstart your new SaaS adventure as fast as possible. Built on top of  [Adonis JS](https://github.com/adonisjs/adonis-framework) for the BackEnd and [React Starter Kit][https://github.com/kriasoft/react-starter-kit] for the Front-End it helped me to stay productive and follow the best practices. I hope it will be a solid starting point for both professionnals and beginners.
 >
 > - The boilerplate app comes with many basic SaaS features (see [Features](https://github.com/async-labs/saas#features) below) so that you are able to focus on features that differentiate your product.
