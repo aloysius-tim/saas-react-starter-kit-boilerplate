@@ -15,7 +15,7 @@
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.3",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "express-graphql": "^0.6.12",
     "express-jwt": "^5.3.1",
     "graphql": "^0.13.2",
