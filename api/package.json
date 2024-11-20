@@ -31,7 +31,7 @@
     "@adonisjs/mail": "^3.0.5",
     "@adonisjs/validator": "^5.0.3",
     "adonis-stripe": "^1.0.6",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "cloudinary": "^1.11.0",
     "global": "^4.4.0",
     "gravatar": "^1.6.0",
